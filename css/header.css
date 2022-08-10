@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,700;1,300&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
+  font-size: 17px;
+}
+
+.header {
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 1px 9%;
+  border-bottom: #8ba122 5px solid;
+}
+
+.header .nav-links #producto1 {
+  padding-top: 20px;
+  border-bottom: #624983 5px solid;
+  margin: 0 15px;
+}
+.header .nav-links #producto2 {
+  padding-top: 20px;
+  border-bottom: #ffbc0e 5px solid;
+  margin: 0 15px;
+}
+.header .nav-links #producto3 {
+  padding-top: 20px;
+  border-bottom: #ff004a 5px solid;
+  margin: 0 15px;
+}
+
+.header .logo {
+  cursor: pointer;
+}
+
+.header .logo img {
+  height: 75px; /*Logo*/
+  width: auto;
+  margin: 0 17px;
+  transition: all 0.3s;
+}
+
+.header .nav-links {
+  list-style: none;
+}
+
+.header .nav-links li {
+  display: inline-block;
+  padding: 0 20px;
+}
+
+.header .nav-links li:hover {
+  transform: scale(1.1);
+}
+
+.header .nav-links a {
+  font-size: 700;
+  color: #050505;
+  text-decoration: none;
+}
+
+.header .nav-links li a:hover {
+  color: #63666a;
+}
+
+.header .btn button {
+  font-weight: 7;
+  color: #1b3039;
+  padding: 7px 22px;
+  background: #c0c2c5;
+  border: none;
+  border-radius: 90px;
+  cursor: pointer;
+  transition: all 0.3 ease 0s;
+}
+
+.header .btn button:hover {
+  background-color: #ef6079;
+  color: #63666a;
+  transform: scale(1.1);
+}
