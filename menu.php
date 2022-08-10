@@ -47,8 +47,8 @@
 					<div class="card text-bg-light mb-3">
 						<div class="card-body">
 							<a href="actualizacion.php"><img src="img/menu/expedientes.png" width="260" height="190"></a>
-							<h5 class="card-title">Expedientes</h5>
-							<p class="card-text">Modificar contenido de las tablas</p>
+							<h5 class="card-title">Datos de empleados</h5>
+							<p class="card-text">Modificar contenido de las tablas </p>
 							<a href="actualizacion.php" class="btn btn-primary">Ir</a>
 						</div>
 					</div>
