@@ -49,13 +49,27 @@
 		</div>
 	</section>
 
-	<form class="form-login" action="reporte_excel.php" method="post" enctype="multipart/form-data">
-		<div style="text-align:center;">
-			<img id="img" src="img/reportes/excel.png" height="200" width="200">
-			<br>
-			<br>
-			<button class="buttons">Generar reporte Excel</button>
-		</div>
+	<form class="form-login" action="reportes_txt.php" method="post" enctype="multipart/form-data">
+	<div style="text-align:center;">
+				<label><select id="lista" name="CveNomina">
+						<?php
+						include 'conexion.php';
+						$consulta = "SELECT CveNomina FROM Nominas ORDER BY CveNomina DESC";
+						$resultado = $mysqli->query($consulta);
+						?>
+						<form action="genera.php" method="post" class="form-login">
+							<?php foreach ($resultado as  $opciones) : ?>
+								<option value="<?php echo $opciones['CveNomina'] ?>">
+									<?php echo $opciones['CveNomina'] ?>
+								</option>
+							<?php endforeach ?>
+					</select></label>
+				<br>
+				<img id="img" src="img/formularios/texto.png" height="200" width="200">
+				<br>
+				<button class="buttons">Generar reporte</button>
+				<br>
+			</div>
 	</form>
 </body>
 
