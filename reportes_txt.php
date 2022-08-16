@@ -8,40 +8,52 @@ $file = fopen("C:/Users/luisj/Desktop/archivo3.txt", "w");
 
 //Solicitando la conexion con la BD
 require 'conexion.php';
-//Efectuando consulta de datos personales
-$consulta = "SELECT CvePersonal,RFC,Paterno,Materno,Nombre,CveISSEMyM,CURP from EmpGral WHERE 
-CvePersonal IN (SELECT CvePersonal from DetNomina WHERE CveNomina='$CveNomina') ORDER BY Paterno";
+
+//Llamando al procedimiento que inserta los campos en tmptimmaes
+$consulta = "CALL sp_GeneraTmpTimMaes('$CveNomina')";
+
+//Haciendo la consulta a tmptimmaes
+$consulta2 = "SELECT * FROM tmptimmaes";
+
 //Almaceando el resultado de la consulta en una variable
 $resultado = $mysqli->query($consulta);
-
-//Efectuando consulta de Totales
-$consulta2="SELECT SUM(Importe)as tpercepciones FROM DetNomina WHERE 
-Clave IN (SELECT clave FROM PerDedApo WHERE tipoPDA=0) and CveNomina='$CveNomina' GROUP BY CvePersonal";
-//Almaceando el resultado de la consulta en una variable
 $resultado2 = $mysqli->query($consulta2);
 
 
+
+
 //Ciclo para lectura y escritura del archivo
-while ($row = $resultado->fetch_assoc()) {
+while ($row = $resultado2->fetch_assoc()) {
     //Numero consecutivo
-    $a=$a+1;
 	//Ancho alto,borde,salto de linea justificacion relleno
-	fwrite($file,$row['CvePersonal'].'|');
-    fwrite($file,$row['RFC'].'|');
-    fwrite($file,$row['Paterno'].' ');
-    fwrite($file,$row['Materno'].' ');
-    fwrite($file,$row['Nombre'].'|');
-    fwrite($file,'22600001L'.'|');
-    fwrite($file,'A0363072'.'|');
-    fwrite($file,'0'.'|');
-    fwrite($file,$row['CveISSEMyM'].'|');
-    fwrite($file,$row['CURP'].'|');
-    fwrite($file,$a.'|');
-    while ($row = $resultado2->fetch_assoc()) {
-        //Ancho alto,borde,salto de linea justificacion relleno
-        fwrite($file,$row['tpercepciones'].'|');
-    }
+	fwrite($file,$row['CveEmp'].'|');
+    fwrite($file,$row['Rfc'].'|');
+    fwrite($file,$row['NomEmp'].'|');
+    fwrite($file,$row['TipNom'].'|');
+    fwrite($file,$row['CveIsse'].'|');
+    fwrite($file,$row['Curp'].'|');
+    fwrite($file,$row['NumCon'].'|');
+    fwrite($file,$row['TotPer'].'|');
+    fwrite($file,$row['TotDed'].'|');
+    fwrite($file,$row['TotNet'].'|');
+    fwrite($file,$row['TotDes'].'|');
+    fwrite($file,$row['Qna'].'');
+    fwrite($file,$row['FecPag'].'|');
+    fwrite($file,$row['Fecini'].'|');
+    fwrite($file,$row['FecFin'].'|');
+    fwrite($file,$row['NumChe'].'|');
+    fwrite($file,$row['CveOrg'].'|');
+    fwrite($file,$row['OriRec'].'|');
+    fwrite($file,$row['CveBan'].'|');
+    fwrite($file,$row['Cuenta'].'|');
+    fwrite($file,$row['Riesgo'].'|');
+    fwrite($file,$row['SalDiaInt'].'|');
+    fwrite($file,$row['TipCont'].'|');
+    fwrite($file,$row['Subent'].'|');
+    fwrite($file,$row['SubCau'].'|');
+    fwrite($file,$row['AjusSub'].'|');
     fwrite($file,''. PHP_EOL);
+
 }
 
 //. PHP_EOL
