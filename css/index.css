@@ -92,3 +92,15 @@ ROSA = #FF29F2
   margin: auto;
   padding-top: 25px;
 }
+
+
+#timbrado{
+  width: 370px;
+  height: 450px;
+  background: #364653;
+  margin: auto;
+  margin-top: 10px;
+  box-shadow: 1px 20px 37px rgb(0, 0, 0);
+  padding: 20px 30px;
+  border-top: 6px solid #ff004a;
+}

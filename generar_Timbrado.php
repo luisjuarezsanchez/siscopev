@@ -49,7 +49,7 @@
 		</div>
 	</section>
 
-	<form class="form-login" action="reportes_txt.php" method="post" enctype="multipart/form-data">
+	<form id="timbrado" class="form-login" action="reportes_txt.php" method="post" enctype="multipart/form-data">
 	<div style="text-align:center;">
 				<label><select id="lista" name="CveNomina">
 						<?php
@@ -67,6 +67,10 @@
 				<br>
 				<img id="img" src="img/formularios/texto.png" height="200" width="200">
 				<br>
+				<br>
+				<p>Fecha real de pago</p>
+				<input class="controls" type="date" name="FecPag">
+				<!--<input class="controls" type="text" name="CveNomina" value="202212 10094">-->
 				<button class="buttons">Generar reporte</button>
 				<br>
 			</div>

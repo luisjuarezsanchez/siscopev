@@ -1,5 +1,6 @@
 <?php 
 $CveNomina = $_POST['CveNomina'];
+$FecPag = $_POST['FecPag'];
 $a=0;
 echo $CveNomina;
 
@@ -15,9 +16,19 @@ $consulta = "CALL sp_GeneraTmpTimMaes('$CveNomina')";
 //Haciendo la consulta a tmptimmaes
 $consulta2 = "SELECT * FROM tmptimmaes";
 
-//Almaceando el resultado de la consulta en una variable
+//Insertando la fecha real de pago en tmptimmaes
+$consulta3="UPDATE tmptimmaes SET FecPag='$FecPag'";
+
+
+//Almaceando el resultado de las consultas en una variable (Por cada Query que se efectua)
+//Llamada al procedimiento almacenado
 $resultado = $mysqli->query($consulta);
+//Seleccionar todos los datos de tmptimmaes
 $resultado2 = $mysqli->query($consulta2);
+//Insercion de fecha real de pago en la tabla tmptimmaes
+$resultado3 = $mysqli->query($consulta3);
+
+
 
 
 
