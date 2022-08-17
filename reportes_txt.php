@@ -29,6 +29,8 @@ while ($row = $resultado2->fetch_assoc()) {
 	fwrite($file,$row['CveEmp'].'|');
     fwrite($file,$row['Rfc'].'|');
     fwrite($file,$row['NomEmp'].'|');
+    fwrite($file,$row['CveUniAds'].'|');
+    fwrite($file,$row['CodCat'].'|');
     fwrite($file,$row['TipNom'].'|');
     fwrite($file,$row['CveIsse'].'|');
     fwrite($file,$row['Curp'].'|');
@@ -46,8 +48,10 @@ while ($row = $resultado2->fetch_assoc()) {
     fwrite($file,$row['OriRec'].'|');
     fwrite($file,$row['CveBan'].'|');
     fwrite($file,$row['Cuenta'].'|');
+    fwrite($file,$row['FecIniCon'].'|');//Falta
+    fwrite($file,$row['Antigu'].'|');//Falta
     fwrite($file,$row['Riesgo'].'|');
-    fwrite($file,$row['SalDiaInt'].'|');
+    fwrite($file,$row['SalDiaInt'].'|');//Falta
     fwrite($file,$row['TipCont'].'|');
     fwrite($file,$row['Subent'].'|');
     fwrite($file,$row['SubCau'].'|');

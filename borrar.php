@@ -1,6 +1,6 @@
 <?php
 
-/*function calculaTiempo($fechaInicio,$fechaFin){
+function calculaTiempo($fechaInicio,$fechaFin){
     $datetime1 = date_create($fechaInicio);
     $datetime2 = date_create($fechaFin);
     $interval = date_diff($datetime1,$datetime2);
@@ -10,11 +10,11 @@
 
     echo "<pre>";
     print_r(calculaTiempo('2018-01-08','2022-06-15'));
-    echo "</pre>";*/
+    echo "</pre>";
 
 
 
-
+/*
     $datos=calculaTiempo('2018-01-08','2022-06-15');
 
 
@@ -41,5 +41,5 @@
             
        }
        return $tiempo;
-    }
+    }*/
 ?>
