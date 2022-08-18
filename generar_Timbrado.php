@@ -50,31 +50,41 @@
 	</section>
 
 	<form id="timbrado" class="form-login" action="reportes_txt.php" method="post" enctype="multipart/form-data">
-	<div style="text-align:center;">
-				<label><select id="lista" name="CveNomina">
-						<?php
-						include 'conexion.php';
-						$consulta = "SELECT CveNomina FROM Nominas ORDER BY CveNomina DESC";
-						$resultado = $mysqli->query($consulta);
-						?>
-						<form action="genera.php" method="post" class="form-login">
-							<?php foreach ($resultado as  $opciones) : ?>
-								<option value="<?php echo $opciones['CveNomina'] ?>">
-									<?php echo $opciones['CveNomina'] ?>
-								</option>
-							<?php endforeach ?>
-					</select></label>
-				<br>
-				<img id="img" src="img/formularios/texto.png" height="200" width="200">
-				<br>
-				<br>
-				<p>Fecha real de pago</p>
-				<input class="controls" type="date" name="FecPag" required>
-				<!--<input class="controls" type="text" name="CveNomina" value="202212 10094">-->
-				<button class="buttons">Generar reporte</button>
-				<br>
-			</div>
+		<div style="text-align:center;">
+			<label><select id="lista" name="CveNomina">
+					<?php
+					include 'conexion.php';
+					$consulta = "SELECT CveNomina FROM Nominas ORDER BY CveNomina DESC";
+					$resultado = $mysqli->query($consulta);
+					?>
+					<form action="genera.php" method="post" class="form-login">
+						<?php foreach ($resultado as  $opciones) : ?>
+							<option value="<?php echo $opciones['CveNomina'] ?>">
+								<?php echo $opciones['CveNomina'] ?>
+							</option>
+						<?php endforeach ?>
+				</select></label>
+			<br>
+			<img id="img" src="img/formularios/texto.png" height="200" width="200">
+			<br>
+			<br>
+			<p>Fecha real de pago</p>
+			<input class="controls" type="date" name="FecPag" required>
+			<!--<input class="controls" type="text" name="CveNomina" value="202212 10094">-->
+			<button class="buttons">Generar reporte</button>
+			<br>
+		</div>
 	</form>
 </body>
+<br>
+<br>
+<footer class="footer">
+
+	<div class="img_footers">
+		<img src="img/footer/escudo_armas.png" alt="">
+	</div>
+	<br>
+
+</footer>
 
 </html>

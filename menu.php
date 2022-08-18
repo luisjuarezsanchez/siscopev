@@ -112,12 +112,10 @@
 <br>
 <br>
 <footer class="footer">
-
 	<div class="img_footers">
 		<img src="img/footer/escudo_armas.png" alt="">
 	</div>
 	<br>
-
 </footer>
 
 </html>
