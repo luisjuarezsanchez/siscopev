@@ -161,3 +161,63 @@ while ($row = $resultado5->fetch_assoc()) {
     fwrite($file2, '' . PHP_EOL);
 }
 fclose($file2);
+
+
+
+
+require 'conexion.php';
+require 'vendor/autoload.php';
+//Solicitando el objeto a la Biblioteca
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
+//Efectuando la consulta SWL
+$consulta7 = "SELECT CvePersonal, RFC, Paterno, Materno, Nombre FROM EmpGral";
+$resultado7 = $mysqli->query($consulta7);
+
+//Creando hoja de Excel
+$excel = new Spreadsheet();
+//Asignando la hoja activa
+$hojaActiva = $excel->getActiveSheet();
+//Titulo de la hoja
+$hojaActiva->setTitle("Empleados");
+
+//Asignando color a las celdas en un rango
+$excel->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+->getStartColor()->setARGB('00FF7F');
+
+$hojaActiva->getColumnDimension('A')->setWidth(20);//Anchura de la celda
+$hojaActiva->setCellValue('A1', 'Periodo');//Titulo de la columna
+$hojaActiva->getColumnDimension('B')->setWidth(20);
+$hojaActiva->setCellValue('B1', 'RFC');
+$hojaActiva->getColumnDimension('C')->setWidth(20);
+$hojaActiva->setCellValue('C1', 'Paterno');
+$hojaActiva->getColumnDimension('D')->setWidth(20);
+$hojaActiva->setCellValue('D1', 'Materno');
+$hojaActiva->getColumnDimension('E')->setWidth(25);
+$hojaActiva->setCellValue('E1', 'Nombre');
+
+//Indicar que se comience desde la fila 2 de Excel y no reescribir los encanezados
+$fila = 2;
+
+//Ciclo para leer el contenido de la consulta
+while ($rows = $resultado7->fetch_assoc()) {
+    //Extrayendo campos de la BD y especificando la columna donde se mostrara el contenido
+    $hojaActiva->setCellValue('A' . $fila, $rows['CvePersonal']);
+    $hojaActiva->setCellValue('B' . $fila, $rows['RFC']);
+    $hojaActiva->setCellValue('C' . $fila, $rows['Paterno']);
+    $hojaActiva->setCellValue('D' . $fila, $rows['Materno']);
+    $hojaActiva->setCellValue('E' . $fila, $rows['Nombre']);
+    $fila++;//Incrementando las filas en 1 para que se inserten apropiadamente
+}
+
+//Creando el archivo de excel
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="Reporte_Empleados.xlsx"');
+header('Cache-Control: max-age=0');
+
+//Indicando la salida del documento en xlsx 
+$writer = IOFactory::createWriter($excel, 'Xlsx');
+$writer->save('php://output');
+exit;
+
