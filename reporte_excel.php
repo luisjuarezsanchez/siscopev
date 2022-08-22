@@ -53,7 +53,7 @@ $bordesV = [
 ];
 
 //Efectuando la consulta SWL
-$consulta8 = "CALL sp_GeneraTmpSerPub('202212 10094')";
+$consulta8 = "CALL sp_GeneraTmpSerPub('$CveNomina')";
 $resultado8 = $mysqli->query($consulta8);
 
 //Efectuando la consulta SWL

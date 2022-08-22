@@ -71,7 +71,7 @@
 			<p>Fecha real de pago</p>
 			<input class="controls" type="date" name="FecPag" required>
 			<!--<input class="controls" type="text" name="CveNomina" value="202212 10094">-->
-			<button class="buttons">Generar reporte</button>
+			<button class="buttons">Generar reportes</button>
 			<br>
 		</div>
 	</form>

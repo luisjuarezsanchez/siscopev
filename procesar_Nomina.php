@@ -44,7 +44,7 @@
 		<div>
 			<form class="form-login" action="procedimientos_funciones/sp_GeneraNomNor.php" method="post">
 				<p>Clave de nómina</p>
-				<input class="controls" type="text" name="CveNomina" value="202212 10094">
+				<input class="controls" type="text" name="CveNomina" value="">
 				<p>Fecha de inicio de nómina</p>
 				<input class="controls" type="date" name="Del">
 				<p>Fecha de fin de nómina</p>
