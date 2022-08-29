@@ -41,7 +41,7 @@
 				<img src="img/expedientes/empleado.png" height="200" width="200">
 				<div class="card-body">
 					<h5 class="card-title">Actualización de empleados</h5>
-					<a href="#" class="btn btn-primary">Ir</a>
+					<a href="crud_empleados.php" class="btn btn-primary">Ir</a>
 				</div>
 			</div>
 
