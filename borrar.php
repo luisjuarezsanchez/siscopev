@@ -10,7 +10,7 @@
 
     echo "<pre>";
     print_r(calculaTiempo('2018-01-08','2022-06-15'));
-    echo "</pre>";*/
+    echo "</pre>i";*/
 /*
     $fecha1;
     $fecha2;
