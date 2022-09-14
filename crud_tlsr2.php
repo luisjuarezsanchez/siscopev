@@ -125,39 +125,29 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
     </div>
 
     <div id="main-container">
-        <h1>Tablas de empleados</h1>
+        <h1>Tablas de tlsr2</h1>
         <table>
             <thead>
                 <tr>
-                    <th>RFC</th>
-                    <th>Paterno</th>
-                    <th>Materno</th>
-                    <th>Nombre</th>
-                    <th>Clave de Issemym</th>
-                    <th>Fecha de ingreso</th>
-                    <th>Nacionalidad</th>
-                    <th>CURP</th>
+                    <th>Limíte inferior</th>
+                    <th>Limíte inferior</th>
+                    <th>Subsidio</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
             <?php
-            $sql = "SELECT * FROM empgral";
+            $sql = "SELECT * FROM tlsr2";
             $result = mysqli_query($conexion, $sql);
             while ($mostrar = mysqli_fetch_array($result)) {
             ?>
                 <tr>
 
-                    <td><?php echo $mostrar['RFC'] ?></td>
-                    <td><?php echo $mostrar['Paterno'] ?></td>
-                    <td><?php echo $mostrar['Materno'] ?></td>
-                    <td><?php echo $mostrar['Nombre'] ?></td>
-                    <td><?php echo $mostrar['CveISSEMyM'] ?></td>
-                    <td><?php echo $mostrar['FechaIngreso'] ?></td>
-                    <td><?php echo $mostrar['Nacionalidad'] ?></td>
-                    <td><?php echo $mostrar['CURP'] ?></td>
-                    <td><img src="img/expedientes/editar.png" height="40" width="40" title="Editar"></td>
-                    <td><img src="img/expedientes/eliminar.png" height="40" width="40" title="Eliminar"></td>
+                    <td><?php echo $mostrar['LimInf'] ?></td>
+                    <td><?php echo $mostrar['LimSup'] ?></td>
+                    <td><?php echo $mostrar['Subsidio'] ?></td>
+                    <td><img src="img/expedientes/editar.png" alt="Eliminar" height="40" width="40" title="Editar"></td>
+                    <td><img src="img/expedientes/eliminar.png" alt="Editar" height="40" width="40" title="Eliminar"></td>
                 </tr>
             <?php
             }

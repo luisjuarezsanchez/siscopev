@@ -46,10 +46,10 @@
 				<div class="card">
 					<div class="card text-bg-light mb-3">
 						<div class="card-body">
-							<a href="actualizacion.php"><img src="img/menu/expedientes.png" width="260" height="190"></a>
+							<a href="crud_empleados.php"><img src="img/menu/expedientes.png" width="260" height="190"></a>
 							<h5 class="card-title">Datos de empleados</h5>
 							<p class="card-text">Modificar contenido de las tablas </p>
-							<a href="actualizacion.php" class="btn btn-primary">Ir</a>
+							<a href="crud_empleados.php" class="btn btn-primary">Ir</a>
 						</div>
 					</div>
 				</div>

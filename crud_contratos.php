@@ -125,37 +125,39 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
     </div>
 
     <div id="main-container">
-        <h1>Tablas de empleados</h1>
+        <h1>Tablas de Contratos</h1>
         <table>
             <thead>
                 <tr>
-                    <th>RFC</th>
-                    <th>Paterno</th>
-                    <th>Materno</th>
-                    <th>Nombre</th>
-                    <th>Clave de Issemym</th>
-                    <th>Fecha de ingreso</th>
-                    <th>Nacionalidad</th>
-                    <th>CURP</th>
+                    <th>Clave de contrato</th>
+                    <th>Descripción</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Tipo de contrato</th>
+                    <th>Prisma</th>
+                    <th>Año</th>
+                    <th>No.Oficio</th>
+                    <th>Fecha de oficio</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
             <?php
-            $sql = "SELECT * FROM empgral";
+            $sql = "SELECT * FROM Contratos";
             $result = mysqli_query($conexion, $sql);
             while ($mostrar = mysqli_fetch_array($result)) {
             ?>
                 <tr>
 
-                    <td><?php echo $mostrar['RFC'] ?></td>
-                    <td><?php echo $mostrar['Paterno'] ?></td>
-                    <td><?php echo $mostrar['Materno'] ?></td>
-                    <td><?php echo $mostrar['Nombre'] ?></td>
-                    <td><?php echo $mostrar['CveISSEMyM'] ?></td>
-                    <td><?php echo $mostrar['FechaIngreso'] ?></td>
-                    <td><?php echo $mostrar['Nacionalidad'] ?></td>
-                    <td><?php echo $mostrar['CURP'] ?></td>
+                    <td><?php echo $mostrar['CveContrato'] ?></td>
+                    <td><?php echo $mostrar['Descripcion'] ?></td>
+                    <td><?php echo $mostrar['Inicio'] ?></td>
+                    <td><?php echo $mostrar['Fin'] ?></td>
+                    <td><?php echo $mostrar['TipoContrato'] ?></td>
+                    <td><?php echo $mostrar['Prisma'] ?></td>
+                    <td><?php echo $mostrar['Anio'] ?></td>
+                    <td><?php echo $mostrar['NumOficio'] ?></td>
+                    <td><?php echo $mostrar['FecOficio'] ?></td>
                     <td><img src="img/expedientes/editar.png" height="40" width="40" title="Editar"></td>
                     <td><img src="img/expedientes/eliminar.png" height="40" width="40" title="Eliminar"></td>
                 </tr>
