@@ -126,6 +126,12 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
     <div id="main-container">
         <h1>Tablas de tlsr2</h1>
+        <form action="">
+            <label for="campo">Buscar:</label>
+            <input type="text" name="campo" id="campo">
+        </form>
+
+
         <table>
             <thead>
                 <tr>
@@ -136,23 +142,34 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
                     <th>Eliminar</th>
                 </tr>
             </thead>
-            <?php
-            $sql = "SELECT * FROM tlsr2";
-            $result = mysqli_query($conexion, $sql);
-            while ($mostrar = mysqli_fetch_array($result)) {
-            ?>
-                <tr>
+            <tbody id="content">
 
-                    <td><?php echo $mostrar['LimInf'] ?></td>
-                    <td><?php echo $mostrar['LimSup'] ?></td>
-                    <td><?php echo $mostrar['Subsidio'] ?></td>
-                    <td><img src="img/expedientes/editar.png" alt="Eliminar" height="40" width="40" title="Editar"></td>
-                    <td><img src="img/expedientes/eliminar.png" alt="Editar" height="40" width="40" title="Eliminar"></td>
-                </tr>
-            <?php
-            }
-            ?>
+            </tbody>
         </table>
+
+        <script>
+            getData()
+
+            document.getElementById('campo').addEventListener("keyup", getData);
+
+            function getData() {
+                let input = document.getElementById("campo").value
+                let content = document.getElementById("content")
+                let url = "load_tlsr2.php"
+                let formaData = new FormData()
+                formaData.append('campo', input)
+
+                fetch(url, {
+                        method: "POST",
+                        body: formaData
+                    }).then(response => response.json())
+                    .then(data => {
+                        content.innerHTML = data
+                    }).catch(err => console.log(err))
+            }
+        </script>
+        <br>
+
     </div>
 
     <script>

@@ -26,6 +26,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
     <link rel="stylesheet" type="text/css" href="css/fuente.css">
     <link rel="stylesheet" href="css/menulateral.css">
     <link rel="stylesheet" href="css/tablas.css">
+
 </head>
 
 
@@ -124,11 +125,23 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         </div>
     </div>
 
+    <!--//////////////////////////////////////////////-->
+
+
+
+
     <div id="main-container">
         <h1>Tablas de empleados</h1>
+        <form action="">
+            <label for="campo">Buscar:</label>
+            <input type="text" name="campo" id="campo">
+        </form>
+
+
         <table>
             <thead>
                 <tr>
+                    <th>Clave Personal</th>
                     <th>RFC</th>
                     <th>Paterno</th>
                     <th>Materno</th>
@@ -141,29 +154,41 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
                     <th>Eliminar</th>
                 </tr>
             </thead>
-            <?php
-            $sql = "SELECT * FROM empgral";
-            $result = mysqli_query($conexion, $sql);
-            while ($mostrar = mysqli_fetch_array($result)) {
-            ?>
-                <tr>
+            <tbody id="content">
 
-                    <td><?php echo $mostrar['RFC'] ?></td>
-                    <td><?php echo $mostrar['Paterno'] ?></td>
-                    <td><?php echo $mostrar['Materno'] ?></td>
-                    <td><?php echo $mostrar['Nombre'] ?></td>
-                    <td><?php echo $mostrar['CveISSEMyM'] ?></td>
-                    <td><?php echo $mostrar['FechaIngreso'] ?></td>
-                    <td><?php echo $mostrar['Nacionalidad'] ?></td>
-                    <td><?php echo $mostrar['CURP'] ?></td>
-                    <td><img src="img/expedientes/editar.png" height="40" width="40" title="Editar"></td>
-                    <td><img src="img/expedientes/eliminar.png" height="40" width="40" title="Eliminar"></td>
-                </tr>
-            <?php
-            }
-            ?>
+            </tbody>
         </table>
+
+        <script>
+            getData()
+
+            document.getElementById('campo').addEventListener("keyup", getData);
+
+            function getData(){
+                let input = document.getElementById("campo").value
+                let content = document.getElementById("content")
+                let url = "load_empleados.php"
+                let formaData = new FormData()
+                formaData.append('campo',input)
+
+                fetch(url,{
+                    method: "POST",
+                    body: formaData
+                }).then(response => response.json())
+                .then(data => {
+                    content.innerHTML = data
+                }).catch(err => console.log(err))
+            }
+        </script>
+        <br>
     </div>
+
+
+
+
+
+
+    <!--//////////////////////////////////-->
 
     <script>
         const btn = document.querySelector('#menu-btn');
@@ -176,7 +201,6 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             document.querySelector('body').classList.toggle('body-expanded')
         });
     </script>
-
 
 
 </body>

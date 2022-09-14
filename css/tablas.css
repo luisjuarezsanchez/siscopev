@@ -29,3 +29,8 @@ tr:hover td{
   background-color: #a4a5a5;
 }
 
+input{
+  border-radius: 5px;
+  background-color: rgba(221, 221, 221, 0.718);  
+}
+

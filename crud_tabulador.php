@@ -127,49 +127,58 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
     <div id="main-container">
         <h1>Tablas de tabulador</h1>
+        <form action="">
+            <label for="campo">Buscar:</label>
+            <input type="text" name="campo" id="campo">
+        </form>
+
+
         <table>
             <thead>
                 <tr>
-                    <th>Clave de Tabulador</th>
+                    <th>Clave de tabulador</th>
                     <th>Año</th>
                     <th>Nivel</th>
                     <th>Rango</th>
                     <th>Sueldo Base</th>
                     <th>Gratificación</th>
-                    <th>Compensación</th>
+                    <th>Compensacion</th>
                     <th>Despensa</th>
                     <th>Puesto</th>
                     <th>Vigente</th>
-                    <th>Puesto Abreviado </th>
+                    <th>Puesto Abreviado</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
-            <?php
-            $sql = "SELECT * FROM Tabulador";
-            $result = mysqli_query($conexion, $sql);
-            while ($mostrar = mysqli_fetch_array($result)) {
-            ?>
-                <tr>
+            <tbody id="content">
 
-                    <td><?php echo $mostrar['CveTabulador'] ?></td>
-                    <td><?php echo $mostrar['Anio'] ?></td>
-                    <td><?php echo $mostrar['Nivel'] ?></td>
-                    <td><?php echo $mostrar['Rango'] ?></td>
-                    <td><?php echo $mostrar['SueldoBase'] ?></td>
-                    <td><?php echo $mostrar['Gratificacion'] ?></td>
-                    <td><?php echo $mostrar['Compensacion'] ?></td>
-                    <td><?php echo $mostrar['Despensa'] ?></td>
-                    <td><?php echo $mostrar['Puesto'] ?></td>
-                    <td><?php echo $mostrar['Vigente'] ?></td>
-                    <td><?php echo $mostrar['PuestoAbrev'] ?></td>
-                    <td><img src="img/expedientes/editar.png" height="40" width="40" title="Editar"></td>
-                    <td><img src="img/expedientes/eliminar.png" height="40" width="40" title="Eliminar"></td>
-                </tr>
-            <?php
-            }
-            ?>
+            </tbody>
         </table>
+
+        <script>
+            getData()
+
+            document.getElementById('campo').addEventListener("keyup", getData);
+
+            function getData() {
+                let input = document.getElementById("campo").value
+                let content = document.getElementById("content")
+                let url = "load_tabulador.php"
+                let formaData = new FormData()
+                formaData.append('campo', input)
+
+                fetch(url, {
+                        method: "POST",
+                        body: formaData
+                    }).then(response => response.json())
+                    .then(data => {
+                        content.innerHTML = data
+                    }).catch(err => console.log(err))
+            }
+        </script>
+        <br>
+ 
     </div>
 
     <script>

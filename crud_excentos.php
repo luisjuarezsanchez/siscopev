@@ -126,31 +126,50 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
     <div id="main-container">
         <h1>Tablas de Excentos</h1>
+        <form action="">
+            <label for="campo">Buscar:</label>
+            <input type="text" name="campo" id="campo">
+        </form>
+
+
         <table>
             <thead>
                 <tr>
-                    <th>Clave de personal</th>
+                    <th>Clave personal</th>
                     <th>Clave</th>
+
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
-            <?php
-            $sql = "SELECT * FROM ExcentosDedApo";
-            $result = mysqli_query($conexion, $sql);
-            while ($mostrar = mysqli_fetch_array($result)) {
-            ?>
-                <tr>
+            <tbody id="content">
 
-                    <td><?php echo $mostrar['CvePersonal'] ?></td>
-                    <td><?php echo $mostrar['Clave'] ?></td>
-                    <td><img src="img/expedientes/editar.png" height="40" width="40" title="Editar"></td>
-                    <td><img src="img/expedientes/eliminar.png" height="40" width="40" title="Eliminar"></td>
-                </tr>
-            <?php
-            }
-            ?>
+            </tbody>
         </table>
+
+        <script>
+            getData()
+
+            document.getElementById('campo').addEventListener("keyup", getData);
+
+            function getData() {
+                let input = document.getElementById("campo").value
+                let content = document.getElementById("content")
+                let url = "load_excentos.php"
+                let formaData = new FormData()
+                formaData.append('campo', input)
+
+                fetch(url, {
+                        method: "POST",
+                        body: formaData
+                    }).then(response => response.json())
+                    .then(data => {
+                        content.innerHTML = data
+                    }).catch(err => console.log(err))
+            }
+        </script>
+        <br>
+
     </div>
 
     <script>
