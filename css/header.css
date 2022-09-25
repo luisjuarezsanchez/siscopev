@@ -41,7 +41,7 @@
 .header .logo img {
   height: 75px; /*Logo*/
   width: auto;
-  margin: 0 17px;
+  margin: 0 1px;
   transition: all 0.3s;
 }
 

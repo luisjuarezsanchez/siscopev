@@ -1,4 +1,11 @@
 <?php
+session_start();
+$usuario = $_SESSION['username'];
+if (!isset($usuario)) {
+    header("location: index.php");
+}
+?>
+<?php
 $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 ?>
 <!DOCTYPE html>
@@ -126,6 +133,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
     <div id="main-container">
         <h1>Tablas de Contratos</h1>
+        <?php echo "Estas modificando como usuario: ".$usuario; ?>
         <form action="">
             <label for="campo">Buscar:</label>
             <input type="text" name="campo" id="campo">

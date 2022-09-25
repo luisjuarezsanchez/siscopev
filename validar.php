@@ -1,8 +1,7 @@
 <?php
-
 $usuario = $_POST['usuario'];
 $password = $_POST['password'];
-$conexion = mysqli_connect("localhost", "root", "", "nomina");
+$conexion = mysqli_connect("localhost", "root", "", "Siscopevw2");
 
 $consulta = "SELECT * FROM aubd where usuario='$usuario' and password='$password'";
 $resultado = mysqli_query($conexion, $consulta);
@@ -24,3 +23,5 @@ if ($filas) {
 }
 mysqli_free_result($resultado);
 mysqli_close($conexion);
+
+

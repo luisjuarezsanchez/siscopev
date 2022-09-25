@@ -1,4 +1,11 @@
 <?php
+session_start();
+$usuario = $_SESSION['username'];
+if(!isset($usuario)){
+	header("location: index.php");
+}
+?>
+<?php
 $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 ?>
 <!DOCTYPE html>
@@ -45,6 +52,8 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         </nav>
         <a href="https://cultura.edomex.gob.mx/" target="_blank" class="btn"><button>Contacto</button></a>
     </header>
+
+    <!--///////////////////Menú desplegable///////////////////////////-->
 
     <div id="sidemenu" class="menu-collapsed">
         <!--Header-->
@@ -132,7 +141,9 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
     <div id="main-container">
         <h1>Tablas de empleados</h1>
+        <?php echo "Estas modificando como usuario: ".$usuario; ?>
         <form action="">
+            
             <label for="campo">Buscar:</label>
             <input type="text" name="campo" id="campo">
         </form>
@@ -188,7 +199,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
 
 
-    <!--//////////////////////////////////-->
+    <!--/////////////////Animacion del menu desplegable/////////////////-->
 
     <script>
         const btn = document.querySelector('#menu-btn');
@@ -201,6 +212,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             document.querySelector('body').classList.toggle('body-expanded')
         });
     </script>
+    <!--//////////////////////////////////-->
 
 
 </body>

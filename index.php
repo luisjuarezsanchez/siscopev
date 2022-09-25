@@ -30,7 +30,7 @@
 	<br>
 	<div align="center"><img src="img/header/logo_horizontal.png" height="120" width="500"></div>
 	<section class="form-login">
-		<form action="validar.php" method="post">
+		<form action="sesiones/login.php" method="post">
 			<h5>Llene los datos correspondientes</h5>
 			<input placeholder="Usuario" class=controls type="text" name="usuario">
 			<input placeholder="Contraseña" class=controls type="password" name="password">

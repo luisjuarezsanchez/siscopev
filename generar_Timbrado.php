@@ -1,3 +1,10 @@
+<?php
+session_start();
+$usuario = $_SESSION['username'];
+if (!isset($usuario)) {
+    header("location: index.php");
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -9,6 +16,7 @@
 	<link rel="stylesheet" href="css/header.css">
 	<link rel="stylesheet" href="css/index.css">
 	<link rel="stylesheet" type="text/css" href="css/fuente.css">
+	<link rel="stylesheet" href="css/menulateral.css">
 	<!--Titulo de la página-->
 	<title>Generar timbrado</title>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -21,12 +29,10 @@
 
 </head>
 
-
 <body>
 	<header class="header">
 		<div class="logo">
 			<a href="menu.php"><img class="logos" src="img/header/escudo_armas.png"></a>
-			<a href="menu.php"><img class="logos" src="img/header/logo_vertical.png"></a>
 		</div>
 		<nav>
 			<ul class="nav-links">
@@ -36,6 +42,53 @@
 		</nav>
 		<a href="https://cultura.edomex.gob.mx/" target="_blank" class="btn"><button>Contacto</button></a>
 	</header>
+	<!--///////////////////Menú desplegable///////////////////////////-->
+
+	<div id="sidemenu" class="menu-collapsed">
+		<!--Header-->
+		<div id="header">
+			<div id="title"><span>Secretaría de Cultura y Turismo</span></div>
+			<div id="menu-btn">
+				<div class="btn-hamburger"></div>
+				<div class="btn-hamburger"></div>
+				<div class="btn-hamburger"></div>
+			</div>
+		</div>
+		<!--Profile-->
+
+		<div id="profile">
+			<a href="menu.php">
+				<div id="photo"><img src="img/header/logo_vertical.png" alt=""></div>
+				<div id="name"><span>Sistema de Nóminas</span></div>
+			</a>
+		</div>
+		<!--Items-->
+
+		<div id="menu-items">
+			<div class="item">
+				<a href="crud_empleados.php">
+					<div class="icon"> <img src="img/expedientes/usuaro.png" alt=""> </div>
+					<div class="title"><span><?php echo "Bienvenido(a): ".$usuario; ?></span></div>
+				</a>
+			</div>
+
+			<div class="item">
+                <a href="menu.php">
+                    <div class="icon"> <img src="img/expedientes/volver.png" title="Volver al Menú"> </div>
+                    <div class="title"><span>Volver</span></div>
+                </a>
+            </div>
+
+			<div class="item">
+				<a href="sesiones/salir.php">
+					<div class="icon"> <img src="img/expedientes/cerrarsesion.png" title="Cerrar sesión"> </div>
+					<div class="title"><span>Cerrar Sesión</span></div>
+				</a>
+			</div>
+
+		</div>
+	</div>
+	<!--//////////////////////////////////////////////-->
 	<br>
 	<section id="blog">
 		<br>
@@ -75,6 +128,19 @@
 			<br>
 		</div>
 	</form>
+	<!--/////////////////Animacion del menu desplegable/////////////////-->
+	<script>
+		const btn = document.querySelector('#menu-btn');
+		const menu = document.querySelector('#sidemenu');
+
+		btn.addEventListener('click', e => {
+			menu.classList.toggle("menu-expanded");
+			menu.classList.toggle("menu-collapsed");
+
+			document.querySelector('body').classList.toggle('body-expanded')
+		});
+	</script>
+	<!--//////////////////////////////////-->
 </body>
 <br>
 <br>

@@ -1,3 +1,10 @@
+<?php
+session_start();
+$usuario = $_SESSION['username'];
+if(!isset($usuario)){
+	header("location: index.php");
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +15,7 @@
 	<link rel="icon" href="img/iconos/escudo_armas.png">
 	<!--Titulo de la página-->
 	<title>Menú principal</title>
-
+	<!--Referencias CSS-->
 	<link rel="icon" href="img/menu/icono.png">
 	<link rel="stylesheet" type="text/css" href="css/estilos_menu.css">
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -19,6 +26,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="css/header.css">
 	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="css/menulateral.css">
 	<link rel="stylesheet" type="text/css" href="css/fuente.css">
 </head>
 
@@ -27,7 +35,6 @@
 	<header class="header">
 		<div class="logo">
 			<a href="index.php"><img class="logos" src="img/header/escudo_armas.png"></a>
-			<a href="index.php"><img class="logos" src="img/header/logo_vertical.png"></a>
 		</div>
 		<nav>
 			<ul class="nav-links">
@@ -38,6 +45,48 @@
 		</nav>
 		<a href="https://cultura.edomex.gob.mx/" target="_blank" class="btn"><button>Contacto</button></a>
 	</header>
+	<!--///////////////////Menú desplegable///////////////////////////-->
+
+	<div id="sidemenu" class="menu-collapsed">
+		<!--Header-->
+		<div id="header">
+			<div id="title"><span>Secretaría de Cultura y Turismo</span></div>
+			<div id="menu-btn">
+				<div class="btn-hamburger"></div>
+				<div class="btn-hamburger"></div>
+				<div class="btn-hamburger"></div>
+			</div>
+		</div>
+		<!--Profile-->
+
+		<div id="profile">
+			<a href="menu.php">
+				<div id="photo"><img src="img/header/logo_vertical.png" alt=""></div>
+				<div id="name"><span>Sistema de Nóminas</span></div>
+			</a>
+		</div>
+		<!--Items-->
+ 
+		<div id="menu-items">
+			<div class="item">
+				<a href="crud_empleados.php">
+					<div class="icon"> <img src="img/expedientes/usuaro.png" alt=""> </div>
+					<div class="title"><span><?php echo "Bienvenido(a): ".$usuario; ?></span></div>
+					
+				</a>
+			</div>
+
+			<div class="item">
+				<a href="sesiones/salir.php">
+					<div class="icon"> <img src="img/expedientes/cerrarsesion.png" title="Cerrar sesión"> </div>
+					<div class="title"><span>Cerrar Sesión</span></div>
+				</a>
+			</div>
+
+		</div>
+	</div>
+
+	<!--//////////////////////////////////////////////-->
 	<br>
 
 	<table class="imagenes">
@@ -61,7 +110,7 @@
 				<div class="card">
 					<div class="card text-bg-light mb-3">
 						<div class="card-body">
-							<a href="procesar_nomina.php"><img src="img/menu/procesar_nomina.png" width="260" height="190"></a>
+							<a href="procesar_Nomina.php"><img src="img/menu/procesar_nomina.png" width="260" height="190"></a>
 							<h5 class="card-title">Procesar nómina</h5>
 							<p class="card-text">Generación de la nómina quincenal</p>
 							<a href="procesar_nomina.php" class="btn btn-primary">Ir</a>
@@ -108,13 +157,29 @@
 		</td>
 	</table>
 	</div>
+
+
+	<!--/////////////////Animacion del menu desplegable/////////////////-->
+
+	<script>
+		const btn = document.querySelector('#menu-btn');
+		const menu = document.querySelector('#sidemenu');
+
+		btn.addEventListener('click', e => {
+			menu.classList.toggle("menu-expanded");
+			menu.classList.toggle("menu-collapsed");
+
+			document.querySelector('body').classList.toggle('body-expanded')
+		});
+	</script>
+	<!--//////////////////////////////////-->
 </body>
 <br>
 <br>
 <footer class="footer">
 	<div class="img_footers">
 		<img src="img/footer/escudo_armas.png" alt="">
-		
+
 	</div>
 	<br>
 </footer>
