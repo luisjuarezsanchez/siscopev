@@ -1,7 +1,7 @@
 <?php
 session_start();
 $usuario = $_SESSION['username'];
-if(!isset($usuario)){
+if (!isset($usuario)) {
 	header("location: index.php");
 }
 ?>
@@ -70,9 +70,16 @@ if(!isset($usuario)){
 
 		<div id="menu-items">
 			<div class="item">
-				<a href="crud_empleados.php">
+				<a href="#">
 					<div class="icon"> <img src="img/expedientes/usuaro.png" alt=""> </div>
-					<div class="title"><span><?php echo "Bienvenido(a): ".$usuario; ?></span></div>
+					<div class="title"><span><?php echo "Bienvenido(a): " . $usuario; ?></span></div>
+				</a>
+			</div>
+
+			<div class="item">
+				<a href="procesar_Nomina.php">
+					<div class="icon"> <img src="img/expedientes/volver.png" title="Volver al Menú"> </div>
+					<div class="title"><span>Volver</span></div>
 				</a>
 			</div>
 

@@ -70,7 +70,7 @@ if(!isset($usuario)){
 
 		<div id="menu-items">
 			<div class="item">
-				<a href="crud_empleados.php">
+				<a href="#">
 					<div class="icon"> <img src="img/expedientes/usuaro.png" alt=""> </div>
 					<div class="title"><span><?php echo "Bienvenido(a): ".$usuario; ?></span></div>
 				</a>
@@ -99,18 +99,19 @@ if(!isset($usuario)){
 		<div>
 			<form class="form-login" action="procedimientos_funciones/sp_GeneraNomNor.php" method="post">
 				<p>Clave de nómina</p>
-				<input class="controls" type="text" name="CveNomina" value="">
+				<input class="controls" type="text" name="CveNomina" value="" required>
 				<p>Fecha de inicio de nómina</p>
-				<input class="controls" type="date" name="Del">
+				<input class="controls" type="date" name="Del" required>
 				<p>Fecha de fin de nómina</p>
-				<input class="controls" type="date" name="Al">
+				<input class="controls" type="date" name="Al" required>
 				<p>Honorarios</p>
-				<input class="controls" type="text" name="GenHon">
+				<input class="controls" type="text" name="GenHon" required>
 				<br>
 				<br>
 				<input class="buttons" type="submit" name="Enviar" value="Enviar información">
 				<br>
 				<input class="buttons" type="reset" name="" value="Vaciar campos">
+				
 			</form>
 		</div>
 	</section>

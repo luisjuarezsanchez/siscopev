@@ -133,11 +133,12 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
     </div>
 
     <div id="main-container">
-        <h1>Tablas de tabulador</h1>
-        <?php echo "Estas modificando como usuario: ".$usuario; ?>
+        <br>
+        <h1 id="tituloTabla">Tabla de Tabulador</h1>
+        <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
         <form action="">
             <label for="campo">Buscar:</label>
-            <input type="text" name="campo" id="campo">
+            <input type="text" name="campo" id="campo" placeholder="Digita tu búsqueda">
         </form>
 
 
@@ -186,7 +187,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             }
         </script>
         <br>
- 
+
     </div>
 
     <script>

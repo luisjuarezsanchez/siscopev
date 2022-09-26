@@ -69,7 +69,7 @@ if(!isset($usuario)){
  
 		<div id="menu-items">
 			<div class="item">
-				<a href="crud_empleados.php">
+				<a href="#">
 					<div class="icon"> <img src="img/expedientes/usuaro.png" alt=""> </div>
 					<div class="title"><span><?php echo "Bienvenido(a): ".$usuario; ?></span></div>
 					
