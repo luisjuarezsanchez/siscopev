@@ -1,7 +1,7 @@
 <?php
 session_start();
 $usuario = $_SESSION['username'];
-if(!isset($usuario)){
+if (!isset($usuario)) {
 	header("location: index.php");
 }
 ?>
@@ -39,9 +39,9 @@ if(!isset($usuario)){
 		</div>
 		<nav>
 			<ul class="nav-links">
-				<li id="producto1"><a href="reportes.php">Reportes de nómina</a></li>
-				<li id="producto2"><a href="#">Resumén</a></li>
-				<li id="producto3"><a href="#">Alfabético</a></li>
+				<li id="producto1"><a href="#">Sistema de Nóminas</a></li>
+				<li id="producto2"><a href="#">Secretaría de Cultura y Turismo</a></li>
+
 			</ul>
 		</nav>
 		<a href="https://cultura.edomex.gob.mx/" target="_blank" class="btn"><button>Contacto</button></a>
@@ -72,16 +72,30 @@ if(!isset($usuario)){
 			<div class="item">
 				<a href="#">
 					<div class="icon"> <img src="img/expedientes/usuaro.png" alt=""> </div>
-					<div class="title"><span><?php echo "Bienvenido(a): ".$usuario; ?></span></div>
+					<div class="title"><span><?php echo "Bienvenido(a): " . $usuario; ?></span></div>
 				</a>
 			</div>
 
 			<div class="item">
-                <a href="menu.php">
-                    <div class="icon"> <img src="img/expedientes/volver.png" title="Volver al Menú"> </div>
-                    <div class="title"><span>Volver</span></div>
-                </a>
-            </div>
+				<a href="reportes.php">
+					<div class="icon"> <img src="img/expedientes/resumen.png" title="Reporte resumen"> </div>
+					<div class="title"><span>Reporte resumen</span></div>
+				</a>
+			</div>
+
+			<div class="item">
+				<a href="alfabetico.php">
+					<div class="icon"> <img src="img/expedientes/alfabetico.png" title="Alfabético de Nómina"> </div>
+					<div class="title"><span>Alfabético de Nómina</span></div>
+				</a>
+			</div>
+
+			<div class="item">
+				<a href="menu.php">
+					<div class="icon"> <img src="img/expedientes/volver.png" title="Volver al Menú"> </div>
+					<div class="title"><span>Volver</span></div>
+				</a>
+			</div>
 
 			<div class="item">
 				<a href="sesiones/salir.php">
@@ -90,7 +104,7 @@ if(!isset($usuario)){
 				</a>
 			</div>
 
-		</div> 
+		</div>
 	</div>
 	<!--//////////////////////////////////////////////-->
 
@@ -111,7 +125,7 @@ if(!isset($usuario)){
 				<input class="buttons" type="submit" name="Enviar" value="Enviar información">
 				<br>
 				<input class="buttons" type="reset" name="" value="Vaciar campos">
-				
+
 			</form>
 		</div>
 	</section>

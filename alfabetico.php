@@ -18,7 +18,7 @@ if (!isset($usuario)) {
 	<link rel="stylesheet" href="css/menulateral.css">
 
 	<!--Titulo de la página-->
-	<title>Resumen de Nómina</title>
+	<title>Resumen Alfabético</title>
 
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
@@ -96,7 +96,7 @@ if (!isset($usuario)) {
 	<br>
 	<div>
 
-		<form class="form-login" action="resumen_nominas.php" method="post" enctype="multipart/form-data">
+		<form class="form-login" action="resumen_alfabetico.php" method="post" enctype="multipart/form-data">
 			<br>
 			<div style="text-align:center;">
 				<label><select id="lista" name="CveNomina">
@@ -113,7 +113,7 @@ if (!isset($usuario)) {
 							<?php endforeach ?>
 					</select></label>
 				<br>
-				<img id="img" src="img/iconos/reporte.png" height="200" width="200">
+				<img id="img" src="img/expedientes/alfabetico.png" height="200" width="200">
 				<br>
 				<button class="buttons">Generar reporte</button>
 				<br>

@@ -17,7 +17,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
     <!--Icono de la pagina web-->
     <link rel="icon" href="img/iconos/escudo_armas.png">
     <!--Titulo de la página-->
-    <title>Menú principal</title>
+    <title>Datos de empleados</title>
 
     <link rel="icon" href="img/menu/icono.png">
     <link rel="stylesheet" type="text/css" href="css/estilos_menu.css">
