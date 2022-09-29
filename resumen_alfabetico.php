@@ -1,16 +1,18 @@
 <?php
+//Verificar la sesión iniciada
 session_start();
 $usuario = $_SESSION['username'];
 if (!isset($usuario)) {
     header("location: index.php");
 }
-//$CveNomina = $_POST['CveNomina'];
+//Recibiendo variable por metodo POST del formulario
+$CveNomina = $_POST['CveNomina'];
 //Variables de control por contrato
 $totalEmp = 0;
 $totalPercepciones = 0;
 $totalDeducciones = 0;
 //Variables de control totales de nomina
-$defEmp;
+$a = 0;
 $defPercepciones = 0;
 $defDeducciones = 0;
 
@@ -22,7 +24,7 @@ class PDF extends FPDF
     function Header()
     {
         // Logos
-        $this->Image('img/reportes/gob.jpg', 10, 2, 35); //esp.izquierda-abajo-tamaño
+        $this->Image('img/reportes/gob.jpg', 10, 2, 35);
         $this->Image('img/reportes/logo_vertical.png', 240, 2, 25);
         // Arial bold 15
         $this->SetFont('Arial', 'B', 13);
@@ -35,8 +37,7 @@ class PDF extends FPDF
         //Saltos de linea
         $this->Ln(0);
         $this->SetFont('Arial', 'B', 10);
-        //$this->Cell(250, 14, utf8_decode('RESUMEN DE PERCEPCIONES Y DEDUCCIONES DE LA QUINCENA '.$GLOBALS["CveNomina"]), 10, 10, 'C');
-        $this->Cell(250, 14, utf8_decode('ALFABÉTICO DE EMPLEADOS A LA QUINCENA 202218'/*.substr($GLOBALS["CveNomina"],0,6)*/), 10, 10, 'C');
+        $this->Cell(250, 14, utf8_decode('RESUMEN DE PERCEPCIONES Y DEDUCCIONES DE LA QUINCENA '.substr($GLOBALS["CveNomina"],0,6)), 10, 10, 'C');
         $this->Ln(0);
     }
     // Pie de página
@@ -52,7 +53,7 @@ class PDF extends FPDF
 }
 //Solicitando la conexion con la BD
 require 'conexion.php';
-//CONSULTA PARA CONTRATOS DE DEPORTE//////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************CONSULTA PARA CONTRATOS DE DEPORTE**********************/ 
 $consulta = "SELECT
 DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
 EmpCont.CodCategoria,DetNomina.Del,DetNomina.Al,
@@ -84,20 +85,20 @@ SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END)- SUM(CASE 
 (SELECT COUNT(*) FROM EmpCont WHERE EmpCont.Dirgral=0) AS totempleados
 FROM EmpCont INNER JOIN 
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal INNER JOIN
-EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal WHERE EmpCont.CveContrato LIKE '%DEPOR%' AND DetNomina.CveNomina='202218 10094' GROUP BY DetNomina.CvePersonal";
+EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal WHERE EmpCont.CveContrato LIKE '%DEPOR%' AND DetNomina.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal";
 //EFECTUANDO CONSULTA
 $resultado = $mysqli->query($consulta);
 
 
 
-//IMPRESION EN EL PDF DE CONTRATOS DE DEPORTE//////////////////////////////////////////////////////////////////////////////////////
+/**********************IMPRESION EN EL PDF DE CONTRATOS DE DEPORTE*********************/ 
 // Creación del objeto de la clase heredada
 $pdf = new PDF('L', 'mm', 'letter'); //Indicando formato horizontal del reporte
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Helvetica', '', 11);
 
-//Indicar salida del archivo pdf
+//Indicar salida del archivo pdf y estableciendo tamaño de letra
 $pdf->SetFont('Helvetica', '', 10);
 while ($row = $resultado->fetch_assoc()) {
     $pdf->Cell(2, 5, utf8_decode($row['CvePersonal']), 0, 0, 'C', 0);
@@ -161,21 +162,20 @@ while ($row = $resultado->fetch_assoc()) {
     $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
     $pdf->Cell(260, 5, utf8_decode("$" . number_format($row['sueldobruto'], 2, ".", ",")), 0, 0, 'R', 0);
 
-
-    //$pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
     $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
     $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 
-    //SUMAS FINALES DE DEPORTE
+    //Sumas finales de deporte
     $totalEmp = $row['totempleados'];
     $totalPercepciones = $totalPercepciones + $row['totpercepciones'];
     $totalDeducciones = $totalDeducciones + $row['totdeducciones'];
-    //SUMAS FINALES DE NOMINA
-    $defEmp = $row['totempleados'];
+    //Sumas finales de nómina
+    $a = $a + 1;
     $defPercepciones = $defPercepciones + $row['totpercepciones'];
     $defDeducciones = $defDeducciones + $row['totdeducciones'];
 }
 
+//Imprimiendo totales en pantalla
 $pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $totalEmp), 0, 0, 'R', 0);
 $pdf->Cell(90, 5, utf8_decode("$" . number_format($totalPercepciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(120, 5, utf8_decode("$" . number_format($totalDeducciones, 2, ".", ",")), 0, 0, 'R', 0);
@@ -186,12 +186,21 @@ $totalEmp = 0;
 $totalPercepciones = 0;
 $totalDeducciones = 0;
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-$pdf->Cell(45, 5, utf8_decode("FIN: " . $defEmp), 0, 0, 'R', 0);
 
 
 
 
-//CONSULTA PARA CONTRATOS DE COMEM//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+/**********************CONSULTA PARA CONTRATOS DE COMEM**********************/ 
 $consulta2 = "SELECT
 DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
 EmpCont.CodCategoria,DetNomina.Del,DetNomina.Al,
@@ -223,7 +232,7 @@ SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END)- SUM(CASE 
 (SELECT COUNT(*) FROM EmpCont WHERE EmpCont.Dirgral=1) AS totempleados
 FROM EmpCont INNER JOIN 
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal INNER JOIN
-EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal WHERE EmpCont.CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='202218 10094' GROUP BY DetNomina.CvePersonal";
+EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal WHERE EmpCont.CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal";
 //EFECTUANDO CONSULTA
 $resultado2 = $mysqli->query($consulta2);
 
@@ -305,12 +314,13 @@ while ($row = $resultado2->fetch_assoc()) {
     $totalEmp = $row['totempleados'];
     $totalPercepciones = $totalPercepciones + $row['totpercepciones'];
     $totalDeducciones = $totalDeducciones + $row['totdeducciones'];
-    //SUMAS FINALES DE NOMINA
-    $defEmp = $row['totempleados'];
+    //Sumas finales de nómina
+    $a = $a + 1;
     $defPercepciones = $defPercepciones + $row['totpercepciones'];
     $defDeducciones = $defDeducciones + $row['totdeducciones'];
 }
 
+//Imprimiendo totales en pantalla
 $pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $totalEmp), 0, 0, 'R', 0);
 $pdf->Cell(90, 5, utf8_decode("$" . number_format($totalPercepciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(120, 5, utf8_decode("$" . number_format($totalDeducciones, 2, ".", ",")), 0, 0, 'R', 0);
@@ -321,7 +331,6 @@ $totalEmp = 0;
 $totalPercepciones = 0;
 $totalDeducciones = 0;
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-$pdf->Cell(45, 5, utf8_decode("FIN: " . $defEmp), 0, 0, 'R', 0);
 
 
 
@@ -336,7 +345,7 @@ $pdf->Cell(45, 5, utf8_decode("FIN: " . $defEmp), 0, 0, 'R', 0);
 
 
 
-//CONSULTA PARA CONTRATOS DE PATRIMONIO//////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************CONSULTA PARA CONTRATOS DE PATRIMONIO**********************/ 
 $consulta3 = "SELECT
 DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
 EmpCont.CodCategoria,DetNomina.Del,DetNomina.Al,
@@ -368,7 +377,7 @@ SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END)- SUM(CASE 
 (SELECT COUNT(*) FROM EmpCont WHERE EmpCont.Dirgral=2) AS totempleados
 FROM EmpCont INNER JOIN 
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal INNER JOIN
-EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal WHERE EmpCont.CveContrato LIKE '%PATRI%' AND DetNomina.CveNomina='202218 10094' GROUP BY DetNomina.CvePersonal";
+EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal WHERE EmpCont.CveContrato LIKE '%PATRI%' AND DetNomina.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal";
 //EFECTUANDO CONSULTA
 $resultado3 = $mysqli->query($consulta3);
 
@@ -450,29 +459,31 @@ while ($row = $resultado3->fetch_assoc()) {
     $totalEmp = $row['totempleados'];
     $totalPercepciones = $totalPercepciones + $row['totpercepciones'];
     $totalDeducciones = $totalDeducciones + $row['totdeducciones'];
-    //SUMAS FINALES DE NOMINA
-    $defEmp = $row['totempleados'];
+    //Sumas finales de nómina
+    $a = $a + 1;
     $defPercepciones = $defPercepciones + $row['totpercepciones'];
     $defDeducciones = $defDeducciones + $row['totdeducciones'];
 }
 
+//Imprimiendo totales en pantalla
 $pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $totalEmp), 0, 0, 'R', 0);
 $pdf->Cell(90, 5, utf8_decode("$" . number_format($totalPercepciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(120, 5, utf8_decode("$" . number_format($totalDeducciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-$pdf->Cell(45, 5, utf8_decode("FIN: " . $defEmp), 0, 0, 'R', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 $pdf->Cell(255, 5, utf8_decode("$" . number_format($totalPercepciones - $totalDeducciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+
+//Totales de toda la nomina
 $pdf->Cell(250, 5, utf8_decode("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"), 0, 0, 'C', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-$pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $defEmp), 0, 0, 'R', 0);
+$pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $a), 0, 0, 'R', 0);
 $pdf->Cell(90, 5, utf8_decode("$" . number_format($defPercepciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(120, 5, utf8_decode("$" . number_format($defDeducciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 $pdf->Cell(255, 5, utf8_decode("$" . number_format($defPercepciones - $defDeducciones, 2, ".", ",")), 0, 0, 'R', 0);
 
-
+//Inidicando la salida del archivo como PDF en pantalla
 $pdf->Output();

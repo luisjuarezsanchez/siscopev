@@ -3,6 +3,7 @@
 
 <head>
 	<title> </title>
+	<script src="sweetalert2.all.min.js"></script>
 </head>
 
 <body>
@@ -28,7 +29,13 @@
 	}
 	?>
 	<?php
-	header("location: ../procesar_Nomina.php");
+	//header("location: ../procesar_Nomina.php");
+	echo '<script>
+	alert("Proceso de nómina ejecutado correctamente")
+	</script>
+	<meta http-equiv="refresh" content="0.1;url=../procesar_Nomina.php" />';
+
+	//header("location: ../procesar_Nomina.php");
 	?>
 
 </body>
