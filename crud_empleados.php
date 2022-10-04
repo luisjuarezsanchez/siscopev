@@ -174,6 +174,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         <script>
             getData()
 
+            //Programando los eventos de AJAX (Actualizacion en tiempo real)
             document.getElementById('campo').addEventListener("keyup", getData);
 
             function getData(){

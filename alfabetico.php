@@ -1,4 +1,5 @@
 <?php
+/*Verificando si existe alguna sesion activa*/
 session_start();
 $usuario = $_SESSION['username'];
 if (!isset($usuario)) {

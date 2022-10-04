@@ -1,4 +1,5 @@
 <?php
+/*Verificando si existe alguna sesion activa*/
 session_start();
 $usuario = $_SESSION['username'];
 if (!isset($usuario)) {
@@ -134,7 +135,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
     <div id="main-container">
         <br>
         <h1 id="tituloTabla">Tabla de Contratos</h1>
-        <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: ".$usuario; ?></h5>
+        <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
         <form action="">
             <label for="campo">Buscar:</label>
             <input type="text" name="campo" id="campo" placeholder="Digita tu búsqueda">
@@ -164,7 +165,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
         <script>
             getData()
-
+            //Programando los eventos de AJAX (Actualizacion en tiempo real)
             document.getElementById('campo').addEventListener("keyup", getData);
 
             function getData() {
