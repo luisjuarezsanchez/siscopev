@@ -11,7 +11,9 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 /********************Timbrado Maestro********************************** */
 //Abriendo el archivo en modo de escritura
-$file = fopen("C:/Users/luisj/Desktop/MAESTRO.txt", "w");
+//$file = fopen("C:/Users/%USERNAME%/Desktop/MAESTRO.txt", "w");
+$file = fopen("%USERPROFILE%\MAESTRO.txt", "w");
+
 
 //Solicitando la conexion con la BD
 require 'conexion.php';
@@ -164,7 +166,9 @@ while ($row = $resultado6->fetch_assoc()) {
 $resultado5 = $mysqli->query($consulta5);
 
 //Abriendo el archivo detalle
-$file2 = fopen("C:/Users/luisj/Desktop/DETALLE.txt", "w");
+//$file2 = fopen("\DETALLE.txt", "w");
+$file2 = fopen("%USERPROFILE%\DETALLE.txt", "w");
+
 
 
 while ($row = $resultado5->fetch_assoc()) {
