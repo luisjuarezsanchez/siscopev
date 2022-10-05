@@ -4,9 +4,16 @@ $usuario = $_SESSION['username'];
 if (!isset($usuario)) {
     header("location: index.php");
 }
+require 'conexion.php';
+$Incrementable = $_GET['Incrementable'];
+
+$sql = "SELECT * FROM EmpCont WHERE Incrementable='$Incrementable'";
+$query = mysqli_query($mysqli, $sql);
+$row = mysqli_fetch_array($query);
+
 ?>
 <?php
-$conexion = mysqli_connect('localhost', 'root', '', 'erbase');
+$conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,6 +40,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
     <link rel="stylesheet" type="text/css" href="css/fuente.css">
     <link rel="stylesheet" href="css/menulateral.css">
     <link rel="stylesheet" href="css/tablas.css">
+
 </head>
 
 
@@ -51,6 +59,8 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         </nav>
         <a href="https://cultura.edomex.gob.mx/" target="_blank" class="btn"><button>Contacto</button></a>
     </header>
+
+    <!--///////////////////Menú desplegable///////////////////////////-->
 
     <div id="sidemenu" class="menu-collapsed">
         <!--Header-->
@@ -129,7 +139,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             </div>
 
             <div class="item">
-                <a href="menu.php">
+                <a href="crud_empcont.php">
                     <div class="icon"> <img src="img/expedientes/volver.png" alt=""> </div>
                     <div class="title"><span>Volver</span></div>
                 </a>
@@ -138,55 +148,63 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         </div>
     </div>
 
+    <!--//////////////////////////////////////////////-->
+
     <div id="main-container">
         <br>
-        <h1 id="tituloTabla">Tabla de Tlsr2</h1>
+        <h1 id="tituloTabla">Editar campos de la tabla EmpCont</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
-        <form action="">
-            <label for="campo">Buscar:</label>
-            <input type="text" name="campo" id="campo" placeholder="Digita tu búsqueda">
+
+
+        <div id="campos_act"></div>
+        <form id="editar" action="update_empcont.php" method="POST">
+
+        <input type="hidden" name="Incrementable" value="<?= $row['Incrementable'] ?>">
+
+            <p>Clave de Personal</p>
+            <input type="text" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
+
+            <p>Cuenta de banco</p>
+            <input type="text" name="CtaBanco" value="<?= $row['CtaBanco'] ?>">
+
+            <p>Clave de contrato</p>
+            <input type="text" name="CveContrato" value="<?= $row['CveContrato'] ?>">
+
+            <p>Tipo de empleado</p>
+            <input type="text" name="TipoEmpleado" value="<?= $row['TipoEmpleado'] ?>">
+
+            <p>Inicio</p>
+            <input type="text" name="Inicio" value="<?= $row['Inicio'] ?>">
+
+            <p>Fin</p>
+            <input type="text" name="Fin" value="<?= $row['Fin'] ?>">
+
+            <p>Ultimo día</p>
+            <input type="text" name="UltDia" value="<?= $row['UltDia'] ?>">
+
+            <p>Código de categoría</p>
+            <input type="text" name="CodCategoria" value="<?= $row['CodCategoria'] ?>">
+
+            <p>Prima vacacional</p>
+            <input type="text" name="PrimaVac" value="<?= $row['PrimaVac'] ?>">
+
+            <p>Horas mensuales</p>
+            <input type="text" name="HrsMen" value="<?= $row['HrsMen'] ?>">
+
+            <p>Costo hora</p>
+            <input type="text" name="CostoHra" value="<?= $row['CostoHra'] ?>">
+            <br>
+            <br>
+
+            <input type="submit" name="enviar" value="Actualizar">
+
         </form>
 
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Limíte inferior</th>
-                    <th>Limíte inferior</th>
-                    <th>Subsidio</th>
-                    <th>Editar</th>
-                    <th>Eliminar</th>
-                </tr>
-            </thead>
-            <tbody id="content">
-
-            </tbody>
-        </table>
-
-        <script>
-            getData()
-            //Programando los eventos de AJAX (Actualizacion en tiempo real)
-            document.getElementById('campo').addEventListener("keyup", getData);
-
-            function getData() {
-                let input = document.getElementById("campo").value
-                let content = document.getElementById("content")
-                let url = "load_tlsr2.php"
-                let formaData = new FormData()
-                formaData.append('campo', input)
-
-                fetch(url, {
-                        method: "POST",
-                        body: formaData
-                    }).then(response => response.json())
-                    .then(data => {
-                        content.innerHTML = data
-                    }).catch(err => console.log(err))
-            }
-        </script>
-        <br>
+    </div>
+    <br>
 
     </div>
+    <!--/////////////////Animacion del menu desplegable/////////////////-->
 
     <script>
         const btn = document.querySelector('#menu-btn');
@@ -199,7 +217,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             document.querySelector('body').classList.toggle('body-expanded')
         });
     </script>
-
+    <!--//////////////////////////////////-->
 
 
 </body>

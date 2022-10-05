@@ -1,8 +1,8 @@
 <?php
 session_start();
 $usuario = $_SESSION['username'];
-if(!isset($usuario)){
-	header("location: index.php");
+if (!isset($usuario)) {
+    header("location: index.php");
 }
 ?>
 <?php
@@ -122,6 +122,13 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             </div>
 
             <div class="item">
+                <a href="crud_empcont.php">
+                    <div class="icon"> <img src="img/expedientes/empcont.png" alt=""> </div>
+                    <div class="title"><span>Actualización de Contratos</span></div>
+                </a>
+            </div>
+
+            <div class="item">
                 <a href="menu.php">
                     <div class="icon"> <img src="img/expedientes/volver.png" alt=""> </div>
                     <div class="title"><span>Volver</span></div>
@@ -134,7 +141,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
     <div id="main-container">
         <br>
         <h1 id="tituloTabla">Tabla de Tlsr1</h1>
-        <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: ".$usuario; ?></h5>
+        <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
         <form action="">
             <label for="campo">Buscar:</label>
             <input type="text" name="campo" id="campo" placeholder="Digita tu búsqueda">

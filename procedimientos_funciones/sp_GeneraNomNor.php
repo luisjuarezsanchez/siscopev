@@ -29,7 +29,7 @@
 		$mysqli->query("CALL sp_GeneraEventuales ('$CveNomina','$Del','$Al','$GenHon')");
 		$mysqli->query("CALL sp_GeneraClavesPerDedApo()");
 		$mysqli->query("CALL sp_GeneraExcentosDedApo()");
-		$mysqli->query("CALL sp_GeneraSubsidioISR()");
+		$mysqli->query("CALL sp_GeneraSubsidioISR('$CveNomina')");
 	}
 	?>
 	<?php

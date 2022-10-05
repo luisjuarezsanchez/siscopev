@@ -123,6 +123,13 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             </div>
 
             <div class="item">
+                <a href="crud_empcont.php">
+                    <div class="icon"> <img src="img/expedientes/empcont.png" alt=""> </div>
+                    <div class="title"><span>Actualización de Contratos</span></div>
+                </a>
+            </div>
+
+            <div class="item">
                 <a href="menu.php">
                     <div class="icon"> <img src="img/expedientes/volver.png" alt=""> </div>
                     <div class="title"><span>Volver</span></div>

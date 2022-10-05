@@ -4,9 +4,12 @@ $usuario = $_SESSION['username'];
 if (!isset($usuario)) {
     header("location: index.php");
 }
+require 'conexion.php';
+$sql = "SELECT * FROM EmpCont";
+$query = mysqli_query($mysqli, $sql);
 ?>
 <?php
-$conexion = mysqli_connect('localhost', 'root', '', 'erbase');
+$conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,6 +36,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
     <link rel="stylesheet" type="text/css" href="css/fuente.css">
     <link rel="stylesheet" href="css/menulateral.css">
     <link rel="stylesheet" href="css/tablas.css">
+
 </head>
 
 
@@ -51,6 +55,8 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         </nav>
         <a href="https://cultura.edomex.gob.mx/" target="_blank" class="btn"><button>Contacto</button></a>
     </header>
+
+    <!--///////////////////Menú desplegable///////////////////////////-->
 
     <div id="sidemenu" class="menu-collapsed">
         <!--Header-->
@@ -138,40 +144,73 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         </div>
     </div>
 
+    <!--//////////////////////////////////////////////-->
+
+
+
+
     <div id="main-container">
         <br>
-        <h1 id="tituloTabla">Tabla de Tlsr2</h1>
+        <h1 id="tituloTabla">Tabla de contratos de empleados</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
         <form action="">
             <label for="campo">Buscar:</label>
             <input type="text" name="campo" id="campo" placeholder="Digita tu búsqueda">
         </form>
 
-
         <table>
             <thead>
                 <tr>
-                    <th>Limíte inferior</th>
-                    <th>Limíte inferior</th>
-                    <th>Subsidio</th>
+                    <th>Incrementable</th>
+                    <th>Clave Personal</th>
+                    <th>Cta. Banco</th>
+                    <th>Cve. Contrato</th>
+                    <th>Tipo empleado</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Ult. Dia</th>
+                    <th>Cod. Categoria</th>
+                    <th>Prima Vac</th>
+                    <th>Hrs Men</th>
+                    <th>Costo Hora</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody id="content">
+                <?php while ($row = mysqli_fetch_array($query)) : ?>
+                    <tr>
+                        <th><?= $row['Incrementable'] ?></th>
+                        <th><?= $row['CvePersonal'] ?></th>
+                        <th><?= $row['CtaBanco'] ?></th>
+                        <th><?= $row['CveContrato'] ?></th>
+                        <th><?= $row['TipoEmpleado'] ?></th>
+                        <th><?= $row['Inicio'] ?></th>
+                        <th><?= $row['Fin'] ?></th>
+                        <th><?= $row['UltDia'] ?></th>
+                        <th><?= $row['CodCategoria'] ?></th>
+                        <th><?= $row['PrimaVac'] ?></th>
+                        <th><?= $row['HrsMen'] ?></th>
+                        <th><?= $row['CostoHra'] ?></th>
+                        <th><a href="editar_empcont.php?Incrementable=<?= $row['Incrementable'] ?>"><img src="img/expedientes/editar.png" height="40" width="40"/></a><th>
+                    
 
+                    </tr>
+                <?php endwhile; ?>
+               
             </tbody>
         </table>
-
+        <!--
         <script>
             getData()
+
             //Programando los eventos de AJAX (Actualizacion en tiempo real)
             document.getElementById('campo').addEventListener("keyup", getData);
 
             function getData() {
                 let input = document.getElementById("campo").value
                 let content = document.getElementById("content")
-                let url = "load_tlsr2.php"
+                let url = "load_empcont.php"
                 let formaData = new FormData()
                 formaData.append('campo', input)
 
@@ -183,10 +222,16 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
                         content.innerHTML = data
                     }).catch(err => console.log(err))
             }
-        </script>
+        </script>-->
         <br>
-
     </div>
+
+
+
+
+
+
+    <!--/////////////////Animacion del menu desplegable/////////////////-->
 
     <script>
         const btn = document.querySelector('#menu-btn');
@@ -199,7 +244,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             document.querySelector('body').classList.toggle('body-expanded')
         });
     </script>
-
+    <!--//////////////////////////////////-->
 
 
 </body>

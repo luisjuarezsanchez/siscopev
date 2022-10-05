@@ -1,8 +1,8 @@
 <?php
 session_start();
 $usuario = $_SESSION['username'];
-if(!isset($usuario)){
-	header("location: index.php");
+if (!isset($usuario)) {
+    header("location: index.php");
 }
 ?>
 <?php
@@ -125,6 +125,13 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             </div>
 
             <div class="item">
+                <a href="crud_empcont.php">
+                    <div class="icon"> <img src="img/expedientes/empcont.png" alt=""> </div>
+                    <div class="title"><span>Actualización de Contratos</span></div>
+                </a>
+            </div>
+
+            <div class="item">
                 <a href="menu.php">
                     <div class="icon"> <img src="img/expedientes/volver.png" alt=""> </div>
                     <div class="title"><span>Volver</span></div>
@@ -142,9 +149,9 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
     <div id="main-container">
         <br>
         <h1 id="tituloTabla">Tabla de Empleados</h1>
-        <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: ".$usuario; ?></h5>
+        <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
         <form action="">
-            
+
             <label for="campo">Buscar:</label>
             <input type="text" name="campo" id="campo" placeholder="Digita tu búsqueda">
         </form>
@@ -177,20 +184,20 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             //Programando los eventos de AJAX (Actualizacion en tiempo real)
             document.getElementById('campo').addEventListener("keyup", getData);
 
-            function getData(){
+            function getData() {
                 let input = document.getElementById("campo").value
                 let content = document.getElementById("content")
                 let url = "load_empleados.php"
                 let formaData = new FormData()
-                formaData.append('campo',input)
+                formaData.append('campo', input)
 
-                fetch(url,{
-                    method: "POST",
-                    body: formaData
-                }).then(response => response.json())
-                .then(data => {
-                    content.innerHTML = data
-                }).catch(err => console.log(err))
+                fetch(url, {
+                        method: "POST",
+                        body: formaData
+                    }).then(response => response.json())
+                    .then(data => {
+                        content.innerHTML = data
+                    }).catch(err => console.log(err))
             }
         </script>
         <br>
