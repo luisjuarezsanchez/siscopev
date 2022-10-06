@@ -12,7 +12,7 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 /********************Timbrado Maestro********************************** */
 //Abriendo el archivo en modo de escritura
 //$file = fopen("C:/Users/%USERNAME%/Desktop/MAESTRO.txt", "w");
-$file = fopen("%USERPROFILE%\MAESTRO.txt", "w");
+$file = fopen("C:\Users\luisj\Desktop\TimMaestro.txt", "w");
 
 
 //Solicitando la conexion con la BD
@@ -167,7 +167,8 @@ $resultado5 = $mysqli->query($consulta5);
 
 //Abriendo el archivo detalle
 //$file2 = fopen("\DETALLE.txt", "w");
-$file2 = fopen("%USERPROFILE%\DETALLE.txt", "w");
+//$file2 = fopen("%USERPROFILE%\DETALLE.txt", "w");
+$file2 = fopen("C:\Users\luisj\Desktop\TimDetalle.txt", "w");
 
 
 
