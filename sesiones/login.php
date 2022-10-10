@@ -16,6 +16,6 @@ if ($array['contar'] > 0) {
     // header("location: ../index.php");
     echo '<script language="javascript">alert("Datos de inicio de sesion incorrectos");</script>';
     header("location: ../index.php");
-    echo '<script language="javascript">alert("Datos de inicio de sesion incorrectos");</script>';
+    //echo '<script language="javascript">alert("Datos de inicio de sesion incorrectos");</script>';
 }
 ?>

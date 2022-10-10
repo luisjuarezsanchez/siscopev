@@ -151,7 +151,6 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         <h1 id="tituloTabla">Tabla de Empleados</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
         <form action="">
-
             <label for="campo">Buscar:</label>
             <input type="text" name="campo" id="campo" placeholder="Digita tu búsqueda">
         </form>
@@ -180,17 +179,14 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
         <script>
             getData()
-
             //Programando los eventos de AJAX (Actualizacion en tiempo real)
             document.getElementById('campo').addEventListener("keyup", getData);
-
             function getData() {
                 let input = document.getElementById("campo").value
                 let content = document.getElementById("content")
                 let url = "load_empleados.php"
                 let formaData = new FormData()
                 formaData.append('campo', input)
-
                 fetch(url, {
                         method: "POST",
                         body: formaData
