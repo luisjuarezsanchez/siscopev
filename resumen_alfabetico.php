@@ -309,8 +309,6 @@ while ($row = $resultado2->fetch_assoc()) {
             $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
         }
 
-
-
         if ($row['totsubsidios'] > 0) {
             $pdf->Cell(2, 5, utf8_decode($row['cvesubsidios']), 0, 0, 'C', 0);
             $pdf->Cell(55, 5, utf8_decode('SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
