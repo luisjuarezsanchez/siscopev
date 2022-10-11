@@ -30,7 +30,7 @@ $html = '';
 if ($num_rows > 0) {
     while ($row = $resultado->fetch_assoc()) {
         $html .= '<tr>';
-        //$html .= '<td>' . $row['Incrementable'] . '</td>';
+        $html .= '<td>' . $row['Incrementable'] . '</td>';
         $html .= '<td>' . $row['CvePersonal'] . '</td>';
         $html .= '<td>' . $row['CtaBanco'] . '</td>';
         $html .= '<td>' . $row['CveContrato'] . '</td>';
@@ -43,10 +43,15 @@ if ($num_rows > 0) {
         $html .= '<td>' . $row['HrsMen'] . '</td>';
         $html .= '<td>' . $row['CostoHra'] . '</td>';
 
+        $Incrementable = $row['Incrementable'];
+        $CvePersonal = $row['CvePersonal'];
+
         $html .= '<td>
-        <a href="editar_empcont.php"?id=".$row[Incrementable]."><img src="img/expedientes/editar.png" height="40" width="40" /></a>
+        <a href="editar_empcont.php?Incrementable='.$Incrementable.' &
+        CvePersonal='.$CvePersonal.'
+         "><img src="img/expedientes/editar.png" height="40" width="40" /></a>
         </td>';
-        
+
         $html .= '<td><img src="img/expedientes/eliminar.png" height="40" width="40" title="Eliminar"></td>';
         $html .= '</td>';
     }

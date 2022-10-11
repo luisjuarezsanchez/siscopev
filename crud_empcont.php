@@ -178,42 +178,19 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
                 </tr>
             </thead>
             <tbody id="content">
-                <?php while ($row = mysqli_fetch_array($query)) : ?>
-                    <tr>
-                        <th><?= $row['Incrementable'] ?></th>
-                        <th><?= $row['CvePersonal'] ?></th>
-                        <th><?= $row['CtaBanco'] ?></th>
-                        <th><?= $row['CveContrato'] ?></th>
-                        <th><?= $row['TipoEmpleado'] ?></th>
-                        <th><?= $row['Inicio'] ?></th>
-                        <th><?= $row['Fin'] ?></th>
-                        <th><?= $row['UltDia'] ?></th>
-                        <th><?= $row['CodCategoria'] ?></th>
-                        <th><?= $row['PrimaVac'] ?></th>
-                        <th><?= $row['HrsMen'] ?></th>
-                        <th><?= $row['CostoHra'] ?></th>
-                        <th><a href="editar_empcont.php?Incrementable=<?= $row['Incrementable'] ?>"><img src="img/expedientes/editar.png" height="40" width="40"/></a><th>
-                    
-
-                    </tr>
-                <?php endwhile; ?>
-               
             </tbody>
         </table>
-        <!--
+        
         <script>
             getData()
-
             //Programando los eventos de AJAX (Actualizacion en tiempo real)
             document.getElementById('campo').addEventListener("keyup", getData);
-
             function getData() {
                 let input = document.getElementById("campo").value
                 let content = document.getElementById("content")
                 let url = "load_empcont.php"
                 let formaData = new FormData()
                 formaData.append('campo', input)
-
                 fetch(url, {
                         method: "POST",
                         body: formaData
@@ -222,7 +199,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
                         content.innerHTML = data
                     }).catch(err => console.log(err))
             }
-        </script>-->
+        </script>
         <br>
     </div>
 

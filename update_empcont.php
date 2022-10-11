@@ -1,7 +1,7 @@
 <?php
 require 'conexion.php';
 
-$Incrementable =$_POST['Incrementable'];    ;
+$Incrementable =$_POST['Incrementable'];
 $CvePersonal = $_POST['CvePersonal'];
 $CtaBanco = $_POST['CtaBanco'];
 $CveContrato = $_POST['CveContrato'];
