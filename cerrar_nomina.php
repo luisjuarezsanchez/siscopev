@@ -97,7 +97,7 @@ if (!isset($usuario)) {
 	<br>
 	<div>
     <h4 id="tituloTabla">Recuerda que el proceso de cerrar una nómina es irreversible <br>
-        y esta ya no podra ser eliminada
+        y esta ya no podra ser eliminada 
     </h4>
     <br>
 		<form class="form-login" action="lock_nomina.php" method="post" enctype="multipart/form-data">

@@ -17,6 +17,7 @@ if (!isset($usuario)) {
 	<link rel="stylesheet" href="css/estilos_reportes.css">
 	<link rel="stylesheet" type="text/css" href="css/fuente.css">
 	<link rel="stylesheet" href="css/menulateral.css">
+	<link rel="stylesheet" href="css/tablas.css">
 	<!--Titulo de la página-->
 	<title>Conciliación con PRISMA</title>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -69,7 +70,7 @@ if (!isset($usuario)) {
 
 		<div id="menu-items">
 			<div class="item">
-				<a href="crud_empleados.php">
+				<a href="#">
 					<div class="icon"> <img src="img/expedientes/usuaro.png" alt=""> </div>
 					<div class="title"><span><?php echo "Bienvenido(a): " . $usuario; ?></span></div>
 				</a>
@@ -92,6 +93,8 @@ if (!isset($usuario)) {
 		</div>
 	</div>
 	<!--//////////////////////////////////////////////-->
+	<br>
+	<h4 id="tituloTabla">Conciliación con PRISMA</h4>
 	<br>
 	<form class="form-login" action="reporte_Prisma.php" method="post" enctype="multipart/form-data">
 		<div style="text-align:center;">
@@ -129,4 +132,5 @@ if (!isset($usuario)) {
 	<br>
 
 </footer>
+
 </html>

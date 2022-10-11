@@ -17,6 +17,7 @@ if (!isset($usuario)) {
 	<link rel="stylesheet" href="css/index.css">
 	<link rel="stylesheet" type="text/css" href="css/fuente.css">
 	<link rel="stylesheet" href="css/menulateral.css">
+	<link rel="stylesheet" href="css/tablas.css">
 	<!--Titulo de la página-->
 	<title>Generar timbrado</title>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -102,6 +103,8 @@ if (!isset($usuario)) {
 		</div>
 	</section>
 
+	<h4 id="tituloTabla">Conciliación con PRISMA</h4>
+	<br>
 	<form id="timbrado" class="form-login" action="reportes_txt.php" method="post" enctype="multipart/form-data">
 		<div style="text-align:center;">
 			<label><select id="lista" name="CveNomina">

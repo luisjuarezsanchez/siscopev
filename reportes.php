@@ -16,10 +16,10 @@ if (!isset($usuario)) {
 	<link rel="stylesheet" href="css/estilos_reportes.css">
 	<link rel="stylesheet" type="text/css" href="css/fuente.css">
 	<link rel="stylesheet" href="css/menulateral.css">
+	<link rel="stylesheet" href="css/tablas.css">
 
 	<!--Titulo de la página-->
 	<title>Resumen de Nómina</title>
-
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -95,7 +95,8 @@ if (!isset($usuario)) {
 	<!--//////////////////////////////////////////////-->
 	<br>
 	<div>
-
+		<h4 id="tituloTabla">Reporte resumen de nómina</h4>
+		<br>
 		<form class="form-login" action="resumen_nominas.php" method="post" enctype="multipart/form-data">
 			<br>
 			<div style="text-align:center;">

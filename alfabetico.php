@@ -17,6 +17,7 @@ if (!isset($usuario)) {
 	<link rel="stylesheet" href="css/estilos_reportes.css">
 	<link rel="stylesheet" type="text/css" href="css/fuente.css">
 	<link rel="stylesheet" href="css/menulateral.css">
+	<link rel="stylesheet" href="css/tablas.css">
 
 	<!--Titulo de la página-->
 	<title>Resumen Alfabético</title>
@@ -96,7 +97,8 @@ if (!isset($usuario)) {
 	<!--//////////////////////////////////////////////-->
 	<br>
 	<div>
-
+		<h4 id="tituloTabla">Reporte alfabético de nómina</h4>
+		<br>
 		<form class="form-login" action="resumen_alfabetico.php" method="post" enctype="multipart/form-data">
 			<br>
 			<div style="text-align:center;">

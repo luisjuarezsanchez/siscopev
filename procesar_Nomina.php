@@ -16,6 +16,7 @@ if (!isset($usuario)) {
 	<link rel="stylesheet" type="text/css" href="css/estilos_p_nomina.css">
 	<link rel="stylesheet" type="text/css" href="css/fuente.css">
 	<link rel="stylesheet" href="css/menulateral.css">
+	<link rel="stylesheet" href="css/tablas.css">
 
 
 	<!--Titulo de la página-->
@@ -124,6 +125,8 @@ if (!isset($usuario)) {
 
 	<br>
 	<section id="blog">
+		<h4 id="tituloTabla">Procesamiento de nómina</h4>
+		<br>
 		<div>
 			<form class="form-login" action="procedimientos_funciones/sp_GeneraNomNor.php" method="post">
 				<p>Clave de nómina</p>

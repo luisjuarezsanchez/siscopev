@@ -151,13 +151,12 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
 
     <div id="main-container">
         <br>
-        <h1 id="tituloTabla">Tabla de contratos de empleados</h1>
+        <h1 id="tituloTabla">Contratos de empleados</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
         <form action="">
             <label for="campo">Buscar:</label>
             <input type="text" name="campo" id="campo" placeholder="Digita tu búsqueda">
         </form>
-
         <table>
             <thead>
                 <tr>
@@ -180,11 +179,12 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
             <tbody id="content">
             </tbody>
         </table>
-        
+
         <script>
             getData()
             //Programando los eventos de AJAX (Actualizacion en tiempo real)
             document.getElementById('campo').addEventListener("keyup", getData);
+
             function getData() {
                 let input = document.getElementById("campo").value
                 let content = document.getElementById("content")
