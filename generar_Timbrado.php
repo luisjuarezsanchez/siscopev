@@ -2,7 +2,7 @@
 session_start();
 $usuario = $_SESSION['username'];
 if (!isset($usuario)) {
-    header("location: index.php");
+	header("location: index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -68,16 +68,16 @@ if (!isset($usuario)) {
 			<div class="item">
 				<a href="crud_empleados.php">
 					<div class="icon"> <img src="img/expedientes/usuaro.png" alt=""> </div>
-					<div class="title"><span><?php echo "Bienvenido(a): ".$usuario; ?></span></div>
+					<div class="title"><span><?php echo "Bienvenido(a): " . $usuario; ?></span></div>
 				</a>
 			</div>
 
 			<div class="item">
-                <a href="menu.php">
-                    <div class="icon"> <img src="img/expedientes/volver.png" title="Volver al Menú"> </div>
-                    <div class="title"><span>Volver</span></div>
-                </a>
-            </div>
+				<a href="menu.php">
+					<div class="icon"> <img src="img/expedientes/volver.png" title="Volver al Menú"> </div>
+					<div class="title"><span>Volver</span></div>
+				</a>
+			</div>
 
 			<div class="item">
 				<a href="sesiones/salir.php">
@@ -107,7 +107,7 @@ if (!isset($usuario)) {
 			<label><select id="lista" name="CveNomina">
 					<?php
 					include 'conexion.php';
-					$consulta = "SELECT CveNomina FROM Nominas ORDER BY CveNomina DESC";
+					$consulta = "SELECT CveNomina FROM Nominas WHERE Cerrada=1 ORDER BY CveNomina DESC";
 					$resultado = $mysqli->query($consulta);
 					?>
 					<form action="genera.php" method="post" class="form-login">

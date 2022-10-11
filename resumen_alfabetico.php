@@ -458,6 +458,7 @@ $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 
 
 
+
 /**********************CONSULTA PARA CONTRATOS DE PATRIMONIO**********************/
 $consulta3 = "SELECT
 DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,

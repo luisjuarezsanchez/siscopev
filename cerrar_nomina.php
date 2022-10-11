@@ -12,27 +12,28 @@ if (!isset($usuario)) {
 	<meta charset="utf-8">
 	<!--Icono de la pagina web-->
 	<link rel="icon" href="img/iconos/escudo_armas.png">
-	<link rel="stylesheet" type="text/css" href="css/header.css">
-	<link rel="stylesheet" type="text/css" href="css/estilos_p_nomina.css">
+	<link rel="stylesheet" href="css/header.css">
+	<link rel="stylesheet" href="css/estilos_reportes.css">
 	<link rel="stylesheet" type="text/css" href="css/fuente.css">
 	<link rel="stylesheet" href="css/menulateral.css">
-
+    <link rel="stylesheet" href="css/tablas.css">
 
 	<!--Titulo de la página-->
-	<title>Procesar nómina</title>
+	<title>Resumen de Nómina</title>
+
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+	<script language="JavaScript" type="text/javascript" src="js/script.js"></script>
+	<script src="js/script.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
-	<script src="js/script.js"></script>
-	<script language="JavaScript" type="text/javascript" src="js/script.js"></script>
 </head>
 
-
-
 <body>
+
 	<header class="header">
 		<div class="logo">
 			<a href="menu.php"><img class="logos" src="img/header/escudo_armas.png"></a>
@@ -40,11 +41,11 @@ if (!isset($usuario)) {
 		<nav>
 			<ul class="nav-links">
 				<li id="producto1"><a href="#">Sistema de Nóminas</a></li>
-				<li id="producto2"><a href="#">Secretaría de Cultura y Turismo</a></li>
-
+				<li id="producto2"><a href="#">Secretaria de Cultura y Turismo</a></li>
 			</ul>
 		</nav>
 		<a href="https://cultura.edomex.gob.mx/" target="_blank" class="btn"><button>Contacto</button></a>
+
 	</header>
 	<!--///////////////////Menú desplegable///////////////////////////-->
 
@@ -77,35 +78,7 @@ if (!isset($usuario)) {
 			</div>
 
 			<div class="item">
-				<a href="reportes.php">
-					<div class="icon"> <img src="img/expedientes/resumen.png" title="Reporte resumen"> </div>
-					<div class="title"><span>Reporte resumen</span></div>
-				</a>
-			</div>
-
-			<div class="item">
-				<a href="alfabetico.php">
-					<div class="icon"> <img src="img/expedientes/alfabetico.png" title="Alfabético de Nómina"> </div>
-					<div class="title"><span>Alfabético de Nómina</span></div>
-				</a>
-			</div>
-
-			<div class="item">
-				<a href="eliminar_nomina.php">
-					<div class="icon"> <img src="img/expedientes/borrar.png" title="Eliminar nómina"> </div>
-					<div class="title"><span>Eliminar nómina</span></div>
-				</a>
-			</div>
-
-			<div class="item">
-				<a href="cerrar_nomina.php">
-					<div class="icon"> <img src="img/expedientes/candado.png" title="Eliminar nómina"> </div>
-					<div class="title"><span>Cerrar nómina</span></div>
-				</a>
-			</div>
-
-			<div class="item">
-				<a href="menu.php">
+				<a href="procesar_Nomina.php">
 					<div class="icon"> <img src="img/expedientes/volver.png" title="Volver al Menú"> </div>
 					<div class="title"><span>Volver</span></div>
 				</a>
@@ -121,30 +94,36 @@ if (!isset($usuario)) {
 		</div>
 	</div>
 	<!--//////////////////////////////////////////////-->
-
 	<br>
-	<section id="blog">
-		<div>
-			<form class="form-login" action="procedimientos_funciones/sp_GeneraNomNor.php" method="post">
-				<p>Clave de nómina</p>
-				<input class="controls" type="text" name="CveNomina" value="" required>
-				<p>Fecha de inicio de nómina</p>
-				<input class="controls" type="date" name="Del" required>
-				<p>Fecha de fin de nómina</p>
-				<input class="controls" type="date" name="Al" required>
-				<p>Honorarios</p>
-				<input class="controls" type="text" name="GenHon" required>
+	<div>
+    <h4 id="tituloTabla">Recuerda que el proceso de cerrar una nómina es irreversible <br>
+        y esta ya no podra ser eliminada
+    </h4>
+    <br>
+		<form class="form-login" action="lock_nomina.php" method="post" enctype="multipart/form-data">
+			<br>
+			<div style="text-align:center;">
+				<label><select id="lista" name="CveNomina">
+						<?php
+						include 'conexion.php';
+						$consulta = "SELECT CveNomina FROM Nominas WHERE Cerrada=0 ORDER BY CveNomina DESC";
+						$resultado = $mysqli->query($consulta);
+						?>
+						<form action="genera.php" method="post" class="form-login">
+							<?php foreach ($resultado as  $opciones) : ?>
+								<option value="<?php echo $opciones['CveNomina'] ?>">
+									<?php echo $opciones['CveNomina'] ?>
+								</option>
+							<?php endforeach ?>
+					</select></label>
 				<br>
+				<img id="img" src="img/iconos/candado.png" height="200" width="200">
 				<br>
-				<input class="buttons" type="submit" name="Enviar" value="Enviar información">
+				<button class="buttons">Cerrar nómina</button>
 				<br>
-				<input class="buttons" type="reset" name="" value="Vaciar campos">
-
-			</form>
-		</div>
-	</section>
-	<br>
-	<br>
+			</div>
+		</form>
+	</div>
 	<!--/////////////////Animacion del menu desplegable/////////////////-->
 	<script>
 		const btn = document.querySelector('#menu-btn');
@@ -159,6 +138,8 @@ if (!isset($usuario)) {
 	</script>
 	<!--//////////////////////////////////-->
 </body>
+<br>
+<br>
 <footer class="footer">
 
 	<div class="img_footers">
