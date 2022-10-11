@@ -47,9 +47,7 @@ if ($num_rows > 0) {
         $CvePersonal = $row['CvePersonal'];
 
         $html .= '<td>
-        <a href="editar_empcont.php?Incrementable='.$Incrementable.' &
-        CvePersonal='.$CvePersonal.'
-         "><img src="img/expedientes/editar.png" height="40" width="40" /></a>
+        <a href="editar_empcont.php?Incrementable='.$Incrementable.'"><img src="img/expedientes/editar.png" height="40" width="40" /></a>
         </td>';
 
         $html .= '<td><img src="img/expedientes/eliminar.png" height="40" width="40" title="Eliminar"></td>';
