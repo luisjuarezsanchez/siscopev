@@ -92,6 +92,13 @@ if (!isset($usuario)) {
 			</div>
 
 			<div class="item">
+				<a href="#">
+					<div class="icon"> <img src="img/expedientes/perdedapo.png" title="Agregar PerDedApo manual"> </div>
+					<div class="title"><span>Agregar PerDedApo manual</span></div>
+				</a>
+			</div>
+
+			<div class="item">
 				<a href="eliminar_nomina.php">
 					<div class="icon"> <img src="img/expedientes/borrar.png" title="Eliminar nómina"> </div>
 					<div class="title"><span>Eliminar nómina</span></div>
@@ -104,6 +111,8 @@ if (!isset($usuario)) {
 					<div class="title"><span>Cerrar nómina</span></div>
 				</a>
 			</div>
+
+
 
 			<div class="item">
 				<a href="menu.php">

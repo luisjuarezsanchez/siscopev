@@ -1,3 +1,3 @@
 <?php
-$clave = $_GET['clave'];
-echo $clave;
+$CveNomina = $_POST['CveNomina'];
+echo $CveNomina;

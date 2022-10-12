@@ -99,7 +99,7 @@ if (!isset($usuario)) {
 		<br>
 		<form class="form-login" action="resumen_nominas.php" method="post" enctype="multipart/form-data">
 			<br>
-			<div style="text-align:center;">
+			<div style="text-align:center;"> 
 				<label><select id="lista" name="CveNomina">
 						<?php
 						include 'conexion.php';

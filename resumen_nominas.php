@@ -17,7 +17,7 @@ class PDF extends FPDF
     {
         // Logos
         $this->Image('img/reportes/gob.jpg', 10, 2, 35); //esp.izquierda-abajo-tamaño
-        $this->Image('img/reportes/logo_vertical.png', 240, 2, 25);
+        $this->Image('img/reportes/logo_vertical.png', 185, 2, 25);
         // Arial bold 15
         $this->SetFont('Arial', 'B', 15);
         // Movernos a la derecha
@@ -25,11 +25,11 @@ class PDF extends FPDF
         // Título
         $this->Cell(100, 5, utf8_decode(""), 0, 1, 'C', 0);
 
-        $this->Cell(250, 15, utf8_decode('SECRETARIA DE CULTURA Y TURISMO'), 10, 10, 'C'); //derecha abajo Salto de línea
+        $this->Cell(200, 20, utf8_decode('SECRETARIA DE CULTURA Y TURISMO'), 10, 10, 'C'); //derecha abajo Salto de línea
         //Saltos de linea
         $this->Ln(0);
         //$this->Cell(250, 14, utf8_decode('RESUMEN DE PERCEPCIONES Y DEDUCCIONES DE LA QUINCENA '.$GLOBALS["CveNomina"]), 10, 10, 'C');
-        $this->Cell(250, 14, utf8_decode('RESUMEN DE PERCEPCIONES Y DEDUCCIONES DE LA QUINCENA '.substr($GLOBALS["CveNomina"],0,6)), 10, 10, 'C');
+        $this->Cell(190, 14, utf8_decode('RESUMEN DE PERCEPCIONES Y DEDUCCIONES DE LA QUINCENA '.substr($GLOBALS["CveNomina"],0,6)), 10, 10, 'C');
         $this->Ln(0);
     }
     // Pie de página
@@ -104,22 +104,22 @@ $resultado = $mysqli->query($consulta);
 
 //IMPRESION EN EL PDF DE CONTRATOS DE DEPORTE//////////////////////////////////////////////////////////////////////////////////////
 // Creación del objeto de la clase heredada
-$pdf = new PDF('L', 'mm', 'letter'); //Indicando formato horizontal del reporte
+$pdf = new PDF('P', 'mm', 'letter'); //Indicando formato horizontal del reporte
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Helvetica', '', 12);
 
-$pdf->Cell(250, 10, utf8_decode('COORDINACION: 22600005L          DIREC. GRAL. DE CULTURA FISICA Y DEPORTE'), 10, 100, 'C', 0);
+$pdf->Cell(195, 10, utf8_decode('COORDINACION: 22600005L          DIREC. GRAL. DE CULTURA FISICA Y DEPORTE'), 10, 100, 'C', 0);
 
 //Indicar salida del archivo pdf
 $pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(150, 15, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
-$pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(100, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-$pdf->Cell(20, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-$pdf->Cell(150, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
-$pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
-$pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
+$pdf->Cell(100, 15, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
+$pdf->Cell(25, 10, utf8_decode(""), 0, 1, 'C', 0);
+$pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
+$pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
+$pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
+$pdf->Cell(25, 10, utf8_decode(''), 0, 1, 'C', 0);
+$pdf->Cell(25, 10, utf8_decode(''), 0, 1, 'C', 0);
 $pdf->SetFont('Helvetica', '', 12);
 
 
@@ -127,105 +127,105 @@ $pdf->SetFont('Helvetica', '', 12);
 
 while ($row = $resultado->fetch_assoc()) {
     //SUEDOS EVENTUALES
-    $pdf->Cell(100, 7, utf8_decode('0202'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumaeventuales']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['eventuales'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('0202'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumaeventuales']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['eventuales'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //SUBSIDIO AL EMPLEO
-    $pdf->Cell(100, 7, utf8_decode('0325'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumasubsidios']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['subsidios'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('0325'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumasubsidios']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['subsidios'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //TOTAL DE PERCEPCIONES
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(150, 10, utf8_decode('TOTAL DE PERCEPCIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 10, utf8_decode("$" . number_format($row['totper'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL DE PERCEPCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totper'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //ENCABEZADOS DEDUCCIONES
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(150, 10, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(100, 10, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
     $pdf->Cell(43, 8, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(100, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-    $pdf->Cell(20, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-    $pdf->Cell(150, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
+    $pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
+    $pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
+    $pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
     $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
     $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
 
 
     //SERVICIOS DE SALUD
-    $pdf->Cell(100, 7, utf8_decode('5540'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SERVICIOS DE SALUD 4.625% '), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumasalud']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['sersalud'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5540'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SERVICIOS DE SALUD 4.625% '), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumasalud']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['sersalud'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //SISTEMA SOLIDARIO DE REPARTO
-    $pdf->Cell(100, 7, utf8_decode('5541'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SISTEMA SOLIDARIO DE REPARTO 6.1%'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumareparto']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['sissolidario'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5541'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SISTEMA SOLIDARIO DE REPARTO 6.1%'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumareparto']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['sissolidario'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //CAPITALIZACION INDIVIDUAL
-    $pdf->Cell(100, 7, utf8_decode('5542'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('CAPITALIZACION INDIVIDUAL 1.4%'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumacapita']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['siscapita'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5542'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('CAPITALIZACION INDIVIDUAL 1.4%'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumacapita']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['siscapita'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //IMPUESTO SOBRE LA RENTA
-    $pdf->Cell(100, 7, utf8_decode('5408'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('IMPUESTO SOBRE LA RENTA '), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumaisr']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['isr'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5408'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('IMPUESTO SOBRE LA RENTA '), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumaisr']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['isr'], 2, ".", ",")), 0, 1, 'R', 0);
 
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
 
     //TOTAL DEDUCCIONES
-    $pdf->Cell(150, 10, utf8_decode('TOTAL DE DEDUCCIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 10, utf8_decode("$" . number_format($row['totdeducciones'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL DE DEDUCCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totdeducciones'], 2, ".", ",")), 0, 1, 'R', 0);
 
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
 
     //TOTAL NETOS
-    $pdf->Cell(150, 10, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 10, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
     $pdf->Cell(54, 5, utf8_decode(""), 0, 1, 'R', 0);
 
     //TOTAL SUELDOS EVENTUALES
-    $pdf->Cell(150, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-    $pdf->Cell(10, 12, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+    $pdf->Cell(185, 12, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
 
     //SERVICIOS DE SALUD
-    $pdf->Cell(150, 10, utf8_decode('10.0% SERVICIOS DE SALUD'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 6, utf8_decode("$" . number_format($row['sersalud2'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('10.0% SERVICIOS DE SALUD'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 6, utf8_decode("$" . number_format($row['sersalud2'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //FONDO DEL SISTEMA SOLIDARIO D
-    $pdf->Cell(150, 10, utf8_decode('7.42% FONDO DEL SISTEMA SOLIDARIO D'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['fondosisre'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('7.42% FONDO DEL SISTEMA SOLIDARIO D'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['fondosisre'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //SISTEMA DE CAPITALI. INDIVI
-    $pdf->Cell(150, 10, utf8_decode('1.85% SISTEMA DE CAPITALI. INDIVI.'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['siscapita2'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('1.85% SISTEMA DE CAPITALI. INDIVI.'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("70$" . number_format($row['siscapita2'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //GASTOS DE ADMINISTRACION
-    $pdf->Cell(150, 10, utf8_decode('0.875% GASTOS DE ADMINISTRACION'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['gasadmin'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('0.875% GASTOS DE ADMINISTRACION'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['gasadmin'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //PRIMA BASICA
-    $pdf->Cell(150, 10, utf8_decode('1.0% PRIMA BASICA'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['primbas'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('1.0% PRIMA BASICA'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['primbas'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //PRIMA DE SINIESTRALIDAD
-    $pdf->Cell(150, 10, utf8_decode('1.989% PRIMA DE SINIESTRALIDAD'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['primsinies'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('1.989% PRIMA DE SINIESTRALIDAD'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['primsinies'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //PRIMA RIESGO NO CONTROLADO
-    $pdf->Cell(150, 10, utf8_decode('0.104% PRIMA RIESGO NO CONTROLADO'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['primriesgo'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('0.104% PRIMA RIESGO NO CONTROLADO'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['primriesgo'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //TOTAL IMPUESTO SOBRE REMUNERACIONES
-    $pdf->Cell(150, 10, utf8_decode('3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode('PENDIENTE'), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode('PENDIENTE'), 0, 1, 'R', 0);
 }
 
 
@@ -294,15 +294,15 @@ $resultado2 = $mysqli->query($consulta2);
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Helvetica', '', 12);
-$pdf->Cell(250, 10, utf8_decode('COORDINACION: 22600003L          DIREC GRAL CONSERVATORIO DE MUSICA DEL EDOMEX'), 10, 100, 'C', 0);
+$pdf->Cell(195, 10, utf8_decode('COORDINACION: 22600003L          DIREC GRAL CONSERVATORIO DE MUSICA DEL EDOMEX'), 10, 100, 'C', 0);
 
 //Indicar salida del archivo pdf
 $pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(150, 15, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
+$pdf->Cell(100, 15, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
 $pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(100, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-$pdf->Cell(20, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-$pdf->Cell(150, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
+$pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
+$pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
+$pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
 $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
 $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
 $pdf->SetFont('Helvetica', '', 12);
@@ -312,105 +312,105 @@ $pdf->SetFont('Helvetica', '', 12);
 
 while ($row = $resultado2->fetch_assoc()) {
     //SUEDOS EVENTUALES
-    $pdf->Cell(100, 7, utf8_decode('0202'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumaeventuales']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['eventuales'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('0202'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumaeventuales']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['eventuales'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //SUBSIDIO AL EMPLEO
-    $pdf->Cell(100, 7, utf8_decode('0325'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumasubsidios']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['subsidios'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('0325'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumasubsidios']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['subsidios'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //TOTAL DE PERCEPCIONES
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(150, 10, utf8_decode('TOTAL DE PERCEPCIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 10, utf8_decode("$" . number_format($row['totper'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL DE PERCEPCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totper'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //ENCABEZADOS DEDUCCIONES
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(150, 10, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(100, 10, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
     $pdf->Cell(43, 8, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(100, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-    $pdf->Cell(20, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-    $pdf->Cell(150, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
+    $pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
+    $pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
+    $pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
     $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
     $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
 
 
     //SERVICIOS DE SALUD
-    $pdf->Cell(100, 7, utf8_decode('5540'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SERVICIOS DE SALUD 4.625% '), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumasalud']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['sersalud'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5540'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SERVICIOS DE SALUD 4.625% '), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumasalud']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['sersalud'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //SISTEMA SOLIDARIO DE REPARTO
-    $pdf->Cell(100, 7, utf8_decode('5541'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SISTEMA SOLIDARIO DE REPARTO 6.1%'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumareparto']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['sissolidario'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5541'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SISTEMA SOLIDARIO DE REPARTO 6.1%'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumareparto']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['sissolidario'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //CAPITALIZACION INDIVIDUAL
-    $pdf->Cell(100, 7, utf8_decode('5542'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('CAPITALIZACION INDIVIDUAL 1.4%'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumacapita']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['siscapita'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5542'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('CAPITALIZACION INDIVIDUAL 1.4%'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumacapita']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['siscapita'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //IMPUESTO SOBRE LA RENTA
-    $pdf->Cell(100, 7, utf8_decode('5408'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('IMPUESTO SOBRE LA RENTA '), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumaisr']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['isr'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5408'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('IMPUESTO SOBRE LA RENTA '), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumaisr']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['isr'], 2, ".", ",")), 0, 1, 'R', 0);
 
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
 
     //TOTAL DEDUCCIONES
-    $pdf->Cell(150, 10, utf8_decode('TOTAL DE DEDUCCIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 10, utf8_decode("$" . number_format($row['totdeducciones'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL DE DEDUCCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totdeducciones'], 2, ".", ",")), 0, 1, 'R', 0);
 
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
 
     //TOTAL NETOS
-    $pdf->Cell(150, 10, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 10, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
     $pdf->Cell(54, 5, utf8_decode(""), 0, 1, 'R', 0);
 
     //TOTAL SUELDOS EVENTUALES
-    $pdf->Cell(150, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-    $pdf->Cell(10, 12, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+    $pdf->Cell(185, 12, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
 
     //SERVICIOS DE SALUD
-    $pdf->Cell(150, 10, utf8_decode('10.0% SERVICIOS DE SALUD'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 6, utf8_decode("$" . number_format($row['sersalud2'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('10.0% SERVICIOS DE SALUD'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 6, utf8_decode("$" . number_format($row['sersalud2'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //FONDO DEL SISTEMA SOLIDARIO D
-    $pdf->Cell(150, 10, utf8_decode('7.42% FONDO DEL SISTEMA SOLIDARIO D'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['fondosisre'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('7.42% FONDO DEL SISTEMA SOLIDARIO D'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['fondosisre'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //SISTEMA DE CAPITALI. INDIVI
-    $pdf->Cell(150, 10, utf8_decode('1.85% SISTEMA DE CAPITALI. INDIVI.'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['siscapita2'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('1.85% SISTEMA DE CAPITALI. INDIVI.'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['siscapita2'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //GASTOS DE ADMINISTRACION
-    $pdf->Cell(150, 10, utf8_decode('0.875% GASTOS DE ADMINISTRACION'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['gasadmin'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('0.875% GASTOS DE ADMINISTRACION'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['gasadmin'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //PRIMA BASICA
-    $pdf->Cell(150, 10, utf8_decode('1.0% PRIMA BASICA'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['primbas'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('1.0% PRIMA BASICA'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['primbas'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //PRIMA DE SINIESTRALIDAD
-    $pdf->Cell(150, 10, utf8_decode('1.989% PRIMA DE SINIESTRALIDAD'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['primsinies'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('1.989% PRIMA DE SINIESTRALIDAD'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['primsinies'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //PRIMA RIESGO NO CONTROLADO
-    $pdf->Cell(150, 10, utf8_decode('0.104% PRIMA RIESGO NO CONTROLADO'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['primriesgo'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('0.104% PRIMA RIESGO NO CONTROLADO'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['primriesgo'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //TOTAL IMPUESTO SOBRE REMUNERACIONES
-    $pdf->Cell(150, 10, utf8_decode('3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode('PENDIENTE'), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode('PENDIENTE'), 0, 1, 'R', 0);
 }
 
 
@@ -477,15 +477,15 @@ $resultado3 = $mysqli->query($consulta3);
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Helvetica', '', 12);
-$pdf->Cell(250, 10, utf8_decode('COORDINACION: 22600002L          DIR GRAL DE PATRIMONIO Y SERVICIOS CULTURALES'), 10, 100, 'C', 0);
+$pdf->Cell(195, 10, utf8_decode('COORDINACION: 22600002L          DIR GRAL DE PATRIMONIO Y SERVICIOS CULTURALES'), 10, 100, 'C', 0);
 
 //Indicar salida del archivo pdf
 $pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(150, 15, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
+$pdf->Cell(100, 15, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
 $pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(100, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-$pdf->Cell(20, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-$pdf->Cell(150, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
+$pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
+$pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
+$pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
 $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
 $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
 $pdf->SetFont('Helvetica', '', 12);
@@ -495,105 +495,105 @@ $pdf->SetFont('Helvetica', '', 12);
 
 while ($row = $resultado3->fetch_assoc()) {
     //SUEDOS EVENTUALES
-    $pdf->Cell(100, 7, utf8_decode('0202'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumaeventuales']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['eventuales'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('0202'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumaeventuales']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['eventuales'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //SUBSIDIO AL EMPLEO
-    $pdf->Cell(100, 7, utf8_decode('0325'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumasubsidios']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['subsidios'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('0325'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumasubsidios']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['subsidios'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //TOTAL DE PERCEPCIONES
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(150, 10, utf8_decode('TOTAL DE PERCEPCIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 10, utf8_decode("$" . number_format($row['totper'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL DE PERCEPCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totper'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //ENCABEZADOS DEDUCCIONES
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(150, 10, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(100, 10, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
     $pdf->Cell(43, 8, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(100, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-    $pdf->Cell(20, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-    $pdf->Cell(150, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
+    $pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
+    $pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
+    $pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
     $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
     $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
 
 
     //SERVICIOS DE SALUD
-    $pdf->Cell(100, 7, utf8_decode('5540'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SERVICIOS DE SALUD 4.625% '), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumasalud']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['sersalud'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5540'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SERVICIOS DE SALUD 4.625% '), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumasalud']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['sersalud'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //SISTEMA SOLIDARIO DE REPARTO
-    $pdf->Cell(100, 7, utf8_decode('5541'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SISTEMA SOLIDARIO DE REPARTO 6.1%'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumareparto']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['sissolidario'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5541'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SISTEMA SOLIDARIO DE REPARTO 6.1%'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumareparto']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['sissolidario'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //CAPITALIZACION INDIVIDUAL
-    $pdf->Cell(100, 7, utf8_decode('5542'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('CAPITALIZACION INDIVIDUAL 1.4%'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumacapita']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['siscapita'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5542'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('CAPITALIZACION INDIVIDUAL 1.4%'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumacapita']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['siscapita'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //IMPUESTO SOBRE LA RENTA
-    $pdf->Cell(100, 7, utf8_decode('5408'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('IMPUESTO SOBRE LA RENTA '), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumaisr']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['isr'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5408'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('IMPUESTO SOBRE LA RENTA '), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumaisr']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['isr'], 2, ".", ",")), 0, 1, 'R', 0);
 
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
 
     //TOTAL DEDUCCIONES
-    $pdf->Cell(150, 10, utf8_decode('TOTAL DE DEDUCCIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 10, utf8_decode("$" . number_format($row['totdeducciones'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL DE DEDUCCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totdeducciones'], 2, ".", ",")), 0, 1, 'R', 0);
 
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
 
     //TOTAL NETOS
-    $pdf->Cell(150, 10, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 10, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
-    $pdf->Cell(54, 5, utf8_decode(""), 0, 1, 'R', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(105, 5, utf8_decode(""), 0, 1, 'R', 0);
 
     //TOTAL SUELDOS EVENTUALES
-    $pdf->Cell(150, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-    $pdf->Cell(10, 12, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 12, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
 
     //SERVICIOS DE SALUD
-    $pdf->Cell(150, 10, utf8_decode('10.0% SERVICIOS DE SALUD'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 6, utf8_decode("$" . number_format($row['sersalud2'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('10.0% SERVICIOS DE SALUD'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 6, utf8_decode("$" . number_format($row['sersalud2'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //FONDO DEL SISTEMA SOLIDARIO D
-    $pdf->Cell(150, 10, utf8_decode('7.42% FONDO DEL SISTEMA SOLIDARIO D'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['fondosisre'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('7.42% FONDO DEL SISTEMA SOLIDARIO D'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['fondosisre'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //SISTEMA DE CAPITALI. INDIVI
-    $pdf->Cell(150, 10, utf8_decode('1.85% SISTEMA DE CAPITALI. INDIVI.'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['siscapita2'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('1.85% SISTEMA DE CAPITALI. INDIVI.'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['siscapita2'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //GASTOS DE ADMINISTRACION
-    $pdf->Cell(150, 10, utf8_decode('0.875% GASTOS DE ADMINISTRACION'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['gasadmin'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('0.875% GASTOS DE ADMINISTRACION'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['gasadmin'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //PRIMA BASICA
-    $pdf->Cell(150, 10, utf8_decode('1.0% PRIMA BASICA'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['primbas'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('1.0% PRIMA BASICA'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['primbas'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //PRIMA DE SINIESTRALIDAD
-    $pdf->Cell(150, 10, utf8_decode('1.989% PRIMA DE SINIESTRALIDAD'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['primsinies'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('1.989% PRIMA DE SINIESTRALIDAD'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['primsinies'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //PRIMA RIESGO NO CONTROLADO
-    $pdf->Cell(150, 10, utf8_decode('0.104% PRIMA RIESGO NO CONTROLADO'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['primriesgo'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('0.104% PRIMA RIESGO NO CONTROLADO'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['primriesgo'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //TOTAL IMPUESTO SOBRE REMUNERACIONES
-    $pdf->Cell(150, 10, utf8_decode('3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode('PENDIENTE'), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode('PENDIENTE'), 0, 1, 'R', 0);
 }
 
 
@@ -665,15 +665,15 @@ $resultado4 = $mysqli->query($consulta4);
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Helvetica', '', 12);
-$pdf->Cell(250, 10, utf8_decode('COORDINACION: 22600000L          SECRETARIA DE CULTURA Y TURISMO'), 10, 100, 'C', 0);
+$pdf->Cell(195, 10, utf8_decode('COORDINACION: 22600000L          SECRETARIA DE CULTURA Y TURISMO'), 10, 100, 'C', 0);
 
 //Indicar salida del archivo pdf
 $pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(150, 15, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
+$pdf->Cell(100, 15, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
 $pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(100, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-$pdf->Cell(20, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-$pdf->Cell(150, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
+$pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
+$pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
+$pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
 $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
 $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
 $pdf->SetFont('Helvetica', '', 12);
@@ -683,105 +683,105 @@ $pdf->SetFont('Helvetica', '', 12);
 
 while ($row = $resultado4->fetch_assoc()) {
     //SUEDOS EVENTUALES
-    $pdf->Cell(100, 7, utf8_decode('0202'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumaeventuales']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['eventuales'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('0202'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumaeventuales']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['eventuales'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //SUBSIDIO AL EMPLEO
-    $pdf->Cell(100, 7, utf8_decode('0325'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumasubsidios']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['subsidios'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('0325'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumasubsidios']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['subsidios'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //TOTAL DE PERCEPCIONES
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(150, 10, utf8_decode('TOTAL DE PERCEPCIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 10, utf8_decode("$" . number_format($row['totper'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL DE PERCEPCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totper'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //ENCABEZADOS DEDUCCIONES
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(150, 10, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(100, 10, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
     $pdf->Cell(43, 8, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(100, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-    $pdf->Cell(20, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-    $pdf->Cell(150, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
+    $pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
+    $pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
+    $pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
     $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
     $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
 
 
     //SERVICIOS DE SALUD
-    $pdf->Cell(100, 7, utf8_decode('5540'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SERVICIOS DE SALUD 4.625% '), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumasalud']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['sersalud'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5540'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SERVICIOS DE SALUD 4.625% '), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumasalud']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['sersalud'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //SISTEMA SOLIDARIO DE REPARTO
-    $pdf->Cell(100, 7, utf8_decode('5541'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('SISTEMA SOLIDARIO DE REPARTO 6.1%'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumareparto']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['sissolidario'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5541'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('SISTEMA SOLIDARIO DE REPARTO 6.1%'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumareparto']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['sissolidario'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //CAPITALIZACION INDIVIDUAL
-    $pdf->Cell(100, 7, utf8_decode('5542'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('CAPITALIZACION INDIVIDUAL 1.4%'), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumacapita']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['siscapita'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5542'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('CAPITALIZACION INDIVIDUAL 1.4%'), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumacapita']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['siscapita'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //IMPUESTO SOBRE LA RENTA
-    $pdf->Cell(100, 7, utf8_decode('5408'), 0, 0, 'C', 0);
-    $pdf->Cell(22, 7, utf8_decode('IMPUESTO SOBRE LA RENTA '), 0, 0, 'C', 0);
-    $pdf->Cell(72, 7, utf8_decode($row['sumaisr']), 0, 0, 'C', 0);
-    $pdf->Cell(10, 7, utf8_decode("$" . number_format($row['isr'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(30, 7, utf8_decode('5408'), 0, 0, 'C', 0);
+    $pdf->Cell(110, 7, utf8_decode('IMPUESTO SOBRE LA RENTA '), 0, 0, 'C', 0);
+    $pdf->Cell(10, 7, utf8_decode($row['sumaisr']), 0, 0, 'C', 0);
+    $pdf->Cell(35, 7, utf8_decode("$" . number_format($row['isr'], 2, ".", ",")), 0, 1, 'R', 0);
 
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
 
     //TOTAL DEDUCCIONES
-    $pdf->Cell(150, 10, utf8_decode('TOTAL DE DEDUCCIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 10, utf8_decode("$" . number_format($row['totdeducciones'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL DE DEDUCCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totdeducciones'], 2, ".", ",")), 0, 1, 'R', 0);
 
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
 
     //TOTAL NETOS
-    $pdf->Cell(150, 10, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 10, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
-    $pdf->Cell(54, 5, utf8_decode(""), 0, 1, 'R', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(105, 5, utf8_decode(""), 0, 1, 'R', 0);
 
     //TOTAL SUELDOS EVENTUALES
-    $pdf->Cell(150, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-    $pdf->Cell(10, 12, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+    $pdf->Cell(185, 12, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
 
     //SERVICIOS DE SALUD
-    $pdf->Cell(150, 10, utf8_decode('10.0% SERVICIOS DE SALUD'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 6, utf8_decode("$" . number_format($row['sersalud2'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('10.0% SERVICIOS DE SALUD'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 6, utf8_decode("$" . number_format($row['sersalud2'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //FONDO DEL SISTEMA SOLIDARIO D
-    $pdf->Cell(150, 10, utf8_decode('7.42% FONDO DEL SISTEMA SOLIDARIO D'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['fondosisre'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('7.42% FONDO DEL SISTEMA SOLIDARIO D'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['fondosisre'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //SISTEMA DE CAPITALI. INDIVI
-    $pdf->Cell(150, 10, utf8_decode('1.85% SISTEMA DE CAPITALI. INDIVI.'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['siscapita2'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('1.85% SISTEMA DE CAPITALI. INDIVI.'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['siscapita2'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //GASTOS DE ADMINISTRACION
-    $pdf->Cell(150, 10, utf8_decode('0.875% GASTOS DE ADMINISTRACION'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['gasadmin'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('0.875% GASTOS DE ADMINISTRACION'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['gasadmin'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //PRIMA BASICA
-    $pdf->Cell(150, 10, utf8_decode('1.0% PRIMA BASICA'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['primbas'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('1.0% PRIMA BASICA'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['primbas'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //PRIMA DE SINIESTRALIDAD
-    $pdf->Cell(150, 10, utf8_decode('1.989% PRIMA DE SINIESTRALIDAD'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['primsinies'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('1.989% PRIMA DE SINIESTRALIDAD'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['primsinies'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //PRIMA RIESGO NO CONTROLADO
-    $pdf->Cell(150, 10, utf8_decode('0.104% PRIMA RIESGO NO CONTROLADO'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode("$" . number_format($row['primriesgo'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('0.104% PRIMA RIESGO NO CONTROLADO'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['primriesgo'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //TOTAL IMPUESTO SOBRE REMUNERACIONES
-    $pdf->Cell(150, 10, utf8_decode('3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(54, 7, utf8_decode('PENDIENTE'), 0, 1, 'R', 0);
+    $pdf->Cell(95, 10, utf8_decode('3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(90, 7, utf8_decode('PENDIENTE'), 0, 1, 'R', 0);
 }
 
 

@@ -6,6 +6,8 @@ if ($mysqli->connect_errno) {
 	echo "Falló la conexión con MySQL: (" . $mysqli->connect_errno . ")" . $mysqli->connect_error;
 }
 
+$CveNominaForm = $_POST['CveNomina'];
+
 //Solicitar el archivo desde el lado del cliente
 $nombre = $_FILES['archivo']['name'];
 $guardado = $_FILES['archivo']['tmp_name'];
@@ -31,20 +33,67 @@ set_time_limit(600);
 //Borrando contenido de la tabla temporal
 $mysqli->query("DELETE FROM tmpConPrisma");
 
+//Comprobando el origen de archivo PRISMA
 $arc2 = fopen('archivos/' . $nombre, "r");
 //Obteniendo una linea completa del archivo txt
 $linea2 = fgets($arc2);
 //Recuperando las dos primeras posiciones de cada linea
 $bandera2 = substr($linea2, 0, 4);
 
-if ($bandera2 != "0101") {
-	header("Location: alertas/prisma.php");
-}
 fclose($arc2);
 
 
 
 
+
+
+
+//Comprobando coincidencia de archivo PRISMA y nomina del formulario
+//Abriendo el archivo
+$arc3 = fopen('archivos/' . $nombre, "r");
+$i = 0;
+$tmp = "";
+while (!feof($arc3)) {
+	$linea3 = fgets($arc3);
+	$CveNominaTxt = substr($linea3, 419, 6);
+	$i++;
+	if ($i == 2) {
+		break;
+	}
+}
+fclose($arc3);
+
+
+
+if (substr($CveNominaForm, 0, 6) != $CveNominaTxt) {
+	header("Location: alertas/prisma2.php");
+}
+
+
+if ($bandera2 != "0101") {
+	header("Location: alertas/prisma.php");
+}
+
+
+
+
+
+
+
+
+echo "Llegue desde el formulario: " . $CveNominaForm;
+echo '<br>';
+echo "Soy la linea uno del txt: " . $linea2;
+echo '<br>';
+echo "Soy la linea dos del txt:" . $CveNominaTxt;
+echo '<br>';
+echo substr($CveNominaForm, 0, 6);
+echo '<br>';
+echo "!!!!!!!!!!!!AMBAS NOMINAS COINCIDEN PROCEDE A GENERAR REPORTE";
+
+
+
+/*
 //Abriendo el archivo
 $arc = fopen('archivos/' . $nombre, "r");
 //Ciclo que indica lee el archivo hasta la ultima linea
@@ -182,3 +231,4 @@ $pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
 $pdf->Cell(25, 10, 'EXISTEN ' . $a . ' DIFERENCIAS', 0, 0, 0);
 //Indicar salida del archivo pdf
 $pdf->Output();
+*/
