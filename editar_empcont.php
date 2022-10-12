@@ -177,13 +177,13 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
             <input type="text" name="TipoEmpleado" value="<?= $row['TipoEmpleado'] ?>">
 
             <p>Inicio</p>
-            <input type="text" name="Inicio" value="<?= $row['Inicio'] ?>">
+            <input type="date" name="Inicio" value="<?= $row['Inicio'] ?>">
 
             <p>Fin</p>
-            <input type="text" name="Fin" value="<?= $row['Fin'] ?>">
+            <input type="date" name="Fin" value="<?= $row['Fin'] ?>">
 
             <p>Ultimo día</p>
-            <input type="text" name="UltDia" value="<?= $row['UltDia'] ?>">
+            <input type="date" name="UltDia" value="<?= $row['UltDia'] ?>">
 
             <p>Código de categoría</p>
             <input type="text" name="CodCategoria" value="<?= $row['CodCategoria'] ?>">
