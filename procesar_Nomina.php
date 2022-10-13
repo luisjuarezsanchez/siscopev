@@ -92,7 +92,7 @@ if (!isset($usuario)) {
 			</div>
 
 			<div class="item">
-				<a href="#">
+				<a href="perdedapo_manuales.php">
 					<div class="icon"> <img src="img/expedientes/perdedapo.png" title="Agregar PerDedApo manual"> </div>
 					<div class="title"><span>Agregar PerDedApo manual</span></div>
 				</a>

@@ -103,12 +103,6 @@ if (!isset($usuario)) {
 					include 'conexion.php';
 					$consulta = "SELECT CveNomina FROM Nominas ORDER BY CveNomina DESC LIMIT 2";
 					$resultado = $mysqli->query($consulta);
-
-					/*$consulta2 = "TRUNCATE TABLE tmpConPrisma";
-					$resultado2 = $mysqli->query($consulta2);
-
-					$consulta3 = "TRUNCATE TABLE tmpDifISS";
-					$resultado3 = $mysqli->query($consulta3)*/
 					?>
 					<form action="reporte_Prisma.php" method="post" class="form-login">
 						<?php foreach ($resultado as  $opciones) : ?>

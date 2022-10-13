@@ -12,7 +12,7 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 /********************Timbrado Maestro********************************** */
 //Abriendo el archivo en modo de escritura
 //$file = fopen("C:/Users/%USERNAME%/Desktop/MAESTRO.txt", "w");
-$file = fopen("C:\Users\luisj\Desktop\TimMaestro.txt", "w");
+$file = fopen("archivos\timbrados\TimMaestro'.$CveNomina.'.txt", "w");
 
 
 //Solicitando la conexion con la BD
