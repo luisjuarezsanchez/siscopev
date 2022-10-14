@@ -101,6 +101,16 @@ if (!isset($usuario)) {
     error_reporting(0);
     $Nomselect = $_POST['CveNomina'];
     $Cveselect = $_POST['CveEmpleado'];
+    $PerDedAposelect = $_POST['ClavePerDedApo'];
+    $monto = $_POST['monto'];
+    echo "Llego la clave de nomina: " . $Nomselect;
+    echo '<br>';
+    echo "Llego la clave de personal: " . $Cveselect;
+    echo '<br>';
+    echo "Llego la PerDedApo: " . $PerDedAposelect;
+    echo '<br>';
+    echo "Llego el monto: " . $monto;
+    echo '<br>';
     ?>
 
     <br>
@@ -147,16 +157,58 @@ if (!isset($usuario)) {
                         <?php endforeach ?>
                         </select></label>
                         <br>
+
+                        <input class="buttons" type="submit" name="Enviar" value="Cargar nómina">
+                        <br>
+                        <?php
+                        if ($Nomselect > 0) {
+                            
+                            echo '<input class="buttons" type="submit" name="Enviar" value="Cargar datos de empleado">';
+                            echo '<br>';
+                            echo '<br>';
+                            echo '<p>Datos del monto</p>';
+                            echo '<label><select id="lista" name="ClavePerDedApo">';
+                        }
+                        ?>
+
+                        <br>
+
+                        <?php
+                        if ($Cveselect > 0) {
+                            include 'conexion.php';
+                            $consulta = "SELECT Clave,Concepto FROM PerDedApo";
+                            $resultado = $mysqli->query($consulta);
+                            
+                        }
+                        ?>
+                       
+                        <?php foreach ($resultado as  $opciones) : ?>
+                            <option value="<?php echo $opciones['Clave'] ?>">
+                                <?php echo $opciones['Clave'] . " " . $opciones['Concepto'] ?>
+                            </option>
+                        <?php endforeach ?>
+                        <br>
+                        </select></label>
+                        <br>
+                        <?php
+                        echo '<br>';
+                        if ($Cveselect > 0) {
+                            echo '<input type="decimal" name="monto" placeholder="$ Ingresa el monto" required>';
+                            echo '<br>';
+                            echo '<br>';
+                            echo '<input class="buttons" type="submit" value="Insertar PerDedApo">';
+                        }
+                        ?>
                         <br>
                 </div>
-                <input class="buttons" type="submit" name="Enviar" value="Cargar nómina">
-                <?php
-                if ($Nomselect > 0) {
-                    echo '<input class="buttons" type="submit" name="Enviar" value="Cargar datos de empleado">';
-                }
-                ?>
             </form>
             <br>
+
+            <div style="text-align:center;">
+
+
+
+            </div>
 
             <table>
                 <tr>
@@ -184,14 +236,13 @@ if (!isset($usuario)) {
                 }
                 ?>
             </table>
+
+
+
+
+
             <br>
-            <div style="text-align:center;">
-                <form action="">
-                    <input id="caja1" type="text">
-                    <input id="caja2" type="text" placeholder="$">
-                    <input class="buttons" type="submit" value="Insertar PerDedApo">
-                </form>
-            </div>
+
         </div>
     </section>
     <br>
