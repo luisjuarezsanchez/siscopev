@@ -105,7 +105,7 @@ if (!isset($usuario)) {
 
 	<h4 id="tituloTabla">Conciliación con PRISMA</h4>
 	<br>
-	<form id="timbrado" class="form-login" action="reportes_txt.php" method="post" enctype="multipart/form-data">
+	<form id="timbrado" class="form-login" action="depurar.php" method="post" enctype="multipart/form-data">
 		<div style="text-align:center;">
 			<label><select id="lista" name="CveNomina">
 					<?php
@@ -127,7 +127,7 @@ if (!isset($usuario)) {
 			<p>Fecha real de pago</p>
 			<input class="controls" type="date" name="FecPag" required>
 			<!--<input class="controls" type="text" name="CveNomina" value="202212 10094">-->
-			<button class="buttons">Generar reportes</button>
+			<button class="buttons">Generar Excel SerPub</button>
 			<br>
 		</div>
 	</form>

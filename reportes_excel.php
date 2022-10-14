@@ -12,7 +12,7 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 /********************Timbrado Maestro********************************** */
 //Abriendo el archivo en modo de escritura
 //$file = fopen("C:/Users/%USERNAME%/Desktop/MAESTRO.txt", "w");
-$file = fopen("archivos/timbrados/TimMaestro$CveNomina.txt", "w");
+$file = fopen("archivos/timbrados/TimMaestro.txt", "w");
 
 
 //Solicitando la conexion con la BD
@@ -166,10 +166,7 @@ while ($row = $resultado6->fetch_assoc()) {
 $resultado5 = $mysqli->query($consulta5);
 
 //Abriendo el archivo detalle
-//$file2 = fopen("\DETALLE.txt", "w");
-//$file2 = fopen("%USERPROFILE%\DETALLE.txt", "w");
-//$file = fopen("C:/Users/%USERNAME%/Desktop/MAESTRO.txt", "w");
-$file2 = fopen("archivos/timbrados/TimDetalle$CveNomina.txt", "w");
+$file2 = fopen("archivos/timbrados/TimDetalle.txt", "w");
 
 while ($row = $resultado5->fetch_assoc()) {
   fwrite($file2, $row['NumCon'] . '|');
@@ -183,6 +180,8 @@ while ($row = $resultado5->fetch_assoc()) {
   fwrite($file2, '' . PHP_EOL);
 }
 fclose($file2);
+
+
 
 
 
@@ -323,3 +322,5 @@ header('Cache-Control: max-age=0');
 $writer = IOFactory::createWriter($excel, 'Xlsx');
 $writer->save('php://output');
 exit;
+
+
