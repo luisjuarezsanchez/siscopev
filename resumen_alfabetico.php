@@ -55,7 +55,7 @@ class PDF extends FPDF
 require 'conexion.php';
 /**********************CONSULTA PARA CONTRATOS DE DEPORTE**********************/
 $consulta = "SELECT
-DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
+DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4) AS NomBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
 EmpCont.CodCategoria,DetNomina.Del,DetNomina.Al,
 #Total de sueldos eventuales
 '0202' AS cveeventuales,
@@ -85,7 +85,9 @@ SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END)- SUM(CASE 
 (SELECT COUNT(*) FROM EmpCont WHERE EmpCont.Dirgral=0) AS totempleados
 FROM EmpCont INNER JOIN 
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal INNER JOIN
-EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal WHERE EmpCont.CveContrato LIKE '%DEPOR%' AND DetNomina.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal";
+EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal INNER JOIN
+catbanco ON SUBSTR(EmpCont.CtaBanco, 1, 3) = catbanco.CveBanco
+WHERE EmpCont.CveContrato LIKE '%DEPOR%' AND DetNomina.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal";
 //EFECTUANDO CONSULTA
 $resultado = $mysqli->query($consulta);
 
@@ -104,8 +106,9 @@ while ($row = $resultado->fetch_assoc()) {
     $pdf->Cell(2, 5, utf8_decode($row['CvePersonal']), 0, 0, 'C', 0);
     $pdf->Cell(65, 5, utf8_decode($row['RFC']), 0, 0, 'C', 0);
     $pdf->Cell(80, 5, utf8_decode($row['Nombre']), 0, 0, 'C', 0);
-    $pdf->Cell(70, 5, utf8_decode($row['CtaBanco']), 0, 0, 'C', 0);
-    $pdf->Cell(45, 5, utf8_decode($row['CURP']), 0, 0, 'C', 0);
+    $pdf->Cell(55, 5, utf8_decode($row['CtaBanco']), 0, 0, 'C', 0);
+    $pdf->Cell(1, 5, utf8_decode('(' . $row['NomBanco'] . ')'), 0, 0, 'C', 0);
+    $pdf->Cell(74, 5, utf8_decode($row['CURP']), 0, 0, 'C', 0);
     $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
     $pdf->Cell(1, 5, utf8_decode($row['Dirgral']), 0, 0, 'C', 0);
     $pdf->Cell(30, 5, utf8_decode($row['CveISSEMyM']), 0, 0, 'C', 0);
@@ -202,7 +205,7 @@ $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 
 /**********************CONSULTA PARA CONTRATOS DE COMEM**********************/
 $consulta2 = "SELECT
-DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,EmpGral.CURP,EmpCont.Dirgral,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
+DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4)AS NomBanco,EmpGral.CURP,EmpCont.Dirgral,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
 EmpCont.CodCategoria,DetNomina.Del,DetNomina.Al,DetNomina.HrsMen,
 COUNT(DetNomina.Clave=0202) AS indicador,
 #Total de sueldos eventuales
@@ -233,7 +236,9 @@ SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END)- SUM(CASE 
 (SELECT COUNT(*) FROM EmpCont WHERE EmpCont.Dirgral=1) AS totempleados
 FROM EmpCont INNER JOIN 
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal INNER JOIN
-EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal WHERE EmpCont.CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina'  /*AND DetNomina.CvePersonal IN (86) */GROUP BY DetNomina.CvePersonal";
+EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal INNER JOIN
+catbanco ON SUBSTR(EmpCont.CtaBanco, 1, 3) = catbanco.CveBanco
+WHERE EmpCont.CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal";
 //EFECTUANDO CONSULTA
 $resultado2 = $mysqli->query($consulta2);
 
@@ -251,8 +256,9 @@ while ($row = $resultado2->fetch_assoc()) {
         $pdf->Cell(2, 5, utf8_decode($row['CvePersonal']), 0, 0, 'C', 0);
         $pdf->Cell(65, 5, utf8_decode($row['RFC']), 0, 0, 'C', 0);
         $pdf->Cell(80, 5, utf8_decode($row['Nombre']), 0, 0, 'C', 0);
-        $pdf->Cell(70, 5, utf8_decode($row['CtaBanco']), 0, 0, 'C', 0);
-        $pdf->Cell(45, 5, utf8_decode($row['CURP']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode($row['CtaBanco']), 0, 0, 'C', 0);
+        $pdf->Cell(1, 5, utf8_decode('(' . $row['NomBanco'] . ')'), 0, 0, 'C', 0);
+        $pdf->Cell(74, 5, utf8_decode($row['CURP']), 0, 0, 'C', 0);
         $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
         $pdf->Cell(1, 5, utf8_decode($row['Dirgral']), 0, 0, 'C', 0);
         $pdf->Cell(30, 5, utf8_decode($row['CveISSEMyM']), 0, 0, 'C', 0);
@@ -357,8 +363,9 @@ while ($row = $resultado2->fetch_assoc()) {
         $pdf->Cell(2, 5, utf8_decode($row['CvePersonal']), 0, 0, 'C', 0);
         $pdf->Cell(65, 5, utf8_decode($row['RFC']), 0, 0, 'C', 0);
         $pdf->Cell(80, 5, utf8_decode($row['Nombre']), 0, 0, 'C', 0);
-        $pdf->Cell(70, 5, utf8_decode($row['CtaBanco']), 0, 0, 'C', 0);
-        $pdf->Cell(45, 5, utf8_decode($row['CURP']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode($row['CtaBanco']), 0, 0, 'C', 0);
+        $pdf->Cell(1, 5, utf8_decode('(' . $row['NomBanco'] . ')'), 0, 0, 'C', 0);
+        $pdf->Cell(74, 5, utf8_decode($row['CURP']), 0, 0, 'C', 0);
         $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
         $pdf->Cell(1, 5, utf8_decode($row['Dirgral']), 0, 0, 'C', 0);
         $pdf->Cell(30, 5, utf8_decode($row['CveISSEMyM']), 0, 0, 'C', 0);
