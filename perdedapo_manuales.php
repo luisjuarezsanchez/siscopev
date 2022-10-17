@@ -1,4 +1,5 @@
 <?php
+$conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
 session_start();
 $usuario = $_SESSION['username'];
 if (!isset($usuario)) {
@@ -101,16 +102,9 @@ if (!isset($usuario)) {
     error_reporting(0);
     $Nomselect = $_POST['CveNomina'];
     $Cveselect = $_POST['CveEmpleado'];
-    $PerDedAposelect = $_POST['ClavePerDedApo'];
-    $monto = $_POST['monto'];
-    echo "Llego la clave de nomina: " . $Nomselect;
-    echo '<br>';
-    echo "Llego la clave de personal: " . $Cveselect;
-    echo '<br>';
-    echo "Llego la PerDedApo: " . $PerDedAposelect;
-    echo '<br>';
-    echo "Llego el monto: " . $monto;
-    echo '<br>';
+    //$PerDedAposelect = $_POST['ClavePerDedApo'];
+    //$monto = $_POST['monto'];
+
     ?>
 
     <br>
@@ -136,7 +130,7 @@ if (!isset($usuario)) {
                         </select></label>
                     <?php
                     if ($Nomselect > 0) {
-                        echo '<p>Clave de empleado</p>';
+                        echo '<p>Nombre de empleado</p>';
                     }
 
                     ?>
@@ -146,104 +140,112 @@ if (!isset($usuario)) {
                     }
                     ?>
                     <?php
-                    $consulta2 = "SELECT CvePersonal FROM DetNomina WHERE CveNomina = '$Nomselect' GROUP BY CvePersonal";
+                    $consulta2 = "SELECT CONCAT(EmpGral.Paterno,' ',EmpGral.Materno,' ', EmpGral.Nombre)AS Nombre,DetNomina.CvePersonal FROM DetNomina INNER JOIN EmpGral ON DetNomina.CvePersonal = EmpGral.CvePersonal WHERE DetNomina.CveNomina = '$Nomselect' GROUP BY DetNomina.CvePersonal ORDER BY EmpGral.Paterno";
                     $resultado2 = $mysqli->query($consulta2);
                     ?>
                     <form action="perdedapo_manuales.php" method="post" class="form-login">
-                        <?php foreach ($resultado2 as  $opciones2) : ?>
+                        <?php foreach ($resultado2 as  $opciones2) :
+                        ?>
                             <option value="<?php echo $opciones2['CvePersonal'] ?>">
-                                <?php echo $opciones2['CvePersonal'] ?>
+                                <?php echo $opciones2['Nombre']; ?>
                             </option>
                         <?php endforeach ?>
                         </select></label>
                         <br>
-
                         <input class="buttons" type="submit" name="Enviar" value="Cargar nómina">
                         <br>
                         <?php
                         if ($Nomselect > 0) {
-                            
+                            echo '<form class="form-login-perdedapo" action="depurar.php" method="post">';
                             echo '<input class="buttons" type="submit" name="Enviar" value="Cargar datos de empleado">';
                             echo '<br>';
                             echo '<br>';
-                            echo '<p>Datos del monto</p>';
-                            echo '<label><select id="lista" name="ClavePerDedApo">';
+                            echo '</form>';
                         }
                         ?>
-
                         <br>
 
-                        <?php
-                        if ($Cveselect > 0) {
-                            include 'conexion.php';
-                            $consulta = "SELECT Clave,Concepto FROM PerDedApo";
-                            $resultado = $mysqli->query($consulta);
-                            
-                        }
-                        ?>
-                       
-                        <?php foreach ($resultado as  $opciones) : ?>
-                            <option value="<?php echo $opciones['Clave'] ?>">
-                                <?php echo $opciones['Clave'] . " " . $opciones['Concepto'] ?>
-                            </option>
-                        <?php endforeach ?>
-                        <br>
-                        </select></label>
-                        <br>
-                        <?php
-                        echo '<br>';
-                        if ($Cveselect > 0) {
-                            echo '<input type="decimal" name="monto" placeholder="$ Ingresa el monto" required>';
-                            echo '<br>';
-                            echo '<br>';
-                            echo '<input class="buttons" type="submit" value="Insertar PerDedApo">';
-                        }
-                        ?>
-                        <br>
+
                 </div>
             </form>
             <br>
-
+            <br>
             <div style="text-align:center;">
+                <?php
+                if ($Nomselect > 0 and $Cveselect > 0) {
+                    echo '<h4 id="tituloTabla">Verifica que los datos cargados sean correctos de lo contrario<br>
+                    vuelve a seleccionar los valores correspondientes</h4>';
+                    $sql = "SELECT HrsMen,CONCAT(EmpGral.Paterno,' ',EmpGral.Materno,' ',EmpGral.Nombre) AS Nombre,DetNomina.Del,DetNomina.Al,DetNomina.CveNomina,DetNomina.CvePersonal 
+                    FROM DetNomina INNER JOIN EmpGral ON DetNomina.CvePersonal=EmpGral.CvePersonal
+                    WHERE DetNomina.CveNomina='$Nomselect' AND DetNomina.CvePersonal='$Cveselect' GROUP BY DetNomina.CvePersonal;";
+                    $result = mysqli_query($conexion, $sql);
+                    while ($mostrar = mysqli_fetch_array($result)) {
+                        $Hrsselect = $mostrar['HrsMen'];
+                        $Nombreselect = $mostrar['Nombre'];
+                        $Delselect = $mostrar['Del'];
+                        $Alselect = $mostrar['Al'];
+                    }
+                    echo "Clave de nomina: " . $Nomselect;
+                    echo '<br>';
+                    echo "Clave de empleado: " . $Cveselect;
+                    echo '<br>';
+                    echo "Nombre del empleado: " . $Nombreselect;
+                    echo '<br>';
+                    echo "Fecha inicio nómina: " . $Delselect;
+                    echo '<br>';
+                    echo "Fecha fin de nómina: " . $Alselect;
+                    echo '<div style="text-align:center;">';
+                    echo '<form action="insert_perded.php" method="post">';
+                    echo '<label><select id="lista" name="ClavePerDedApo">';
+                    $consulta3 = "SELECT Clave,Concepto FROM PerDedApo";
+                    $resultado3 = $mysqli->query($consulta3);
+                    foreach ($resultado3 as  $opciones3) :
+                ?>
+                        <option value="<?php echo $opciones3['Clave'] ?>">
+                    <?php
+                        echo $opciones3['Clave'].' '.$opciones3['Concepto'];
+                        echo '</option>';
+                    endforeach;
+                    echo '</select></label>';
+                    echo '<input type="decimal" placeholder="Importe" name="Importe">';
+                    echo '<input type="hidden" name="CveNomina" value="' . $Nomselect . '">';
+                    echo '<input type="hidden" name="Del" value="' . $Delselect . '">';
+                    echo '<input type="hidden" name="Al" value="' . $Alselect . '">';
+                    echo '<input type="hidden" name="CvePersonal" value="' . $Cveselect . '">';
+                    echo '<input type="hidden" name="HrsMen" value="' . $Hrsselect . '">';
+
+                    echo '<button class="buttons">Insertar PerDedApo manual</button>';
+                    echo '</form>';
+                }
+                    ?>
+                    <table>
+                        <tr>
+                            <thead>
+                                <td>Clave</td>
+                                <td>Importe</td>
+                            </thead>
+                        </tr>
+
+                        <?php
+                        if ($Nomselect > 0 and $Cveselect > 0) {
+                            $sql = "SELECT * FROM DetNomina WHERE CveNomina='$Nomselect' AND CvePersonal='$Cveselect'";
+                            $result = mysqli_query($conexion, $sql);
+                        }
 
 
+                        while ($mostrar = mysqli_fetch_array($result)) {
+                        ?>
+                            <tr>
+                                <td><?php echo $mostrar['Clave'] ?></td>
+                                <td><?php echo '$ ' . $mostrar['Importe'] ?></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </table>
+                    <br>
 
             </div>
-
-            <table>
-                <tr>
-                    <thead>
-                        <td>CveEmpleado</td>
-                        <td>Clave</td>
-                        <td>Importe</td>
-                    </thead>
-                </tr>
-
-                <?php
-                $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
-
-                $sql = "SELECT * FROM DetNomina WHERE CveNomina='$Nomselect' AND CvePersonal='$Cveselect'";
-                $result = mysqli_query($conexion, $sql);
-
-                while ($mostrar = mysqli_fetch_array($result)) {
-                ?>
-                    <tr>
-                        <td><?php echo $mostrar['CvePersonal'] ?></td>
-                        <td><?php echo $mostrar['Clave'] ?></td>
-                        <td><?php echo '$ ' . $mostrar['Importe'] ?></td>
-                    </tr>
-                <?php
-                }
-                ?>
-            </table>
-
-
-
-
-
-            <br>
-
-        </div>
     </section>
     <br>
     <br>

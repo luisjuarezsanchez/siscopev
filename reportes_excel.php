@@ -10,9 +10,16 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 /********************Timbrado Maestro********************************** */
+#Creando carpeta para almacenar archivos timbrado
+$micarpeta = 'timbrados/timbrados'.$CveNomina.'';
+if (!file_exists($micarpeta)) {
+  mkdir($micarpeta, 0777, true);
+}
+
+
 //Abriendo el archivo en modo de escritura
 //$file = fopen("C:/Users/%USERNAME%/Desktop/MAESTRO.txt", "w");
-$file = fopen("archivos/timbrados/TimMaestro.txt", "w");
+$file = fopen("timbrados/timbrados$CveNomina/TimMaestro$CveNomina.txt", "w");
 
 
 //Solicitando la conexion con la BD
@@ -166,7 +173,11 @@ while ($row = $resultado6->fetch_assoc()) {
 $resultado5 = $mysqli->query($consulta5);
 
 //Abriendo el archivo detalle
-$file2 = fopen("archivos/timbrados/TimDetalle.txt", "w");
+//$file2 = fopen("\DETALLE.txt", "w");
+//$file2 = fopen("%USERPROFILE%\DETALLE.txt", "w");
+$file2 = fopen("timbrados/timbrados$CveNomina/TimDetalle$CveNomina.txt", "w");
+
+
 
 while ($row = $resultado5->fetch_assoc()) {
   fwrite($file2, $row['NumCon'] . '|');
@@ -180,8 +191,6 @@ while ($row = $resultado5->fetch_assoc()) {
   fwrite($file2, '' . PHP_EOL);
 }
 fclose($file2);
-
-
 
 
 
@@ -322,5 +331,3 @@ header('Cache-Control: max-age=0');
 $writer = IOFactory::createWriter($excel, 'Xlsx');
 $writer->save('php://output');
 exit;
-
-
