@@ -145,7 +145,7 @@ if (!isset($usuario)) {
 				<p>Fecha de fin de nómina</p>
 				<input class="controls" type="date" name="Al" required>
 				<p>Honorarios</p>
-				<input class="controls" type="text" name="GenHon" required>
+				<input class="controls" type="text" name="GenHon" required pattern="[0-1]" title="Unicamente se aceptan los valores 0 y 1">
 				<br>
 				<br>
 				<input class="buttons" type="submit" name="Enviar" value="Enviar información">

@@ -15,6 +15,11 @@ $totalDeducciones = 0;
 $a = 0;
 $defPercepciones = 0;
 $defDeducciones = 0;
+//Contadores de empleados
+$contadorDeporte = 0;
+$contadorComem = 0;
+$contadorPatri = 0;
+
 
 //Solicitando los archivos de FPDF
 require('fpdf/fpdf.php');
@@ -56,7 +61,7 @@ require 'conexion.php';
 /**********************CONSULTA PARA CONTRATOS DE DEPORTE**********************/
 $consulta = "SELECT
 DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4) AS NomBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
-EmpCont.CodCategoria,DetNomina.Del,DetNomina.Al,
+EmpCont.CodCategoria,catcatego.Descripcion,DetNomina.Del,DetNomina.Al,
 #Total de sueldos eventuales
 '0202' AS cveeventuales,
 SUM(CASE WHEN DetNomina.Clave=0202 THEN Importe ELSE 0 END) AS toteventuales,
@@ -86,7 +91,8 @@ SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END)- SUM(CASE 
 FROM EmpCont INNER JOIN 
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal INNER JOIN
 EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal INNER JOIN
-catbanco ON SUBSTR(EmpCont.CtaBanco, 1, 3) = catbanco.CveBanco
+catbanco ON SUBSTR(EmpCont.CtaBanco, 1, 3) = catbanco.CveBanco INNER JOIN
+catcatego ON EmpCont.CodCategoria = catcatego.CveCategoria
 WHERE EmpCont.CveContrato LIKE '%DEPOR%' AND DetNomina.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal";
 //EFECTUANDO CONSULTA
 $resultado = $mysqli->query($consulta);
@@ -115,7 +121,7 @@ while ($row = $resultado->fetch_assoc()) {
     $pdf->Cell(10, 5, utf8_decode($row['UnidadRespon']), 0, 0, 'C', 0);
     $pdf->Cell(90, 5, utf8_decode('DIR GRAL DE CULTURA FISICA Y DEPORTE'), 0, 0, 'C', 0);
     $pdf->Cell(20, 5, utf8_decode($row['CodCategoria']), 0, 0, 'C', 0);
-    $pdf->Cell(65, 5, utf8_decode('INSTRUCTOR NATACION "D"'), 0, 0, 'C', 0);
+    $pdf->Cell(65, 5, utf8_decode($row['Descripcion']), 0, 0, 'C', 0);
     $pdf->Cell(15, 5, utf8_decode($row['Del']), 0, 0, 'C', 0);
     $pdf->Cell(40, 5, utf8_decode($row['Al']), 0, 0, 'C', 0);
     $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
@@ -176,10 +182,11 @@ while ($row = $resultado->fetch_assoc()) {
     $a = $a + 1;
     $defPercepciones = $defPercepciones + $row['totpercepciones'];
     $defDeducciones = $defDeducciones + $row['totdeducciones'];
+    $contadorDeporte = $contadorDeporte + 1;
 }
 
 //Imprimiendo totales en pantalla
-$pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $totalEmp), 0, 0, 'R', 0);
+$pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $contadorDeporte), 0, 0, 'R', 0);
 $pdf->Cell(90, 5, utf8_decode("$" . number_format($totalPercepciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(120, 5, utf8_decode("$" . number_format($totalDeducciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
@@ -206,7 +213,7 @@ $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 /**********************CONSULTA PARA CONTRATOS DE COMEM**********************/
 $consulta2 = "SELECT
 DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4)AS NomBanco,EmpGral.CURP,EmpCont.Dirgral,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
-EmpCont.CodCategoria,DetNomina.Del,DetNomina.Al,DetNomina.HrsMen,
+EmpCont.CodCategoria,catcatego.Descripcion,catcatego.DescCorta,DetNomina.Del,DetNomina.Al,DetNomina.HrsMen,
 COUNT(DetNomina.Clave=0202) AS indicador,
 #Total de sueldos eventuales
 '0202' AS cveeventuales,
@@ -237,7 +244,8 @@ SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END)- SUM(CASE 
 FROM EmpCont INNER JOIN 
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal INNER JOIN
 EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal INNER JOIN
-catbanco ON SUBSTR(EmpCont.CtaBanco, 1, 3) = catbanco.CveBanco
+catbanco ON SUBSTR(EmpCont.CtaBanco, 1, 3) = catbanco.CveBanco INNER JOIN
+catcatego ON EmpCont.CodCategoria = catcatego.CveCategoria
 WHERE EmpCont.CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal";
 //EFECTUANDO CONSULTA
 $resultado2 = $mysqli->query($consulta2);
@@ -265,7 +273,7 @@ while ($row = $resultado2->fetch_assoc()) {
         $pdf->Cell(10, 5, utf8_decode($row['UnidadRespon']), 0, 0, 'C', 0);
         $pdf->Cell(90, 5, utf8_decode('DIREC GRAL DEL COMEM'), 0, 0, 'C', 0);
         $pdf->Cell(20, 5, utf8_decode($row['CodCategoria']), 0, 0, 'C', 0);
-        $pdf->Cell(65, 5, utf8_decode('INSTRUCTOR NATACION "D"'), 0, 0, 'C', 0);
+        $pdf->Cell(65, 5, utf8_decode($row['Descripcion']), 0, 0, 'C', 0);
         $pdf->Cell(15, 5, utf8_decode($row['Del']), 0, 0, 'C', 0);
         $pdf->Cell(40, 5, utf8_decode($row['Al']), 0, 0, 'C', 0);
         $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
@@ -372,7 +380,7 @@ while ($row = $resultado2->fetch_assoc()) {
         $pdf->Cell(10, 5, utf8_decode($row['UnidadRespon']), 0, 0, 'C', 0);
         $pdf->Cell(90, 5, utf8_decode('DIREC GRAL DEL COMEM'), 0, 0, 'C', 0);
         $pdf->Cell(20, 5, utf8_decode($row['CodCategoria']), 0, 0, 'C', 0);
-        $pdf->Cell(65, 5, utf8_decode('INSTRUCTOR NATACION "D"'), 0, 0, 'C', 0);
+        $pdf->Cell(65, 5, utf8_decode($row['Descripcion']), 0, 0, 'C', 0);
         $pdf->Cell(15, 5, utf8_decode($row['Del']), 0, 0, 'C', 0);
         $pdf->Cell(40, 5, utf8_decode($row['Al']), 0, 0, 'C', 0);
         $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
@@ -438,10 +446,11 @@ while ($row = $resultado2->fetch_assoc()) {
     $a = $a + 1;
     $defPercepciones = $defPercepciones + $row['totpercepciones'];
     $defDeducciones = $defDeducciones + $row['totdeducciones'];
+    $contadorComem = $contadorComem + 1;
 }
 
 //Imprimiendo totales en pantalla
-$pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $totalEmp), 0, 0, 'R', 0);
+$pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $contadorComem), 0, 0, 'R', 0);
 $pdf->Cell(90, 5, utf8_decode("$" . number_format($totalPercepciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(120, 5, utf8_decode("$" . number_format($totalDeducciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
@@ -468,8 +477,8 @@ $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 
 /**********************CONSULTA PARA CONTRATOS DE PATRIMONIO**********************/
 $consulta3 = "SELECT
-DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
-EmpCont.CodCategoria,DetNomina.Del,DetNomina.Al,
+DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4)AS NomBanco,EmpCont.CtaBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
+EmpCont.CodCategoria,catcatego.Descripcion,DetNomina.Del,DetNomina.Al,
 #Total de sueldos eventuales
 '0202' AS cveeventuales,
 SUM(CASE WHEN DetNomina.Clave=0202 THEN Importe ELSE 0 END) AS toteventuales,
@@ -498,7 +507,10 @@ SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END)- SUM(CASE 
 (SELECT COUNT(*) FROM EmpCont WHERE EmpCont.Dirgral=2) AS totempleados
 FROM EmpCont INNER JOIN 
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal INNER JOIN
-EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal WHERE EmpCont.CveContrato LIKE '%PATRI%' AND DetNomina.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal";
+EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal INNER JOIN
+catbanco ON SUBSTR(EmpCont.CtaBanco, 1, 3) = catbanco.CveBanco INNER JOIN
+catcatego ON EmpCont.CodCategoria = catcatego.CveCategoria
+WHERE EmpCont.CveContrato LIKE '%PATRI%' AND DetNomina.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal";
 //EFECTUANDO CONSULTA
 $resultado3 = $mysqli->query($consulta3);
 
@@ -513,15 +525,16 @@ while ($row = $resultado3->fetch_assoc()) {
     $pdf->Cell(2, 5, utf8_decode($row['CvePersonal']), 0, 0, 'C', 0);
     $pdf->Cell(65, 5, utf8_decode($row['RFC']), 0, 0, 'C', 0);
     $pdf->Cell(80, 5, utf8_decode($row['Nombre']), 0, 0, 'C', 0);
-    $pdf->Cell(70, 5, utf8_decode($row['CtaBanco']), 0, 0, 'C', 0);
-    $pdf->Cell(45, 5, utf8_decode($row['CURP']), 0, 0, 'C', 0);
+    $pdf->Cell(55, 5, utf8_decode($row['CtaBanco']), 0, 0, 'C', 0);
+    $pdf->Cell(1, 5, utf8_decode('(' . $row['NomBanco'] . ')'), 0, 0, 'C', 0);
+    $pdf->Cell(74, 5, utf8_decode($row['CURP']), 0, 0, 'C', 0);
     $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
     $pdf->Cell(1, 5, utf8_decode($row['Dirgral']), 0, 0, 'C', 0);
     $pdf->Cell(30, 5, utf8_decode($row['CveISSEMyM']), 0, 0, 'C', 0);
     $pdf->Cell(10, 5, utf8_decode($row['UnidadRespon']), 0, 0, 'C', 0);
     $pdf->Cell(90, 5, utf8_decode('DIR GRAL PAT Y SERV CULT -TOLUCAE'), 0, 0, 'C', 0);
     $pdf->Cell(20, 5, utf8_decode($row['CodCategoria']), 0, 0, 'C', 0);
-    $pdf->Cell(65, 5, utf8_decode('INSTRUCTOR NATACION "D"'), 0, 0, 'C', 0);
+    $pdf->Cell(65, 5, utf8_decode($row['Descripcion']), 0, 0, 'C', 0);
     $pdf->Cell(15, 5, utf8_decode($row['Del']), 0, 0, 'C', 0);
     $pdf->Cell(40, 5, utf8_decode($row['Al']), 0, 0, 'C', 0);
     $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
@@ -584,10 +597,11 @@ while ($row = $resultado3->fetch_assoc()) {
     $a = $a + 1;
     $defPercepciones = $defPercepciones + $row['totpercepciones'];
     $defDeducciones = $defDeducciones + $row['totdeducciones'];
+    $contadorPatri = $contadorPatri + 1;
 }
 
 //Imprimiendo totales en pantalla
-$pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $totalEmp), 0, 0, 'R', 0);
+$pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $contadorPatri), 0, 0, 'R', 0);
 $pdf->Cell(90, 5, utf8_decode("$" . number_format($totalPercepciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(120, 5, utf8_decode("$" . number_format($totalDeducciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
@@ -600,7 +614,7 @@ $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 //Totales de toda la nomina
 $pdf->Cell(250, 5, utf8_decode("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"), 0, 0, 'C', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-$pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $a), 0, 0, 'R', 0);
+$pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $contadorDeporte+$contadorPatri+$contadorComem), 0, 0, 'R', 0);
 $pdf->Cell(90, 5, utf8_decode("$" . number_format($defPercepciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(120, 5, utf8_decode("$" . number_format($defDeducciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
