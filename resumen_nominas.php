@@ -25,7 +25,7 @@ class PDF extends FPDF
         // Título
         $this->Cell(100, 5, utf8_decode(""), 0, 1, 'C', 0);
 
-        $this->Cell(200, 20, utf8_decode('SECRETARIA DE CULTURA Y TURISMO'), 10, 10, 'C'); //derecha abajo Salto de línea
+        $this->Cell(200, 20, utf8_decode('SECRETARÍA DE CULTURA Y TURISMO'), 10, 10, 'C'); //derecha abajo Salto de línea
         //Saltos de linea
         $this->Ln(0);
         //$this->Cell(250, 14, utf8_decode('RESUMEN DE PERCEPCIONES Y DEDUCCIONES DE LA QUINCENA '.$GLOBALS["CveNomina"]), 10, 10, 'C');

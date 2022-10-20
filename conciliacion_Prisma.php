@@ -122,11 +122,22 @@ if (!isset($usuario)) {
 			<br>
 			<br>
 			<input type="file" name="archivo" accept=".txt" required=""><br><br>
-			<button class="buttons">Cargar archivo .txt</button>
+			<button class="buttons" onclick="Activar" name="tema">Cargar archivo .txt</button>
+			<script type="text/javascript">
+				function Activar() {
+					var contenedor = document.getElementById("OtroTema");
+					contenedor.style.display = "block";
+					return true;
+				}
+			</script>
+
 			<br>
 		</div>
 	</form>
-	<div class="loader" id="load"></div>
+
+	<div id="OtroTema" style="text-align:center; display:none;" class="loader">
+		<span class="spinner"></span>
+	</div>
 	<br>
 	<!--/////////////////Animacion del menu desplegable/////////////////-->
 	<script>
