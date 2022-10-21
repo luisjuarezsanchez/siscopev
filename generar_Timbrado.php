@@ -127,6 +127,8 @@ if (!isset($usuario)) {
 			<p>Fecha real de pago</p>
 			<input class="controls" type="date" name="FecPag" required>
 			<!--<input class="controls" type="text" name="CveNomina" value="202212 10094">-->
+			<p>Fecha real de pago para Bancomer</p>
+			<input class="controls" type="date" name="FecPagBancomer" required>
 			<button class="buttons">Generar archivos de Timbrado</button>
 			<br>
 			<a href="timbrados">Ver archivos TXT de timbrado</a>

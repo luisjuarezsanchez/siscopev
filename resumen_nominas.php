@@ -1,8 +1,8 @@
 <?php
 session_start();
 $usuario = $_SESSION['username'];
-if(!isset($usuario)){
-	header("location: index.php");
+if (!isset($usuario)) {
+    header("location: index.php");
 }
 $CveNomina = $_POST['CveNomina'];
 $a = 0;
@@ -29,7 +29,7 @@ class PDF extends FPDF
         //Saltos de linea
         $this->Ln(0);
         //$this->Cell(250, 14, utf8_decode('RESUMEN DE PERCEPCIONES Y DEDUCCIONES DE LA QUINCENA '.$GLOBALS["CveNomina"]), 10, 10, 'C');
-        $this->Cell(190, 14, utf8_decode('RESUMEN DE PERCEPCIONES Y DEDUCCIONES DE LA QUINCENA '.substr($GLOBALS["CveNomina"],0,6)), 10, 10, 'C');
+        $this->Cell(190, 14, utf8_decode('RESUMEN DE PERCEPCIONES Y DEDUCCIONES DE LA QUINCENA ' . substr($GLOBALS["CveNomina"], 0, 6)), 10, 10, 'C');
         $this->Ln(0);
     }
     // Pie de página
@@ -107,20 +107,20 @@ $resultado = $mysqli->query($consulta);
 $pdf = new PDF('P', 'mm', 'letter'); //Indicando formato horizontal del reporte
 $pdf->AliasNbPages();
 $pdf->AddPage();
-$pdf->SetFont('Helvetica', '', 12);
+$pdf->SetFont('Helvetica', '', 10);
 
-$pdf->Cell(195, 10, utf8_decode('COORDINACION: 22600005L          DIREC. GRAL. DE CULTURA FISICA Y DEPORTE'), 10, 100, 'C', 0);
+$pdf->Cell(195, 5, utf8_decode('COORDINACION: 22600005L          DIREC. GRAL. DE CULTURA FISICA Y DEPORTE'), 10, 100, 'C', 0);
 
 //Indicar salida del archivo pdf
 $pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(100, 15, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
-$pdf->Cell(25, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-$pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-$pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
-$pdf->Cell(25, 10, utf8_decode(''), 0, 1, 'C', 0);
-$pdf->Cell(25, 10, utf8_decode(''), 0, 1, 'C', 0);
-$pdf->SetFont('Helvetica', '', 12);
+$pdf->Cell(100, 1, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
+$pdf->Cell(25, 1, utf8_decode(""), 0, 1, 'C', 0);
+$pdf->Cell(30, 5, utf8_decode('Clave'), 0, 0, 'C', 0);
+$pdf->Cell(115, 5, utf8_decode('Concepto'), 0, 0, 'C', 0);
+$pdf->Cell(65, 5, utf8_decode('Importe'), 0, 0, 'C', 0);
+$pdf->Cell(25, 3, utf8_decode(''), 0, 1, 'C', 0);
+$pdf->Cell(25, 3, utf8_decode(''), 0, 1, 'C', 0);
+$pdf->SetFont('Helvetica', '', 10);
 
 
 //$pdf->Cell(100,10, utf8_decode($row['Descripcion']), 0, 0, 'C', 0);
@@ -145,13 +145,13 @@ while ($row = $resultado->fetch_assoc()) {
 
     //ENCABEZADOS DEDUCCIONES
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(100, 10, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(43, 8, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-    $pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-    $pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
-    $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
-    $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
+    $pdf->Cell(100, 3, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(43, 3, utf8_decode(""), 0, 1, 'C', 0);
+    $pdf->Cell(30, 3, utf8_decode('Clave'), 0, 0, 'C', 0);
+    $pdf->Cell(115, 5, utf8_decode('Concepto'), 0, 0, 'C', 0);
+    $pdf->Cell(65, 3, utf8_decode('Importe'), 0, 0, 'C', 0);
+    $pdf->Cell(43, 3, utf8_decode(''), 0, 1, 'C', 0);
+    $pdf->Cell(43, 3, utf8_decode(''), 0, 1, 'C', 0);
 
 
     //SERVICIOS DE SALUD
@@ -187,13 +187,13 @@ while ($row = $resultado->fetch_assoc()) {
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
 
     //TOTAL NETOS
-    $pdf->Cell(80, 10, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
-    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(80, 5, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 5, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
     $pdf->Cell(54, 5, utf8_decode(""), 0, 1, 'R', 0);
 
     //TOTAL SUELDOS EVENTUALES
     $pdf->Cell(80, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-    $pdf->Cell(185, 12, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
+    $pdf->Cell(195, 10, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
 
     //SERVICIOS DE SALUD
     $pdf->Cell(95, 10, utf8_decode('10.0% SERVICIOS DE SALUD'), 0, 0, 'C', 0);
@@ -205,7 +205,7 @@ while ($row = $resultado->fetch_assoc()) {
 
     //SISTEMA DE CAPITALI. INDIVI
     $pdf->Cell(95, 10, utf8_decode('1.85% SISTEMA DE CAPITALI. INDIVI.'), 0, 0, 'C', 0);
-    $pdf->Cell(90, 7, utf8_decode("70$" . number_format($row['siscapita2'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format($row['siscapita2'], 2, ".", ",")), 0, 1, 'R', 0);
 
     //GASTOS DE ADMINISTRACION
     $pdf->Cell(95, 10, utf8_decode('0.875% GASTOS DE ADMINISTRACION'), 0, 0, 'C', 0);
@@ -293,19 +293,19 @@ $resultado2 = $mysqli->query($consulta2);
 //Agregando pagina para que inicie desde en encabezado
 $pdf->AliasNbPages();
 $pdf->AddPage();
-$pdf->SetFont('Helvetica', '', 12);
-$pdf->Cell(195, 10, utf8_decode('COORDINACION: 22600003L          DIREC GRAL CONSERVATORIO DE MUSICA DEL EDOMEX'), 10, 100, 'C', 0);
+$pdf->SetFont('Helvetica', '', 10);
+$pdf->Cell(195, 5, utf8_decode('COORDINACION: 22600003L          DIREC GRAL CONSERVATORIO DE MUSICA DEL EDOMEX'), 10, 100, 'C', 0);
 
 //Indicar salida del archivo pdf
 $pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(100, 15, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
-$pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-$pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-$pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
-$pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
-$pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
-$pdf->SetFont('Helvetica', '', 12);
+$pdf->Cell(100, 1, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
+$pdf->Cell(25, 1, utf8_decode(""), 0, 1, 'C', 0);
+$pdf->Cell(30, 5, utf8_decode('Clave'), 0, 0, 'C', 0);
+$pdf->Cell(115, 5, utf8_decode('Concepto'), 0, 0, 'C', 0);
+$pdf->Cell(65, 5, utf8_decode('Importe'), 0, 0, 'C', 0);
+$pdf->Cell(25, 3, utf8_decode(''), 0, 1, 'C', 0);
+$pdf->Cell(25, 3, utf8_decode(''), 0, 1, 'C', 0);
+$pdf->SetFont('Helvetica', '', 10);
 
 
 //$pdf->Cell(100,10, utf8_decode($row['Descripcion']), 0, 0, 'C', 0);
@@ -330,13 +330,13 @@ while ($row = $resultado2->fetch_assoc()) {
 
     //ENCABEZADOS DEDUCCIONES
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(100, 10, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(43, 8, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-    $pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-    $pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
-    $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
-    $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
+    $pdf->Cell(100, 3, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(43, 3, utf8_decode(""), 0, 1, 'C', 0);
+    $pdf->Cell(30, 3, utf8_decode('Clave'), 0, 0, 'C', 0);
+    $pdf->Cell(115, 5, utf8_decode('Concepto'), 0, 0, 'C', 0);
+    $pdf->Cell(40, 3, utf8_decode('Importe'), 0, 0, 'C', 0);
+    $pdf->Cell(43, 3, utf8_decode(''), 0, 1, 'C', 0);
+    $pdf->Cell(43, 3, utf8_decode(''), 0, 1, 'C', 0);
 
 
     //SERVICIOS DE SALUD
@@ -372,13 +372,13 @@ while ($row = $resultado2->fetch_assoc()) {
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
 
     //TOTAL NETOS
-    $pdf->Cell(80, 10, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
-    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(80, 5, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 5, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
     $pdf->Cell(54, 5, utf8_decode(""), 0, 1, 'R', 0);
 
     //TOTAL SUELDOS EVENTUALES
     $pdf->Cell(80, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-    $pdf->Cell(185, 12, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
+    $pdf->Cell(195, 10, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
 
     //SERVICIOS DE SALUD
     $pdf->Cell(95, 10, utf8_decode('10.0% SERVICIOS DE SALUD'), 0, 0, 'C', 0);
@@ -476,19 +476,19 @@ $resultado3 = $mysqli->query($consulta3);
 //Agregando pagina para que inicie desde en encabezado
 $pdf->AliasNbPages();
 $pdf->AddPage();
-$pdf->SetFont('Helvetica', '', 12);
-$pdf->Cell(195, 10, utf8_decode('COORDINACION: 22600002L          DIR GRAL DE PATRIMONIO Y SERVICIOS CULTURALES'), 10, 100, 'C', 0);
+$pdf->SetFont('Helvetica', '', 10);
+$pdf->Cell(195, 1, utf8_decode('COORDINACION: 22600002L          DIR GRAL DE PATRIMONIO Y SERVICIOS CULTURALES'), 10, 100, 'C', 0);
 
 //Indicar salida del archivo pdf
 $pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(100, 15, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
-$pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-$pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-$pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
-$pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
-$pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
-$pdf->SetFont('Helvetica', '', 12);
+$pdf->Cell(100, 1, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
+$pdf->Cell(25, 1, utf8_decode(""), 0, 1, 'C', 0);
+$pdf->Cell(30, 5, utf8_decode('Clave'), 0, 0, 'C', 0);
+$pdf->Cell(115, 5, utf8_decode('Concepto'), 0, 0, 'C', 0);
+$pdf->Cell(65, 5, utf8_decode('Importe'), 0, 0, 'C', 0);
+$pdf->Cell(25, 3, utf8_decode(''), 0, 1, 'C', 0);
+$pdf->Cell(25, 3, utf8_decode(''), 0, 1, 'C', 0);
+$pdf->SetFont('Helvetica', '', 10);
 
 
 //$pdf->Cell(100,10, utf8_decode($row['Descripcion']), 0, 0, 'C', 0);
@@ -513,13 +513,13 @@ while ($row = $resultado3->fetch_assoc()) {
 
     //ENCABEZADOS DEDUCCIONES
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(100, 10, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(43, 8, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-    $pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-    $pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
-    $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
-    $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
+    $pdf->Cell(100, 3, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(43, 3, utf8_decode(""), 0, 1, 'C', 0);
+    $pdf->Cell(30, 3, utf8_decode('Clave'), 0, 0, 'C', 0);
+    $pdf->Cell(115, 5, utf8_decode('Concepto'), 0, 0, 'C', 0);
+    $pdf->Cell(40, 3, utf8_decode('Importe'), 0, 0, 'C', 0);
+    $pdf->Cell(43, 3, utf8_decode(''), 0, 1, 'C', 0);
+    $pdf->Cell(43, 3, utf8_decode(''), 0, 1, 'C', 0);
 
 
     //SERVICIOS DE SALUD
@@ -555,13 +555,13 @@ while ($row = $resultado3->fetch_assoc()) {
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
 
     //TOTAL NETOS
-    $pdf->Cell(80, 10, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
-    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
-    $pdf->Cell(105, 5, utf8_decode(""), 0, 1, 'R', 0);
+    $pdf->Cell(80, 5, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 5, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(54, 5, utf8_decode(""), 0, 1, 'R', 0);
 
     //TOTAL SUELDOS EVENTUALES
     $pdf->Cell(80, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-    $pdf->Cell(105, 12, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
+    $pdf->Cell(195, 10, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
 
     //SERVICIOS DE SALUD
     $pdf->Cell(95, 10, utf8_decode('10.0% SERVICIOS DE SALUD'), 0, 0, 'C', 0);
@@ -664,19 +664,19 @@ $resultado4 = $mysqli->query($consulta4);
 //Agregando pagina para que inicie desde en encabezado
 $pdf->AliasNbPages();
 $pdf->AddPage();
-$pdf->SetFont('Helvetica', '', 12);
-$pdf->Cell(195, 10, utf8_decode('COORDINACION: 22600000L          SECRETARIA DE CULTURA Y TURISMO'), 10, 100, 'C', 0);
+$pdf->SetFont('Helvetica', '', 10);
+$pdf->Cell(195, 5, utf8_decode('COORDINACION: 22600000L          SECRETARIA DE CULTURA Y TURISMO'), 10, 100, 'C', 0);
 
 //Indicar salida del archivo pdf
 $pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(100, 15, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
-$pdf->Cell(43, 10, utf8_decode(""), 0, 1, 'C', 0);
-$pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-$pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-$pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
-$pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
-$pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
-$pdf->SetFont('Helvetica', '', 12);
+$pdf->Cell(100, 1, utf8_decode('PERCEPCIONES'), 0, 0, 'C', 0);
+$pdf->Cell(25, 1, utf8_decode(""), 0, 1, 'C', 0);
+$pdf->Cell(30, 5, utf8_decode('Clave'), 0, 0, 'C', 0);
+$pdf->Cell(115, 5, utf8_decode('Concepto'), 0, 0, 'C', 0);
+$pdf->Cell(65, 5, utf8_decode('Importe'), 0, 0, 'C', 0);
+$pdf->Cell(25, 3, utf8_decode(''), 0, 1, 'C', 0);
+$pdf->Cell(25, 3, utf8_decode(''), 0, 1, 'C', 0);
+$pdf->SetFont('Helvetica', '', 10);
 
 
 //$pdf->Cell(100,10, utf8_decode($row['Descripcion']), 0, 0, 'C', 0);
@@ -701,13 +701,13 @@ while ($row = $resultado4->fetch_assoc()) {
 
     //ENCABEZADOS DEDUCCIONES
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(100, 10, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(43, 8, utf8_decode(""), 0, 1, 'C', 0);
-    $pdf->Cell(30, 16, utf8_decode('Clave'), 0, 0, 'C', 0);
-    $pdf->Cell(125, 16, utf8_decode('Concepto'), 0, 0, 'C', 0);
-    $pdf->Cell(40, 16, utf8_decode('Importe'), 0, 0, 'C', 0);
-    $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
-    $pdf->Cell(43, 10, utf8_decode(''), 0, 1, 'C', 0);
+    $pdf->Cell(100, 3, utf8_decode('DEDUCCIONES'), 0, 0, 'C', 0);
+    $pdf->Cell(43, 3, utf8_decode(""), 0, 1, 'C', 0);
+    $pdf->Cell(30, 3, utf8_decode('Clave'), 0, 0, 'C', 0);
+    $pdf->Cell(115, 5, utf8_decode('Concepto'), 0, 0, 'C', 0);
+    $pdf->Cell(40, 3, utf8_decode('Importe'), 0, 0, 'C', 0);
+    $pdf->Cell(43, 3, utf8_decode(''), 0, 1, 'C', 0);
+    $pdf->Cell(43, 3, utf8_decode(''), 0, 1, 'C', 0);
 
 
     //SERVICIOS DE SALUD
@@ -743,13 +743,13 @@ while ($row = $resultado4->fetch_assoc()) {
     $pdf->Cell(43, 5, utf8_decode(""), 0, 1, 'C', 0);
 
     //TOTAL NETOS
-    $pdf->Cell(80, 10, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
-    $pdf->Cell(105, 10, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
-    $pdf->Cell(105, 5, utf8_decode(""), 0, 1, 'R', 0);
+    $pdf->Cell(80, 5, utf8_decode('TOTAL NETO A PAGAR'), 0, 0, 'C', 0);
+    $pdf->Cell(105, 5, utf8_decode("$" . number_format($row['totnetopagar'], 2, ".", ",")), 0, 1, 'R', 0);
+    $pdf->Cell(54, 5, utf8_decode(""), 0, 1, 'R', 0);
 
     //TOTAL SUELDOS EVENTUALES
     $pdf->Cell(80, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-    $pdf->Cell(185, 12, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
+    $pdf->Cell(195, 10, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
 
     //SERVICIOS DE SALUD
     $pdf->Cell(95, 10, utf8_decode('10.0% SERVICIOS DE SALUD'), 0, 0, 'C', 0);

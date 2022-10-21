@@ -1,6 +1,7 @@
 <?php
 $CveNomina = $_POST['CveNomina'];
 $FecPag = $_POST['FecPag'];
+$FecPagBancomer = $_POST['FecPagBancomer'];
 $num = 1;
 $a = 0;
 
@@ -11,7 +12,7 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 /********************Timbrado Maestro********************************** */
 #Creando carpeta para almacenar archivos timbrado
-$micarpeta = 'timbrados/timbrados'.$CveNomina.'';
+$micarpeta = 'timbrados/timbrados' . $CveNomina . '';
 if (!file_exists($micarpeta)) {
   mkdir($micarpeta, 0777, true);
 }
@@ -31,15 +32,22 @@ $consulta = "CALL sp_GeneraTmpTimMaes('$CveNomina')";
 
 //Insertando la fecha real de pago en tmptimmaes
 $consulta2 = "UPDATE tmptimmaes SET FecPag='$FecPag'";
+//$consultabancomer = "UPDATE tmptimmaes SET FecPag='$FecPagBancomer' WHERE CveBan='012'";
 
-//Haciendo la consulta a tmptimmaes
-$consulta3 = "SELECT * FROM tmptimmaes";
+
 
 //Almaceando el resultado de las consultas en una variable (Por cada Query que se efectua)
 //Llamada al procedimiento almacenado
 $resultado = $mysqli->query($consulta);
 //Insercion de fecha real de pago en la tabla tmptimmaes
 $resultado2 = $mysqli->query($consulta2);
+//Insercion de fechas para usuarios BANCOMER
+//$res = $mysqli->query($consultabancomer);
+
+
+//Haciendo la consulta a tmptimmaes
+$consulta3 = "SELECT * FROM tmptimmaes";
+
 //Seleccionar todos los datos de tmptimmaes
 $resultado3 = $mysqli->query($consulta3);
 
@@ -61,7 +69,13 @@ while ($row = $resultado3->fetch_assoc()) {
   fwrite($file, $row['TotNet'] . '|');
   fwrite($file, ' ' . $row['TotDes'] . '|');
   fwrite($file, $row['Qna'] . '|');
-  fwrite($file, $row['FecPag'] . '|'); //No la esta mandando
+
+
+  if ($row['CveBan'] == '012') {
+    fwrite($file, $FecPagBancomer . '|'); //No la esta mandando
+  } else {
+    fwrite($file, $FecPag . '|'); //No la esta mandando
+  }
   fwrite($file, $row['Fecini'] . '|');
   fwrite($file, $row['FecFin'] . '|');
   fwrite($file, $row['NumChe'] . '|');

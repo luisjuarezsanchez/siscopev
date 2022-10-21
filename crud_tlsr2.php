@@ -52,6 +52,8 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         <a href="https://cultura.edomex.gob.mx/" target="_blank" class="btn"><button>Contacto</button></a>
     </header>
 
+    <!--///////////////////Menú desplegable///////////////////////////-->
+
     <div id="sidemenu" class="menu-collapsed">
         <!--Header-->
         <div id="header">
@@ -75,7 +77,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         <div id="menu-items">
             <div class="item">
                 <a href="crud_empleados.php">
-                    <div class="icon"> <img src="img/expedientes/empleado.png" alt=""> </div>
+                    <div class="icon"> <img src="img/expedientes/empleado.png" alt="" title="Actualización de empleados"> </div>
                     <div class="title"><span>Actualización de empleados</span></div>
                 </a>
             </div>
@@ -83,7 +85,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
             <div class="item">
                 <a href="crud_tlsr1.php">
-                    <div class="icon"> <img src="img/expedientes/tlsr1.png" alt=""> </div>
+                    <div class="icon"> <img src="img/expedientes/tlsr1.png" alt="" title="Actualización de tabla tlsr1"> </div>
                     <div class="title"><span>Actualización de tabla tlsr1</span></div>
                 </a>
             </div>
@@ -92,14 +94,14 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
             <div class="item">
                 <a href="crud_tlsr2.php">
-                    <div class="icon"> <img src="img/expedientes/tlsr2.png" alt=""> </div>
+                    <div class="icon"> <img src="img/expedientes/tlsr2.png" alt="" title="Actualización tabla tlsr2"> </div>
                     <div class="title"><span>Actualización tabla tlsr2</span></div>
                 </a>
             </div>
 
             <div class="item">
                 <a href="crud_contratos.php">
-                    <div class="icon"> <img src="img/expedientes/contratos.png" alt=""> </div>
+                    <div class="icon"> <img src="img/expedientes/contratos.png" alt="" title="Actualización de contratos"> </div>
                     <div class="title"><span>Actualización de contratos</span></div>
                 </a>
             </div>
@@ -108,29 +110,22 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
             <div class="item">
                 <a href="crud_excentos.php">
-                    <div class="icon"> <img src="img/expedientes/excentos.png" alt=""> </div>
+                    <div class="icon"> <img src="img/expedientes/excentos.png" alt="" title="Actualización de Excentos"> </div>
                     <div class="title"><span>Actualización de Excentos <br> de aportación</span></div>
                 </a>
             </div>
 
 
             <div class="item">
-                <a href="crud_tabulador.php">
-                    <div class="icon"> <img src="img/expedientes/tabulador.png" alt=""> </div>
-                    <div class="title"><span>Actualización de tabuladores</span></div>
-                </a>
-            </div>
-
-            <div class="item">
                 <a href="crud_empcont.php">
-                    <div class="icon"> <img src="img/expedientes/empcont.png" alt=""> </div>
+                    <div class="icon"> <img src="img/expedientes/empcont.png" alt="" title="Actualización de Contratos"> </div>
                     <div class="title"><span>Actualización de Contratos</span></div>
                 </a>
             </div>
 
             <div class="item">
                 <a href="menu.php">
-                    <div class="icon"> <img src="img/expedientes/volver.png" alt=""> </div>
+                    <div class="icon"> <img src="img/expedientes/volver.png" alt="" title="Volver"> </div>
                     <div class="title"><span>Volver</span></div>
                 </a>
             </div>
@@ -138,9 +133,11 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         </div>
     </div>
 
+    <!--//////////////////////////////////////////////-->
+
     <div id="main-container">
         <br>
-        <h1 id="tituloTabla">Tabla de Tlsr2</h1>
+        <h1 id="tituloTabla">Tabla de Tlsr2 (Subsidio)</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
         <form action="">
             <label for="campo">Buscar:</label>
