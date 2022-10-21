@@ -145,6 +145,9 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
         <br>
         <h1 id="tituloTabla">Contratos de empleados</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
+        <a href="#">
+                <p href="menu.php" style="text-align:right; margin-right: 20px;"><img src="img/expedientes/agregarcontratoempleado.png" height="70" width="70" alt=""></p>
+            </a>
         <form action="">
             <label for="campo">Buscar:</label>
             <input type="text" name="campo" id="campo" placeholder="Digita tu búsqueda">
@@ -154,6 +157,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
                 <tr>
                     <th>Incrementable</th>
                     <th>Clave Personal</th>
+                    <th>Nombbre empleado</th>
                     <th>Cta. Banco</th>
                     <th>Cve. Contrato</th>
                     <th>Tipo empleado</th>

@@ -92,7 +92,8 @@ SUM(CASE WHEN DetNomina.Clave = 5645 THEN Importe ELSE 0 END) AS primsinies,
 #0.104% PRIMA RIESGO NO CONTROLADO
 SUM(CASE WHEN DetNomina.Clave = 5647 THEN Importe ELSE 0 END) AS primriesgo,
 #3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES
-SUM(CASE WHEN DetNomina.Clave = 5641 THEN Importe ELSE 0 END) AS impsoremunA
+SUM(CASE WHEN DetNomina.Clave IN(0202,0325,0308+1202+1305+1308) THEN Importe ELSE 0 END) AS impsoremunA,
+SUM(CASE WHEN DetNomina.Clave IN(8202,8305,8308) THEN Importe ELSE 0 END) AS impsoremunB
 FROM EmpCont 
 INNER JOIN
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal 
@@ -225,7 +226,7 @@ while ($row = $resultado->fetch_assoc()) {
 
     //TOTAL IMPUESTO SOBRE REMUNERACIONES
     $pdf->Cell(95, 10, utf8_decode('3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(90, 7, utf8_decode('PENDIENTE'), 0, 1, 'R', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format((($row['impsoremunA'] + $row['impsoremunB']) * 3 / 100), 2, ".", ",")), 0, 1, 'R', 0);
 }
 
 
@@ -277,7 +278,8 @@ SUM(CASE WHEN DetNomina.Clave = 5645 THEN Importe ELSE 0 END) AS primsinies,
 #0.104% PRIMA RIESGO NO CONTROLADO
 SUM(CASE WHEN DetNomina.Clave = 5647 THEN Importe ELSE 0 END) AS primriesgo,
 #3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES
-SUM(CASE WHEN DetNomina.Clave = 5641 THEN Importe ELSE 0 END) AS impsoremun
+SUM(CASE WHEN DetNomina.Clave IN(0202,0325,0308+1202+1305+1308) THEN Importe ELSE 0 END) AS impsoremunA,
+SUM(CASE WHEN DetNomina.Clave IN(8202,8305,8308) THEN Importe ELSE 0 END) AS impsoremunB
 FROM EmpCont 
 INNER JOIN
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal 
@@ -410,7 +412,7 @@ while ($row = $resultado2->fetch_assoc()) {
 
     //TOTAL IMPUESTO SOBRE REMUNERACIONES
     $pdf->Cell(95, 10, utf8_decode('3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(90, 7, utf8_decode('PENDIENTE'), 0, 1, 'R', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format((($row['impsoremunA'] + $row['impsoremunB']) * 3 / 100), 2, ".", ",")), 0, 1, 'R', 0);
 }
 
 
@@ -464,7 +466,8 @@ SUM(CASE WHEN DetNomina.Clave = 5645 THEN Importe ELSE 0 END) AS primsinies,
 #0.104% PRIMA RIESGO NO CONTROLADO
 SUM(CASE WHEN DetNomina.Clave = 5647 THEN Importe ELSE 0 END) AS primriesgo,
 #3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES
-SUM(CASE WHEN DetNomina.Clave = 5641 THEN Importe ELSE 0 END) AS impsoremun
+SUM(CASE WHEN DetNomina.Clave IN(0202,0325,0308+1202+1305+1308) THEN Importe ELSE 0 END) AS impsoremunA,
+SUM(CASE WHEN DetNomina.Clave IN(8202,8305,8308) THEN Importe ELSE 0 END) AS impsoremunB
 FROM EmpCont 
 INNER JOIN
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal 
@@ -593,7 +596,7 @@ while ($row = $resultado3->fetch_assoc()) {
 
     //TOTAL IMPUESTO SOBRE REMUNERACIONES
     $pdf->Cell(95, 10, utf8_decode('3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(90, 7, utf8_decode('PENDIENTE'), 0, 1, 'R', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format((($row['impsoremunA'] + $row['impsoremunB']) * 3 / 100), 2, ".", ",")), 0, 1, 'R', 0);
 }
 
 
@@ -652,7 +655,8 @@ SUM(CASE WHEN DetNomina.Clave = 5645 THEN Importe ELSE 0 END) AS primsinies,
 #0.104% PRIMA RIESGO NO CONTROLADO
 SUM(CASE WHEN DetNomina.Clave = 5647 THEN Importe ELSE 0 END) AS primriesgo,
 #3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES
-SUM(CASE WHEN DetNomina.Clave = 5641 THEN Importe ELSE 0 END) AS impsoremun
+SUM(CASE WHEN DetNomina.Clave IN(0202,0325,0308+1202+1305+1308) THEN Importe ELSE 0 END) AS impsoremunA,
+SUM(CASE WHEN DetNomina.Clave IN(8202,8305,8308) THEN Importe ELSE 0 END) AS impsoremunB
 FROM EmpCont 
 INNER JOIN
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal 
@@ -781,7 +785,7 @@ while ($row = $resultado4->fetch_assoc()) {
 
     //TOTAL IMPUESTO SOBRE REMUNERACIONES
     $pdf->Cell(95, 10, utf8_decode('3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES'), 0, 0, 'C', 0);
-    $pdf->Cell(90, 7, utf8_decode('PENDIENTE'), 0, 1, 'R', 0);
+    $pdf->Cell(90, 7, utf8_decode("$" . number_format((($row['impsoremunA'] + $row['impsoremunB']) * 3 / 100), 2, ".", ",")), 0, 1, 'R', 0);
 }
 
 

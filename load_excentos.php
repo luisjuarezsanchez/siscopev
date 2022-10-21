@@ -2,8 +2,8 @@
 
 require 'config.php';
 
-$columns = ['CvePersonal', 'Clave'];
-$table = "ExcentosDedApo";
+$columns = ['CvePersonal', 'Clave','Nombre','Concepto'];
+$table = "frontexcentosdedapo"; 
 
 $campo = isset($_POST['campo']) ? $conn->real_escape_string($_POST['campo']) : null;
 $where = '';
@@ -31,7 +31,9 @@ if ($num_rows > 0) {
     while ($row = $resultado->fetch_assoc()) {
         $html .= '<tr>';
         $html .= '<td>' . $row['CvePersonal'] . '</td>';
+        $html .= '<td>' . $row['Nombre'] . '</td>';
         $html .= '<td>' . $row['Clave'] . '</td>';
+        $html .= '<td>' . $row['Concepto'] . '</td>';
         $html .= '<td><img src="img/expedientes/editar.png" height="40" width="40" title="Editar"></td>';
         $html .= '<td><img src="img/expedientes/eliminar.png" height="40" width="40" title="Eliminar"></td>';
         $html .= '</td>';

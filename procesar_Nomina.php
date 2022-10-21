@@ -78,16 +78,9 @@ if (!isset($usuario)) {
 			</div>
 
 			<div class="item">
-				<a href="reportes.php">
+				<a href="reportes_nomina.php">
 					<div class="icon"> <img src="img/expedientes/resumen.png" title="Reporte resumen"> </div>
-					<div class="title"><span>Reporte resumen</span></div>
-				</a>
-			</div>
-
-			<div class="item">
-				<a href="alfabetico.php">
-					<div class="icon"> <img src="img/expedientes/alfabetico.png" title="Alfabético de Nómina"> </div>
-					<div class="title"><span>Alfabético de Nómina</span></div>
+					<div class="title"><span>Reportes de nómina</span></div>
 				</a>
 			</div>
 

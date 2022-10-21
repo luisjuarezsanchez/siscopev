@@ -2,8 +2,8 @@
 
 require 'config.php';
 
-$columns = ['Incrementable', 'CvePersonal', 'CtaBanco', 'CveContrato', 'TipoEmpleado', 'Inicio', 'Fin', 'UltDia', 'CodCategoria', 'PrimaVac', 'HrsMen', 'CostoHra'];
-$table = "EmpCont";
+$columns = ['Incrementable', 'CvePersonal', 'CtaBanco', 'CveContrato', 'TipoEmpleado', 'Inicio', 'Fin', 'UltDia', 'CodCategoria', 'PrimaVac', 'HrsMen', 'CostoHra', 'Nombre'];
+$table = "frontempcont";
 
 $campo = isset($_POST['campo']) ? $conn->real_escape_string($_POST['campo']) : null;
 $where = '';
@@ -32,6 +32,7 @@ if ($num_rows > 0) {
         $html .= '<tr>';
         $html .= '<td>' . $row['Incrementable'] . '</td>';
         $html .= '<td>' . $row['CvePersonal'] . '</td>';
+        $html .= '<td>' . $row['Nombre'] . '</td>';
         $html .= '<td>' . $row['CtaBanco'] . '</td>';
         $html .= '<td>' . $row['CveContrato'] . '</td>';
         $html .= '<td>' . $row['TipoEmpleado'] . '</td>';
@@ -47,7 +48,7 @@ if ($num_rows > 0) {
         $CvePersonal = $row['CvePersonal'];
 
         $html .= '<td>
-        <a href="editar_empcont.php?Incrementable='.$Incrementable.'"><img src="img/expedientes/editar.png" height="40" width="40" /></a>
+        <a href="editar_empcont.php?Incrementable=' . $Incrementable . '"><img src="img/expedientes/editar.png" height="40" width="40" /></a>
         </td>';
 
         $html .= '<td><img src="img/expedientes/eliminar.png" height="40" width="40" title="Eliminar"></td>';

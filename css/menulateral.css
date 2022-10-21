@@ -208,9 +208,9 @@ body {
   align-items: center;
 }
 
-#editar{
+#editar {
   margin: auto;
-  background-color:  #364653;
+  background-color: #364653;
   width: 300px;
   height: 950px;
   margin: auto;
@@ -220,8 +220,24 @@ body {
   text-align: center;
 }
 
-p #p{
+p #p {
   height: 40px;
   text-align: center;
   border-bottom: 1px solid;
+}
+
+#insertar {
+  margin: auto;
+  width: 370px;
+  height: 580px;
+  background: #364653;
+  margin: auto;
+  margin-top: 10px;
+
+  text-align: center;
+  border-top: 6px solid #ff004a;
+  box-shadow: 1px 20px 37px rgb(0 0 0);
+}
+.insertar_input {
+  background-color: white;
 }

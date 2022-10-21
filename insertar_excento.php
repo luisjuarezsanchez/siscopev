@@ -4,9 +4,19 @@ $usuario = $_SESSION['username'];
 if (!isset($usuario)) {
     header("location: index.php");
 }
+require 'conexion.php';
+//$Incrementable = $_GET['Incrementable'];
+
+//$sql = "SELECT * FROM EmpCont WHERE Incrementable='$Incrementable'";
+//$query = mysqli_query($mysqli, $sql);
+//$row = mysqli_fetch_array($query);
+
+
+//echo $Incrementable;
+
 ?>
 <?php
-$conexion = mysqli_connect('localhost', 'root', '', 'erbase');
+$conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,6 +43,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
     <link rel="stylesheet" type="text/css" href="css/fuente.css">
     <link rel="stylesheet" href="css/menulateral.css">
     <link rel="stylesheet" href="css/tablas.css">
+
 </head>
 
 
@@ -77,7 +88,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         <div id="menu-items">
             <div class="item">
                 <a href="crud_empleados.php">
-                    <div class="icon"> <img src="img/expedientes/empleado.png" alt="" title="Actualización de empleados"> </div>
+                    <div class="icon"> <img src="img/expedientes/empleado.png" alt=""> </div>
                     <div class="title"><span>Actualización de empleados</span></div>
                 </a>
             </div>
@@ -85,7 +96,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
             <div class="item">
                 <a href="crud_tlsr1.php">
-                    <div class="icon"> <img src="img/expedientes/tlsr1.png" alt="" title="Actualización de tabla tlsr1"> </div>
+                    <div class="icon"> <img src="img/expedientes/tlsr1.png" alt=""> </div>
                     <div class="title"><span>Actualización de tabla tlsr1</span></div>
                 </a>
             </div>
@@ -94,14 +105,14 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
             <div class="item">
                 <a href="crud_tlsr2.php">
-                    <div class="icon"> <img src="img/expedientes/tlsr2.png" alt="" title="Actualización tabla tlsr2"> </div>
+                    <div class="icon"> <img src="img/expedientes/tlsr2.png" alt=""> </div>
                     <div class="title"><span>Actualización tabla tlsr2</span></div>
                 </a>
             </div>
 
             <div class="item">
                 <a href="crud_contratos.php">
-                    <div class="icon"> <img src="img/expedientes/contratos.png" alt="" title="Actualización de contratos"> </div>
+                    <div class="icon"> <img src="img/expedientes/contratos.png" alt=""> </div>
                     <div class="title"><span>Actualización de contratos</span></div>
                 </a>
             </div>
@@ -110,22 +121,29 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
             <div class="item">
                 <a href="crud_excentos.php">
-                    <div class="icon"> <img src="img/expedientes/excentos.png" alt="" title="Actualización de Excentos"> </div>
+                    <div class="icon"> <img src="img/expedientes/excentos.png" alt=""> </div>
                     <div class="title"><span>Actualización de Excentos <br> de aportación</span></div>
                 </a>
             </div>
 
 
             <div class="item">
+                <a href="crud_tabulador.php">
+                    <div class="icon"> <img src="img/expedientes/tabulador.png" alt=""> </div>
+                    <div class="title"><span>Actualización de tabuladores</span></div>
+                </a>
+            </div>
+
+            <div class="item">
                 <a href="crud_empcont.php">
-                    <div class="icon"> <img src="img/expedientes/empcont.png" alt="" title="Actualización de Contratos"> </div>
+                    <div class="icon"> <img src="img/expedientes/empcont.png" alt=""> </div>
                     <div class="title"><span>Actualización de Contratos</span></div>
                 </a>
             </div>
 
             <div class="item">
-                <a href="menu.php">
-                    <div class="icon"> <img src="img/expedientes/volver.png" alt="" title="Volver"> </div>
+                <a href="crud_contratos.php">
+                    <div class="icon"> <img src="img/expedientes/volver.png" alt=""> </div>
                     <div class="title"><span>Volver</span></div>
                 </a>
             </div>
@@ -137,58 +155,29 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
     <div id="main-container">
         <br>
-        <h1 id="tituloTabla">Tabla de Excentos</h1>
+        <h1 id="tituloTabla">Insertar nueva excepción de aportación</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
-        <a href="insertar_excento.php">
-            <p href="menu.php" style="text-align:right; margin-right: 20px;"><img src="img/expedientes/agregardeduccion.png" height="70" width="70" alt=""></p>
-        </a>
-        <form action="">
-            <label for="campo">Buscar:</label>
-            <input type="text" name="campo" id="campo" placeholder="Digita tu búsqueda">
+        <br>
+        <form class="form-login4"  action="update_empcont.php" method="POST">
+
+            <p>Clave de personal</p>
+            <input class="controls" type="text" name="CvePersonal" placeholder="Selecciona la clave de personal" required>
+
+            <p>Concepto</p>
+            <input class="controls" type="text" name="CtaBanco" placeholder="Concepto a excentar" required pattern="[A-Za-z]" title="Unicamente se aceptar caracteres alfabéticos">
+
+
+            <br>
+            <br>
+            <input class="buttons" type="submit" name="enviar" value="Insertar excepción">
         </form>
 
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Clave personal</th>
-                    <th>Nombre empleado</th>
-                    <th>Clave</th>
-                    <th>Descripción de clave</th>
-                    <th>Editar</th>
-                    <th>Eliminar</th>
-                </tr>
-            </thead>
-            <tbody id="content">
-
-            </tbody>
-        </table>
-
-        <script>
-            getData()
-
-            //Programando los eventos de AJAX (Actualizacion en tiempo real)
-            document.getElementById('campo').addEventListener("keyup", getData);
-
-            function getData() {
-                let input = document.getElementById("campo").value
-                let content = document.getElementById("content")
-                let url = "load_excentos.php"
-                let formaData = new FormData()
-                formaData.append('campo', input)
-
-                fetch(url, {
-                        method: "POST",
-                        body: formaData
-                    }).then(response => response.json())
-                    .then(data => {
-                        content.innerHTML = data
-                    }).catch(err => console.log(err))
-            }
-        </script>
-        <br>
+    </div>
+    <br>
 
     </div>
+    <!--/////////////////Animacion del menu desplegable/////////////////-->
 
     <script>
         const btn = document.querySelector('#menu-btn');
@@ -201,7 +190,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             document.querySelector('body').classList.toggle('body-expanded')
         });
     </script>
-
+    <!--//////////////////////////////////-->
 
 
 </body>

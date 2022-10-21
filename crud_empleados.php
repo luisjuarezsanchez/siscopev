@@ -144,10 +144,12 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         <h1 id="tituloTabla">Tabla de Empleados</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
         <form action="">
+            <a href="insertar_empleado.php">
+                <p href="menu.php" style="text-align:right; margin-right: 20px;"><img src="img/expedientes/agregarusuario.png" height="70" width="70" alt=""></p>
+            </a>
             <label for="campo">Buscar:</label>
             <input type="text" name="campo" id="campo" placeholder="Digita tu búsqueda">
         </form>
-
 
         <table>
             <thead>
@@ -162,7 +164,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
                     <th>Nacionalidad</th>
                     <th>CURP</th>
                     <th>Editar</th>
-                    
+
                 </tr>
             </thead>
             <tbody id="content">
@@ -174,6 +176,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             getData()
             //Programando los eventos de AJAX (Actualizacion en tiempo real)
             document.getElementById('campo').addEventListener("keyup", getData);
+
             function getData() {
                 let input = document.getElementById("campo").value
                 let content = document.getElementById("content")

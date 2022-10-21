@@ -23,6 +23,7 @@ ROSA = #FF29F2
   border-top: 6px solid #ff004a;
 }
 
+
 .form-login h5 {
   margin: 0;
   text-align: center;
@@ -32,6 +33,8 @@ ROSA = #FF29F2
   font-size: 15px;
   color: white;
 }
+
+
 
 .controls {
   width: 100%;
@@ -105,3 +108,128 @@ ROSA = #FF29F2
   border-top: 6px solid #ff004a;
 }
 
+
+
+
+/*Insertar empleados*/
+.form-login2 {
+  width: 370px;
+  height: 850PX;
+  background: #364653;
+  margin: auto;
+  margin-top: 10px;
+  box-shadow: 1px 20px 37px rgb(0, 0, 0);
+  padding: 20px 30px;
+  border-top: 6px solid #ff004a;
+}
+
+
+.form-login2 h5 {
+  margin: 0;
+  text-align: center;
+  height: 40px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid;
+  font-size: 15px;
+  color: white;
+}
+
+
+.form-login2 p {
+  height: 40px;
+  text-align: center;
+  border-bottom: 1px solid;
+  color: white;
+}
+
+.form-login2 a {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.form-login2 a:hover {
+  text-decoration: underline;
+}
+
+/*Insertar contrato*/
+.form-login3 {
+  width: 370px;
+  height: 767px;
+  background: #364653;
+  margin: auto;
+  margin-top: 10px;
+  box-shadow: 1px 20px 37px rgb(0, 0, 0);
+  padding: 20px 30px;
+  border-top: 6px solid #ff004a;
+}
+
+
+.form-login3 h5 {
+  margin: 0;
+  text-align: center;
+  height: 40px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid;
+  font-size: 15px;
+  color: white;
+}
+
+
+.form-login3 p {
+  height: 40px;
+  text-align: center;
+  border-bottom: 1px solid;
+  color: white;
+}
+
+.form-login3 a {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.form-login3 a:hover {
+  text-decoration: underline;
+}
+
+/*Insertar Excento*/
+.form-login4 {
+  width: 370px;
+  height: 300;
+  background: #364653;
+  margin: auto;
+  margin-top: 10px;
+  box-shadow: 1px 20px 37px rgb(0, 0, 0);
+  padding: 20px 30px;
+  border-top: 6px solid #ff004a;
+}
+
+
+.form-login4 h5 {
+  margin: 0;
+  text-align: center;
+  height: 40px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid;
+  font-size: 15px;
+  color: white;
+}
+
+
+.form-login4 p {
+  height: 40px;
+  text-align: center;
+  border-bottom: 1px solid;
+  color: white;
+}
+
+.form-login4 a {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.form-login4 a:hover {
+  text-decoration: underline;
+}
