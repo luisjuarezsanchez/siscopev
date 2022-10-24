@@ -158,31 +158,50 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
         <h1 id="tituloTabla">Insertar nuevo empleado</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
 
-        <form class="form-login2" id="insertarempleado" action="update_empcont.php" method="POST">
+        <form class="form-login2" id="insertarempleado" action="insert_empleado.php" method="POST">
+            <p>Clave de personal</p>
+            <input class="controls" type="text" name="CvePersonal" placeholder="Ingresa la clave de personal" required minlength="9" maxlength="9" pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
 
             <p>RFC</p>
-            <input class="controls" type="text" name="CvePersonal" placeholder="Ingresa el RFC" required>
+            <input id="RFC" class="controls" type="text" name="RFC" onKeyUp="this.value=this.value.toUpperCase();" placeholder="Ingresa el RFC" required pattern="^[A-Za-z0-9]+$" title="Digita un formati válido">
 
             <p>Paterno</p>
-            <input class="controls" type="text" name="CtaBanco" placeholder="Ingresa el apellido paterno" required pattern="[A-Za-z]" title="Unicamente se aceptar caracteres alfabéticos">
+            <input class="controls" type="text" name="Paterno" onKeyUp="this.value=this.value.toUpperCase();" placeholder="Ingresa el apellido paterno" required pattern="^[A-Za-z ]+$" title="Solo se aceptan letras en este campo">
 
             <p>Materno</p>
-            <input class="controls" type="text" name="CveContrato" placeholder="Ingresa el apellido materno" required>
+            <input class="controls" type="text" name="Materno" onKeyUp="this.value=this.value.toUpperCase();" placeholder="Ingresa el apellido materno" required pattern="^[A-Za-z ]+$" title="Solo se aceptan letras en este campo">
 
             <p>Nombre</p>
-            <input class="controls" type="text" name="TipoEmpleado" placeholder="Ingresa el nombre" required>
+            <input class="controls" type="text" name="Nombre" onKeyUp="this.value=this.value.toUpperCase();" placeholder="Ingresa el nombre" required pattern="^[A-Za-z ]+$" title="Solo se aceptan letras en este campo">
 
             <p>Clave de ISSEMYM</p>
-            <input class="controls" type="date" name="Inicio" placeholder="Ingresa la clave de ISSEMYM" required>
+            <input class="controls" type="text" name="CveISSEMyM" placeholder="Ingresa la clave de ISSEMYM" required minlength="9" maxlength="9" pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
+
+            <p>Fecha de ingreso</p>
+            <input class="controls" type="date" name="FechaIngreso" placeholder="Ingresa la clave de ISSEMYM" required>
 
             <p>Nacionalidad</p>
-            <input class="controls" type="date" name="Fin" placeholder="Ingresa la nacionalidad" required>
+            <p style="text-align:center;"><label><select id="lista" name="Nacionalidad">
+                        <?php
+                        include 'conexion.php';
+                        $consulta = "SELECT CveNacion,Nacionalidad FROM catnacion ORDER BY CASE WHEN CveNacion = 'MEX' THEN 1 ELSE 2 END, CveNacion";
+                        $resultado = $mysqli->query($consulta);
+                        ?>
+                        <form action="" method="post" class="form-login">
+                            <?php foreach ($resultado as  $opciones) : ?>
+                                <option value="<?php echo $opciones['Nacionalidad'] ?>">
+
+                                    <?php echo $opciones['CveNacion'] . ' ' . substr($opciones['Nacionalidad'], 0, 15)  ?>
+                                </option>
+                            <?php endforeach ?>
+                    </select></label></p>
 
             <p>CURP</p>
-            <input class="controls" type="date" name="UltDia" placeholder="Ingresa la CURP" required>
+            <input class="controls" type="text" name="CURP" onKeyUp="this.value=this.value.toUpperCase();" placeholder="Ingresa la CURP" required pattern="^[A-Za-z0-9]+$" title="Solo se aceptan letras en este campo">
             <br>
             <br>
             <input class="buttons" type="submit" name="enviar" value="Dar de alta">
+
         </form>
 
 

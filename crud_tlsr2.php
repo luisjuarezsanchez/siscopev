@@ -124,6 +124,13 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             </div>
 
             <div class="item">
+                <a href="renovar_contratos.php">
+                    <div class="icon"> <img src="img/expedientes/renovar.png" alt="" title="Renovación de contratos"> </div>
+                    <div class="title"><span>Renovación de contratos</span></div>
+                </a>
+            </div>
+
+            <div class="item">
                 <a href="menu.php">
                     <div class="icon"> <img src="img/expedientes/volver.png" alt="" title="Volver"> </div>
                     <div class="title"><span>Volver</span></div>
@@ -139,9 +146,6 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         <br>
         <h1 id="tituloTabla">Tabla de Tlsr2 (Subsidio)</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
-        <a href="#">
-                <p href="menu.php" style="text-align:right; margin-right: 20px;"><img src="img/expedientes/agregartlsr2.png" height="70" width="70" alt=""></p>
-            </a>
         <form action="">
             <label for="campo">Buscar:</label>
             <input type="text" name="campo" id="campo" placeholder="Digita tu búsqueda">

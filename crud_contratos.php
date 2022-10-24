@@ -53,9 +53,9 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         <a href="https://cultura.edomex.gob.mx/" target="_blank" class="btn"><button>Contacto</button></a>
     </header>
 
-    <!--///////////////////Menú desplegable///////////////////////////-->
+      <!--///////////////////Menú desplegable///////////////////////////-->
 
-    <div id="sidemenu" class="menu-collapsed">
+      <div id="sidemenu" class="menu-collapsed">
         <!--Header-->
         <div id="header">
             <div id="title"><span>Secretaría de Cultura y Turismo</span></div>
@@ -125,6 +125,13 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             </div>
 
             <div class="item">
+                <a href="renovar_contratos.php">
+                    <div class="icon"> <img src="img/expedientes/renovar.png" alt="" title="Renovación de contratos"> </div>
+                    <div class="title"><span>Renovación de contratos</span></div>
+                </a>
+            </div>
+
+            <div class="item">
                 <a href="menu.php">
                     <div class="icon"> <img src="img/expedientes/volver.png" alt="" title="Volver"> </div>
                     <div class="title"><span>Volver</span></div>
@@ -157,10 +164,9 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
                     <th>Inicio</th>
                     <th>Fin</th>
                     <th>Tipo de contrato</th>
+                    <th>Cerrado</th>
                     <th>Prisma</th>
                     <th>Año</th>
-                    <th>No.Oficio</th>
-                    <th>Fecha de oficio</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>

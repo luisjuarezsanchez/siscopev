@@ -17,7 +17,7 @@ $CostoHra = $_POST['CostoHra'];
 
 $sql = "UPDATE EmpCont SET CvePersonal='$CvePersonal', CtaBanco='$CtaBanco',CveContrato='$CveContrato',
 TipoEmpleado = '$TipoEmpleado',Inicio='$Inicio',Fin='$Fin',UltDia='$UltDia',CodCategoria='$CodCategoria',
-PrimaVac='$PrimaVac',HrsMen = '$HrsMen',CostoHra='$CostoHra' WHERE Incrementable='$Incrementable'";
+PrimaVac='$PrimaVac',HrsMen = '$HrsMen' WHERE Incrementable='$Incrementable'";
 $query = mysqli_query($mysqli, $sql);
 
 if($query){

@@ -2,7 +2,7 @@
 
 require 'config.php';
 
-$columns = ['Incrementable', 'CvePersonal', 'CtaBanco', 'CveContrato', 'TipoEmpleado', 'Inicio', 'Fin', 'UltDia', 'CodCategoria', 'PrimaVac', 'HrsMen', 'CostoHra', 'Nombre'];
+$columns = ['Incrementable', 'CvePersonal', 'CtaBanco', 'CveContrato', 'TipoEmpleado', 'Inicio', 'Fin', 'UltDia', 'CodCategoria', 'PrimaVac', 'HrsMen', 'Nombre'];
 $table = "frontempcont";
 
 $campo = isset($_POST['campo']) ? $conn->real_escape_string($_POST['campo']) : null;
@@ -42,7 +42,6 @@ if ($num_rows > 0) {
         $html .= '<td>' . $row['CodCategoria'] . '</td>';
         $html .= '<td>' . $row['PrimaVac'] . '</td>';
         $html .= '<td>' . $row['HrsMen'] . '</td>';
-        $html .= '<td>' . $row['CostoHra'] . '</td>';
 
         $Incrementable = $row['Incrementable'];
         $CvePersonal = $row['CvePersonal'];

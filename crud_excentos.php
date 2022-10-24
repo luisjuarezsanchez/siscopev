@@ -124,6 +124,13 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             </div>
 
             <div class="item">
+                <a href="renovar_contratos.php">
+                    <div class="icon"> <img src="img/expedientes/renovar.png" alt="" title="Renovación de contratos"> </div>
+                    <div class="title"><span>Renovación de contratos</span></div>
+                </a>
+            </div>
+
+            <div class="item">
                 <a href="menu.php">
                     <div class="icon"> <img src="img/expedientes/volver.png" alt="" title="Volver"> </div>
                     <div class="title"><span>Volver</span></div>

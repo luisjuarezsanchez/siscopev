@@ -5,11 +5,11 @@ if (!isset($usuario)) {
     header("location: index.php");
 }
 require 'conexion.php';
-$Incrementable = $_GET['Incrementable'];
+//$Incrementable = $_GET['Incrementable'];
 
-$sql = "SELECT * FROM EmpCont WHERE Incrementable='$Incrementable'";
-$query = mysqli_query($mysqli, $sql);
-$row = mysqli_fetch_array($query);
+//$sql = "SELECT * FROM EmpCont WHERE Incrementable='$Incrementable'";
+//$query = mysqli_query($mysqli, $sql);
+//$row = mysqli_fetch_array($query);
 
 
 //echo $Incrementable;
@@ -155,51 +155,131 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
 
     <div id="main-container">
         <br>
-        <h1 id="tituloTabla">Editar campos de la tabla EmpCont</h1>
+        <h1 id="tituloTabla">Insertar nuevo contrato de empleado</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
+        <br>
 
+        <form class="form-login5" id="insertarempleado" action="insert_empleado.php" method="POST">
+            <p>Clave de personal</p>
+            <p style="text-align:center;"><label><select id="lista" name="CvePersonal">
+                        <?php
+                        include 'conexion.php';
+                        $consulta = "SELECT CvePersonal,CONCAT(Paterno, ' ',Materno,' ',Nombre) AS Nombre FROM EmpGral";
+                        $resultado = $mysqli->query($consulta);
+                        ?>
+                        <form action="" method="post" class="form-login">
+                            <?php foreach ($resultado as  $opciones) : ?>
+                                <option value="<?php echo $opciones['CvePersonal'] ?>">
+                                    <?php echo $opciones['Nombre'] ?>
+                                </option>
+                            <?php endforeach ?>
+                    </select></label></p>
 
-        <div id="campos_act"></div>
-        <form id="editar" action="update_empcont.php" method="POST">
+            <p>Cuenta de Banco</p>
+            <input id="CtaBanco" class="controls" type="text" name="CtaBanco" placeholder="Ingresa la cuenta de banco" required minlength="18" maxlength="18" pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
 
-        <input type="hidden" name="Incrementable" value="<?= $row['Incrementable'] ?>">
+            <p>Clave de Contrato</p>
+            <input class="controls" type="text" name="CveContrato" placeholder="Ingresa la clave de contrato" required pattern="^[A-Za-z0-9- ]+$" title="Solo se aceptan letras en este campo">
 
-            <p>Clave de Personal</p>
-            <input type="text" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
+            <!--Tipo empleado de tipo HIDDEN siempre en 0-->
+            <input class="controls" type="hidden" name="TipoEmpleado" value="0">
 
-            <p>Cuenta de banco</p>
-            <input type="text" name="CtaBanco" value="<?= $row['CtaBanco'] ?>">
+            <p>Inicio de contrato</p>
+            <input class="controls" type="date" name="Inicio" required>
 
-            <p>Clave de contrato</p>
-            <input type="text" name="CveContrato" value="<?= $row['CveContrato'] ?>">
+            <p>Fin de contrato</p>
+            <input class="controls" type="date" name="Fin" required>
 
-            <p>Tipo de empleado</p>
-            <input type="text" name="TipoEmpleado" value="<?= $row['TipoEmpleado'] ?>">
+            <p>Último día</p>
+            <input class="controls" type="date" name="UltDia" required>
 
-            <p>Inicio</p>
-            <input type="date" name="Inicio" value="<?= $row['Inicio'] ?>">
+            <!--Retenido de tipo HIDDEN siempre en 0-->
+            <input class="controls" type="hidden" name="Retenido" value="0">
 
-            <p>Fin</p>
-            <input type="date" name="Fin" value="<?= $row['Fin'] ?>">
+            <p>Fecha de firma</p>
+            <input class="controls" type="date" name="FechaFirma" required>
 
-            <p>Ultimo día</p>
-            <input type="date" name="UltDia" value="<?= $row['UltDia'] ?>">
+            <!--PeriodosLab de tipo HIDDEN siempre en 0-->
+            <input class="controls" type="hidden" name="PeriodosLab" value="0">
 
-            <p>Código de categoría</p>
-            <input type="text" name="CodCategoria" value="<?= $row['CodCategoria'] ?>">
+            <!--PeriodosLab de tipo HIDDEN siempre en 0-->
+            <input class="controls" type="hidden" name="PeriodosPagAgui" value="0">
 
-            <p>Prima vacacional</p>
-            <input type="text" name="PrimaVac" value="<?= $row['PrimaVac'] ?>">
+            <!--CveHorario de tipo HIDDEN siempre en 0-->
+            <input class="controls" type="hidden" name="CveHorario" value="0">
+
+            <!--Numero de plaza de tipo HIDDEN siempre en 10-->
+            <input class="controls" type="hidden" name="NumPlaza" value="10">
+
+            <p>Codigo de categoria</p>
+            <p style="text-align:center;"><label><select id="lista" name="CodCategoria">
+                        <?php
+                        include 'conexion.php';
+                        $consulta = "SELECT ";
+                        $resultado = $mysqli->query($consulta);
+                        ?>
+                        <form action="" method="post" class="form-login">
+                            <?php foreach ($resultado as  $opciones) : ?>
+                                <option value="<?php echo $opciones['CodCategoria'] ?>">
+                                    <?php echo $opciones['CodCategoria'] ?>
+                                </option>
+                            <?php endforeach ?>
+                    </select></label></p>
+
+            <!--Funciones de tipo HIDDEN siempre en A-->
+            <input class="controls" type="hidden" name="Funciones" value="A">
+
+            <!--Actividades de tipo HIDDEN siempre en A-->
+            <input class="controls" type="hidden" name="Actividades" value="A">
+
+            <!--SueldoNeto de tipo HIDDEN siempre en 0-->
+            <input class="controls" type="hidden" name="SueldoNeto" value="0">
+
+            <!--NumContrato de tipo HIDDEN siempre en 127-->
+            <input class="controls" type="hidden" name="NumContrato" value="127">
+
+            <!--Folio de tipo HIDDEN siempre en 62-->
+            <input class="controls" type="hidden" name="Folio" value="62">
+
+            <!--CveUniAdm de tipo HIDDEN siempre en 62-->
+            <input class="controls" type="hidden" name="CveUniAdm" value="1">
+
+            <!--Codigo de tipo HIDDEN siempre en 62-->
+            <input class="controls" type="hidden" name="Codigo" value="1">
+
+            <p>Unidad Responsable</p>
+            <input class="controls" type="text" name="UnidadRespon" placeholder="Ingresa la Unidad Responsable" required pattern="^[A-Za-z0-9- ]+$" title="Solo se aceptan letras y números en este campo">
+
+            <p>Codigo de secretaría</p>
+            <input class="controls" type="text" name="CodSecre" placeholder="Ingresa el código de secretaría" required pattern="^[A-Za-z0-9- ]+$" title="Solo se aceptan letras y números en este campo">
+
+            <p>Prima Vacacional</p>
+            <p style="text-align: center;"><select name="PrimaVac" id="PrimaVac">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                </select></p>
+
+            <p>Ubicación física</p>
+            <input class="controls" type="text" name="UbicaFisica" placeholder="Ingresa la clave de ubicacion física" required pattern="^[A-Za-z0-9- ]+$" title="Solo se aceptan letras y números en este campo">
 
             <p>Horas mensuales</p>
-            <input type="text" name="HrsMen" value="<?= $row['HrsMen'] ?>">
+            <input class="controls" type="number" name="HrsMen" placeholder="Ingresa las horas mensuales" required minlength="1" maxlength="5" pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
+
+            <p>Costo Hora</p>
+            <input class="controls" type="number" name="CostoHra" placeholder="Ingresa el valor por hora" required minlength="1" maxlength="5" pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
+
+            <p>Dirección general</p>
+            <p style="text-align: center;"><select name="DirGral" id="DirGral">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select></p>
 
             <br>
-            <br>
-
-            <input type="submit" name="enviar" value="Actualizar">
+            <p style="text-align: center;"><input class="buttons" type="submit" name="enviar" value="Dar de alta"></p>
 
         </form>
+
 
     </div>
     <br>

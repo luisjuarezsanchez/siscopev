@@ -142,7 +142,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
             </div>
 
             <div class="item">
-                <a href="crud_contratos.php">
+                <a href="crud_excentos.php">
                     <div class="icon"> <img src="img/expedientes/volver.png" alt=""> </div>
                     <div class="title"><span>Volver</span></div>
                 </a>
@@ -158,18 +158,41 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
         <h1 id="tituloTabla">Insertar nueva excepción de aportación</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
         <br>
-        <form class="form-login4"  action="update_empcont.php" method="POST">
+        <form class="form-login4" action="insert_excento.php" method="POST">
 
             <p>Clave de personal</p>
-            <input class="controls" type="text" name="CvePersonal" placeholder="Selecciona la clave de personal" required>
 
-            <p>Concepto</p>
-            <input class="controls" type="text" name="CtaBanco" placeholder="Concepto a excentar" required pattern="[A-Za-z]" title="Unicamente se aceptar caracteres alfabéticos">
+            <p style="text-align:center;"><label><select id="lista" name="CvePersonal">
+                        <?php
+                        include 'conexion.php';
+                        $consulta = "SELECT CvePersonal,CONCAT(Paterno,' ',Materno,' ',Nombre) as Nombre FROM EmpGral";
+                        $resultado = $mysqli->query($consulta);
+                        ?>
+                        <form action="" method="post" class="form-login">
+                            <?php foreach ($resultado as  $opciones) : ?>
+                                <option value="<?php echo $opciones['CvePersonal'] ?>">
+                                    <?php echo $opciones['Nombre'] ?>
+                                </option>
+                            <?php endforeach ?>
+                    </select></label></p>
 
+            <p>Concepto de excepción</p>
+            <p style="text-align:center;"><label><select id="lista" name="Clave">
+                        <?php
+                        include 'conexion.php';
+                        $consulta = "SELECT Clave,Concepto FROM PerDedApo";
+                        $resultado = $mysqli->query($consulta);
+                        ?>
+                        <form action="" method="post" class="form-login">
+                            <?php foreach ($resultado as  $opciones) : ?>
+                                <option value="<?php echo $opciones['Clave'] ?>">
+                                    <?php echo $opciones['Clave'] . ' ' . $opciones['Concepto'] ?>
+                                </option>
+                            <?php endforeach ?>
+                    </select></label></p>
 
             <br>
-            <br>
-            <input class="buttons" type="submit" name="enviar" value="Insertar excepción">
+            <p style="text-align: center;"><input class="buttons" type="submit" name="enviar" value="Insertar excepción"></p>
         </form>
 
 

@@ -2,7 +2,7 @@
 
 require 'config.php';
 
-$columns = ['CveContrato', 'Descripcion', 'Inicio', 'Fin', 'TipoContrato', 'Prisma', 'Anio', 'NumOficio', 'FecOficio'];
+$columns = ['CveContrato', 'Descripcion', 'Inicio', 'Fin', 'TipoContrato', 'Cerrado', 'Prisma', 'Anio', 'NumOficio', 'FecOficio'];
 $table = "Contratos";
 
 $campo = isset($_POST['campo']) ? $conn->real_escape_string($_POST['campo']) : null;
@@ -35,10 +35,9 @@ if ($num_rows > 0) {
         $html .= '<td>' . $row['Inicio'] . '</td>';
         $html .= '<td>' . $row['Fin'] . '</td>';
         $html .= '<td>' . $row['TipoContrato'] . '</td>';
+        $html .= '<td>' . $row['Cerrado'] . '</td>';
         $html .= '<td>' . $row['Prisma'] . '</td>';
         $html .= '<td>' . $row['Anio'] . '</td>';
-        $html .= '<td>' . $row['NumOficio'] . '</td>';
-        $html .= '<td>' . $row['FecOficio'] . '</td>';
         $html .= '<td><img src="img/expedientes/editar.png" height="40" width="40" title="Editar"></td>';
         $html .= '<td><img src="img/expedientes/eliminar.png" height="40" width="40" title="Eliminar"></td>';
         $html .= '</td>';

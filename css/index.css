@@ -114,7 +114,7 @@ ROSA = #FF29F2
 /*Insertar empleados*/
 .form-login2 {
   width: 370px;
-  height: 850PX;
+  height: 1074px;
   background: #364653;
   margin: auto;
   margin-top: 10px;
@@ -195,8 +195,8 @@ ROSA = #FF29F2
 
 /*Insertar Excento*/
 .form-login4 {
-  width: 370px;
-  height: 300;
+  width: 535px;
+  height: 362px;
   background: #364653;
   margin: auto;
   margin-top: 10px;
@@ -231,5 +231,46 @@ ROSA = #FF29F2
 }
 
 .form-login4 a:hover {
+  text-decoration: underline;
+}
+
+/*Insertar EmpCont*/
+.form-login5 {
+  width: 541px;
+  height: 1766px;
+  background: #364653;
+  margin: auto;
+  margin-top: 10px;
+  box-shadow: 1px 20px 37px rgb(0, 0, 0);
+  padding: 20px 30px;
+  border-top: 6px solid #ff004a;
+}
+
+
+.form-login5 h5 {
+  margin: 0;
+  text-align: center;
+  height: 40px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid;
+  font-size: 15px;
+  color: white;
+}
+
+
+.form-login5 p {
+  height: 40px;
+  text-align: center;
+  border-bottom: 1px solid;
+  color: white;
+}
+
+.form-login5 a {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.form-login5 a:hover {
   text-decoration: underline;
 }
