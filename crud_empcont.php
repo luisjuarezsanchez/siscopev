@@ -127,7 +127,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
                 </a>
             </div>
 
-            <div class="item">
+            <div class="item"> 
                 <a href="renovar_contratos.php">
                     <div class="icon"> <img src="img/expedientes/renovar.png" alt="" title="Renovación de contratos"> </div>
                     <div class="title"><span>Renovación de contratos</span></div>

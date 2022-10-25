@@ -4,9 +4,14 @@ $usuario = $_SESSION['username'];
 if (!isset($usuario)) {
     header("location: index.php");
 }
+require 'conexion.php';
+$CvePersonal = $_GET['CvePersonal'];
+$sql = "SELECT * FROM EmpGral WHERE CvePersonal='$CvePersonal'";
+$query = mysqli_query($mysqli, $sql);
+$row = mysqli_fetch_array($query);
+
 ?>
 <?php
-$conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 ?>
 <!DOCTYPE html>
 <html>
@@ -78,7 +83,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
         <div id="menu-items">
             <div class="item">
                 <a href="crud_empleados.php">
-                    <div class="icon"> <img src="img/expedientes/empleado.png" alt="" title="Actualización de empleados"> </div>
+                    <div class="icon"> <img src="img/expedientes/empleado.png" alt=""> </div>
                     <div class="title"><span>Actualización de empleados</span></div>
                 </a>
             </div>
@@ -86,7 +91,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
             <div class="item">
                 <a href="crud_tlsr1.php">
-                    <div class="icon"> <img src="img/expedientes/tlsr1.png" alt="" title="Actualización de tabla tlsr1"> </div>
+                    <div class="icon"> <img src="img/expedientes/tlsr1.png" alt=""> </div>
                     <div class="title"><span>Actualización de tabla tlsr1</span></div>
                 </a>
             </div>
@@ -95,14 +100,14 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
             <div class="item">
                 <a href="crud_tlsr2.php">
-                    <div class="icon"> <img src="img/expedientes/tlsr2.png" alt="" title="Actualización tabla tlsr2"> </div>
+                    <div class="icon"> <img src="img/expedientes/tlsr2.png" alt=""> </div>
                     <div class="title"><span>Actualización tabla tlsr2</span></div>
                 </a>
             </div>
 
             <div class="item">
                 <a href="crud_contratos.php">
-                    <div class="icon"> <img src="img/expedientes/contratos.png" alt="" title="Actualización de contratos"> </div>
+                    <div class="icon"> <img src="img/expedientes/contratos.png" alt=""> </div>
                     <div class="title"><span>Actualización de contratos</span></div>
                 </a>
             </div>
@@ -111,29 +116,29 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
             <div class="item">
                 <a href="crud_excentos.php">
-                    <div class="icon"> <img src="img/expedientes/excentos.png" alt="" title="Actualización de Excentos"> </div>
+                    <div class="icon"> <img src="img/expedientes/excentos.png" alt=""> </div>
                     <div class="title"><span>Actualización de Excentos <br> de aportación</span></div>
                 </a>
             </div>
 
 
             <div class="item">
+                <a href="crud_tabulador.php">
+                    <div class="icon"> <img src="img/expedientes/tabulador.png" alt=""> </div>
+                    <div class="title"><span>Actualización de tabuladores</span></div>
+                </a>
+            </div>
+
+            <div class="item">
                 <a href="crud_empcont.php">
-                    <div class="icon"> <img src="img/expedientes/empcont.png" alt="" title="Actualización de Contratos"> </div>
+                    <div class="icon"> <img src="img/expedientes/empcont.png" alt=""> </div>
                     <div class="title"><span>Actualización de Contratos</span></div>
                 </a>
             </div>
 
             <div class="item">
-                <a href="renovar_contratos.php">
-                    <div class="icon"> <img src="img/expedientes/renovar.png" alt="" title="Renovación de contratos"> </div>
-                    <div class="title"><span>Renovación de contratos</span></div>
-                </a>
-            </div>
-
-            <div class="item">
-                <a href="menu.php">
-                    <div class="icon"> <img src="img/expedientes/volver.png" alt="" title="Volver"> </div>
+                <a href="crud_empleados.php">
+                    <div class="icon"> <img src="img/expedientes/volver.png" alt=""> </div>
                     <div class="title"><span>Volver</span></div>
                 </a>
             </div>
@@ -143,70 +148,52 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
 
     <!--//////////////////////////////////////////////-->
 
-
-
-
     <div id="main-container">
         <br>
-        <h1 id="tituloTabla">Tabla de Empleados</h1>
+        <h1 id="tituloTabla">Editar campos de la tabla EmpGral</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
-        <form action="">
-            <a href="insertar_empleado.php">
-                <p href="menu.php" style="text-align:right; margin-right: 20px;"><img src="img/expedientes/agregarusuario.png" height="70" width="70" alt=""></p>
-            </a>
-            <label for="campo">Buscar:</label>
-            <input type="text" name="campo" id="campo" placeholder="Digita tu búsqueda">
+
+
+        <div id="campos_act"></div>
+        <form id="editar" action="update_empgral.php" method="POST">
+
+            <input type="hidden" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
+
+            <p>CvePersonal</p>
+            <input type="text" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
+
+            <p>Paterno</p>
+            <input type="text" name="Paterno" value="<?= $row['Paterno'] ?>">
+
+            <p>Materno</p>
+            <input type="text" name="Materno" value="<?= $row['Materno'] ?>">
+
+            <p>Nombre</p>
+            <input type="text" name="Nombre" value="<?= $row['Nombre'] ?>">
+
+            <p>CveISSEMyM</p>
+            <input type="text" name="CveISSEMyM" value="<?= $row['CveISSEMyM'] ?>">
+
+            <p>FechaIngreso</p>
+            <input type="date" name="FechaIngreso" value="<?= $row['FechaIngreso'] ?>">
+
+            <p>Nacionalidad</p>
+            <input type="text" name="Nacionalidad" value="<?= $row['Nacionalidad'] ?>">
+
+            <p>CURP</p>
+            <input type="text" name="CURP" value="<?= $row['CURP'] ?>">
+
+            <br>
+            <br>
+
+            <input type="submit" name="enviar" value="Actualizar">
+
         </form>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Clave Personal</th>
-                    <th>RFC</th>
-                    <th>Paterno</th>
-                    <th>Materno</th>
-                    <th>Nombre</th>
-                    <th>Clave de Issemym</th>
-                    <th>Fecha de ingreso</th>
-                    <th>Nacionalidad</th>
-                    <th>CURP</th>
-                    <th>Editar</th>
-
-                </tr>
-            </thead>
-            <tbody id="content">
-
-            </tbody>
-        </table>
-
-        <script>
-            getData() 
-            //Programando los eventos de AJAX (Actualizacion en tiempo real)
-            document.getElementById('campo').addEventListener("keyup", getData);
-
-            function getData() {
-                let input = document.getElementById("campo").value
-                let content = document.getElementById("content")
-                let url = "load_empleados.php"
-                let formaData = new FormData()
-                formaData.append('campo', input)
-                fetch(url, {
-                        method: "POST",
-                        body: formaData
-                    }).then(response => response.json())
-                    .then(data => {
-                        content.innerHTML = data
-                    }).catch(err => console.log(err))
-            }
-        </script>
-        <br>
     </div>
+    <br>
 
-
-
-
-
-
+    </div>
     <!--/////////////////Animacion del menu desplegable/////////////////-->
 
     <script>

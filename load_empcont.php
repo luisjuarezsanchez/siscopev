@@ -29,7 +29,7 @@ $html = '';
 
 if ($num_rows > 0) {
     while ($row = $resultado->fetch_assoc()) {
-        $html .= '<tr>';
+        $html .= '<tr>'; 
         $html .= '<td>' . $row['Incrementable'] . '</td>';
         $html .= '<td>' . $row['CvePersonal'] . '</td>';
         $html .= '<td>' . $row['Nombre'] . '</td>';

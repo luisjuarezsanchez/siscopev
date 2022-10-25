@@ -1,4 +1,7 @@
 <?php
+
+use LDAP\Result;
+
 $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
 session_start();
 $usuario = $_SESSION['username'];
@@ -96,62 +99,105 @@ if (!isset($usuario)) {
     </div>
     <!--//////////////////////////////////////////////-->
 
+
     <!--Recibiendo variables por POST-->
     <?php
     // No mostrar los errores de PHP
     error_reporting(0);
-    $Nomselect = $_POST['CveNomina'];
-    $Cveselect = $_POST['CveEmpleado'];
-    //$PerDedAposelect = $_POST['ClavePerDedApo'];
-    //$monto = $_POST['monto'];
-
     ?>
 
-    <br>
-    <section id="blog">
+    <div>
+        <br>
         <h4 id="tituloTabla">Renovacion de contratos</h4>
         <br>
-        <div>
-            <form class="form-login-perdedapo" action="#" method="post">
-                <p>Selecciona los contratos que deseas renovar</p>
-                <div style="text-align:center;">
-                    <label><select id="lista" name="CveNomina">
-                            <?php
-                            include 'conexion.php';
-                            $consulta = "SELECT * FROM Contratos WHERE Cerrado='0'";
-                            $resultado = $mysqli->query($consulta);
-                            ?>
-                            <form action="" method="post" class="form-login">
-                                <?php foreach ($resultado as  $opciones) : ?>
-                                    <option value="<?php echo $opciones['CveContrato'] ?>">
-                                        <?php echo $opciones['CveContrato'] ?>
-                                    </option>
-                                <?php endforeach ?>
-                        </select></label>
-                    <br>
-                    <input class="buttons" type="submit" name="Enviar" value="Agregar Contrato">
-                    <br>
-                    <br>
-                </div>
-            </form>
-            <br>
-            <br>
+        <form class="form-login-renovar" action="renovar_contratos.php" method="post">
+            <p>Selecciona el contrato que deseas renovar</p>
+            <div style="text-align:center;">
+                <label><select id="lista" name="CveContrato">
+                        <?php
+                        include 'conexion.php';
+                        $consulta = "SELECT * FROM Contratos WHERE Cerrado='0'";
+                        $resultado = $mysqli->query($consulta);
+                        ?>
+                        <form action="" method="post" class="form-login">
+                            <?php foreach ($resultado as  $opciones) : ?>
+                                <option value="<?php echo $opciones['CveContrato'] ?>">
+                                    <?php echo $opciones['CveContrato'] ?>
+                                </option>
+                            <?php endforeach ?>
+                    </select></label>
+                <br>
+                <input class="buttons" type="submit" name="Enviar" value="Seleccionar contrato">
+                <br>
+                <br>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Clave de contrato antigua</th>
-                        <th>Nueva clave de contrato</th>
-                        <th>Inicio</th>
-                        <th>Fin</th>
-                    </tr>
-                </thead>
 
-            </table>
+            </div>
+        </form>
+        <?php
+        require 'conexion.php';
+        $CveContratoForm = $_POST['CveContrato'];
+        //if ($CveContratoForm <> NULL) {
+        //$sql = "INSERT INTO tmpRenovaCon(CveConAnterior)VALUES('$CveContratoForm');";
+        //$query = mysqli_query($mysqli, $sql);
+        //echo $CveContratoForm;
+        // }
+        ?>
+        <br>
+        <br>
 
-    </section>
-    <br>
-    <br>
+        <table>
+            <thead>
+                <tr>
+                    <th>Clave de contrato antigua</th>
+                    <th>Nueva clave de contrato</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Validar información</th>
+                </tr>
+            </thead>
+
+            <tr>
+                <td><?php echo $CveContratoForm ?></td>
+                <form action="insert_renovarcontratos.php" method="POST">
+
+                    <?php if ($CveContratoForm <> NULL) {
+                    echo '<td>';
+                    echo '<label><select id="lista" name="CveConNueva">';
+                    $consulta = "SELECT * FROM Contratos WHERE Cerrado='0'";
+                    $resultado = $mysqli->query($consulta);
+                    echo '<form action="" method="post" class="form-login">';
+                        foreach ($resultado as  $opciones) : 
+                            
+
+                                echo $opciones['CveContrato'];
+                            echo '</option>';
+                        endforeach;
+                    echo '</select></label>';
+                    echo '</td>';
+ 
+                        echo '<td><input type="date" name = "NuevoInicio"></td>';
+                        echo '<td><input type="date" name = "NuevoFin"></td>';
+                        echo '<td><input class="buttons" type="submit" value="Renovar contrato"></td>';
+                        echo '<td><input type="hidden" name = "CveConAnterior" value="' . $CveContratoForm . '"></td>';
+                    }
+                    ?>
+                </form>
+            </tr>
+
+
+
+
+        </table>
+        <br>
+
+
+
+
+        <br>
+        <br>
+
+    </div>
 
     <!--/////////////////Animacion del menu desplegable/////////////////-->
 

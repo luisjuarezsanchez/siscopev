@@ -12,11 +12,8 @@ $query = mysqli_query($mysqli, $sql);
 $row = mysqli_fetch_array($query);
 
 
-//echo $Incrementable;
-
 ?>
 <?php
-$conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
 ?>
 <!DOCTYPE html>
 <html>

@@ -39,9 +39,12 @@ if ($num_rows > 0) {
         $html .= '<td>' . $row['FechaIngreso'] . '</td>';
         $html .= '<td>' . $row['Nacionalidad'] . '</td>';
         $html .= '<td>' . $row['CURP'] . '</td>';
-        $html .= '<td><img src="img/expedientes/editar.png" height="40" width="40" title="Editar"></td>';
-        //$html .= '<td><img src="img/expedientes/eliminar.png" height="40" width="40" title="Eliminar"></td>';
-        $html .= '</td>';
+
+        $CvePersonal  = $row['CvePersonal'];
+
+        $html .= '<td>
+        <a href="editar_empgral.php?CvePersonal=' . $CvePersonal . '"><img src="img/expedientes/editar.png" height="40" width="40" /></a>
+        </td>';
     }
 } else {
     $html .= '<tr>';
