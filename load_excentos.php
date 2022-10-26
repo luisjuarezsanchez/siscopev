@@ -2,8 +2,8 @@
 
 require 'config.php';
 
-$columns = ['CvePersonal', 'Clave','Nombre','Concepto'];
-$table = "frontexcentosdedapo"; 
+$columns = ['CvePersonal', 'Clave', 'Nombre', 'Concepto'];
+$table = "frontexcentosdedapo";
 
 $campo = isset($_POST['campo']) ? $conn->real_escape_string($_POST['campo']) : null;
 $where = '';
@@ -34,9 +34,17 @@ if ($num_rows > 0) {
         $html .= '<td>' . $row['Nombre'] . '</td>';
         $html .= '<td>' . $row['Clave'] . '</td>';
         $html .= '<td>' . $row['Concepto'] . '</td>';
-        $html .= '<td><img src="img/expedientes/editar.png" height="40" width="40" title="Editar"></td>';
-        $html .= '<td><img src="img/expedientes/eliminar.png" height="40" width="40" title="Eliminar"></td>';
-        $html .= '</td>';
+
+        $CvePersonal  = $row['CvePersonal'];
+        $Clave  = $row['Clave'];
+
+        $html .= '<td>
+        <a href="editar_excentos.php?CvePersonal=' . $CvePersonal . ' & Clave=' . $Clave . ' "><img src="img/expedientes/editar.png" height="40" width="40" /></a>
+        </td>';
+
+        $html .= '<td>
+        <a href="delete_excentos.php?CvePersonal=' . $CvePersonal . ' & Clave=' . $Clave . ' " onclick="return confirm(\'Estás seguro que deseas eliminar el registro?\');"><img src="img/expedientes/eliminar.png" height="40" width="40" /></a>
+        </td>';
     }
 } else {
     $html .= '<tr>';

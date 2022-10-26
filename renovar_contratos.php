@@ -162,22 +162,24 @@ if (!isset($usuario)) {
                 <form action="insert_renovarcontratos.php" method="POST">
 
                     <?php if ($CveContratoForm <> NULL) {
-                    echo '<td>';
-                    echo '<label><select id="lista" name="CveConNueva">';
-                    $consulta = "SELECT * FROM Contratos WHERE Cerrado='0'";
-                    $resultado = $mysqli->query($consulta);
-                    echo '<form action="" method="post" class="form-login">';
-                        foreach ($resultado as  $opciones) : 
-                            
+                        echo '<td>';
+                        echo '<label><select id="lista" name="CveConNueva">';
 
-                                echo $opciones['CveContrato'];
+                        $consulta = "SELECT * FROM Contratos WHERE Cerrado='0'";
+                        $resultado = $mysqli->query($consulta);
+                        echo '<form action="" method="post" class="form-login">';
+                        foreach ($resultado as  $opciones) :
+                            echo '<option value="';
+                            echo $opciones['CveContrato'];
+                            echo '">';
+                            echo $opciones['CveContrato'];
                             echo '</option>';
                         endforeach;
-                    echo '</select></label>';
-                    echo '</td>';
- 
-                        echo '<td><input type="date" name = "NuevoInicio"></td>';
-                        echo '<td><input type="date" name = "NuevoFin"></td>';
+                        echo '</select></label>';
+                        echo '</td>';
+
+                        echo '<td><input type="date" name = "NuevoInicio" required></td>';
+                        echo '<td><input type="date" name = "NuevoFin" required></td>';
                         echo '<td><input class="buttons" type="submit" value="Renovar contrato"></td>';
                         echo '<td><input type="hidden" name = "CveConAnterior" value="' . $CveContratoForm . '"></td>';
                     }

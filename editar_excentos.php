@@ -5,18 +5,16 @@ if (!isset($usuario)) {
     header("location: index.php");
 }
 require 'conexion.php';
-//$Incrementable = $_GET['Incrementable'];
+$CvePersonal = $_GET['CvePersonal'];
+$Clave = $_GET['Clave'];
 
-//$sql = "SELECT * FROM EmpCont WHERE Incrementable='$Incrementable'";
-//$query = mysqli_query($mysqli, $sql);
-//$row = mysqli_fetch_array($query);
+$sql = "SELECT * FROM ExcentosDedApo WHERE CvePersonal='$CvePersonal' AND Clave='$Clave'";
+$query = mysqli_query($mysqli, $sql);
+$row = mysqli_fetch_array($query);
 
-
-//echo $Incrementable;
 
 ?>
 <?php
-$conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
 ?>
 <!DOCTYPE html>
 <html>
@@ -142,7 +140,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
             </div>
 
             <div class="item">
-                <a href="crud_contratos.php">
+                <a href="crud_excentos.php">
                     <div class="icon"> <img src="img/expedientes/volver.png" alt=""> </div>
                     <div class="title"><span>Volver</span></div>
                 </a>
@@ -155,35 +153,40 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
 
     <div id="main-container">
         <br>
-        <h1 id="tituloTabla">Insertar nuevo contrato</h1>
+        <h1 id="tituloTabla">Editar campos de la tabla EmpCont</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
 
-        <form class="form-login3" action="insert_contratos.php" method="POST"> 
 
-            <p>Clave de contrato</p>
-            <input class="controls" type="text" name="CveContrato" placeholder="Ingresa la Clave de contrato" required pattern="^[A-Za-z0-9- ]+$" title="No se aceptan caracteres especiales en este campo">
+        <div id="campos_act"></div>
+        <form id="editar" action="update_excentos.php" method="POST">
 
-            <p>Descripción</p>
-            <p style="text-align: center;"><select name="Descripcion">
-                    <option value="DIREC GRAL CONSERVATORIO DE MUSICA DEL EDOMEX">DIREC GRAL CONSERVATORIO DE MUSICA DEL EDOMEX</option>
-                    <option value="DIREC. GRAL. DE CULTURA FISICA Y DEPORTE">DIREC. GRAL. DE CULTURA FISICA Y DEPORTE</option>
-                    <option value="DIR GRAL DE PATRIMONIO Y SERVICIOS CULTURALES">DIR GRAL DE PATRIMONIO Y SERVICIOS CULTURALES</option>
-                </select></p>
+            <input type="hidden" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
+            <input type="hidden" name="ClaveA" value="<?= $row['Clave'] ?>">
 
-            <p>Inicio de contrato</p>
-            <input class="controls" type="date" name="Inicio" placeholder="Ingresa la fecha de inicio" required>
+            <p>Clave de Personal</p>
+            <input disabled type="text" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
 
-            <p>Fin de contrato</p>
-            <input class="controls" type="date" name="Fin" placeholder="Ingresa la fecha de fin de contato" required>
+            <p>Clave</p>
+            <input disabled type="text" name="ClaveA" value="<?= $row['Clave'] ?>">
 
-            <p>Ingresa el año de contrato</p>
-            <input class="controls" type="text" name="Anio" placeholder="Ingresa el año del contrato" required pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
-
+            <p>Ingresa la nueva clave</p>
+            <p style="text-align:center;"><label><select id="lista" name="Clave">
+                        <?php
+                        include 'conexion.php';
+                        $consulta = "SELECT Clave,Concepto FROM PerDedApo";
+                        $resultado = $mysqli->query($consulta);
+                        ?>
+                        <form action="" method="post" class="form-login">
+                            <?php foreach ($resultado as  $opciones) : ?>
+                                <option value="<?php echo $opciones['Clave'] ?>">
+                                    <?php echo $opciones['Clave'] . ' ' . $opciones['Concepto'] ?>
+                                </option>
+                            <?php endforeach ?>
+                    </select></label></p>
             <br>
-            <br>
-            <input class="buttons" type="submit" name="enviar" value="Agregar contrato">
+            <input type="submit" name="enviar" value="Actualizar">
+
         </form>
-
 
     </div>
     <br>

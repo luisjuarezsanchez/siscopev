@@ -61,7 +61,7 @@ require 'conexion.php';
 /**********************CONSULTA PARA CONTRATOS DE DEPORTE**********************/
 $consulta = "SELECT
 DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4) AS NomBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
-EmpCont.CodCategoria,catcatego.Descripcion,DetNomina.Del,DetNomina.Al,
+EmpCont.CodCategoria,catcatego.Descripcion,catcatego.DescCorta,DetNomina.Del,DetNomina.Al,
 #Total de sueldos eventuales
 '0202' AS cveeventuales,
 SUM(CASE WHEN DetNomina.Clave=0202 THEN Importe ELSE 0 END) AS toteventuales,
@@ -107,7 +107,7 @@ $pdf->AddPage();
 $pdf->SetFont('Helvetica', '', 11);
 
 //Indicar salida del archivo pdf y estableciendo tamaño de letra
-$pdf->SetFont('Helvetica', '', 10);
+$pdf->SetFont('Helvetica', '', 8);
 while ($row = $resultado->fetch_assoc()) {
     $pdf->Cell(2, 5, utf8_decode($row['CvePersonal']), 0, 0, 'C', 0);
     $pdf->Cell(65, 5, utf8_decode($row['RFC']), 0, 0, 'C', 0);
@@ -128,6 +128,7 @@ while ($row = $resultado->fetch_assoc()) {
     $pdf->Cell(2, 5, utf8_decode($row['cveeventuales']), 0, 0, 'C', 0);
     $pdf->Cell(55, 5, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
     $pdf->Cell(1, 5, utf8_decode('(' . $row['HrsMen'] . ')'), 0, 0, 'C', 0);
+    $pdf->Cell(1, 5, utf8_decode(' ' . ' ' . ' ' . $row['DescCorta'] . ''), 0, 0, 'L', 0);
     $pdf->Cell(65, 5, utf8_decode("$" . number_format($row['toteventuales'], 2, ".", ",")), 0, 0, 'R', 0);
     $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 
@@ -171,8 +172,8 @@ while ($row = $resultado->fetch_assoc()) {
     $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
     $pdf->Cell(260, 5, utf8_decode("$" . number_format($row['sueldobruto'], 2, ".", ",")), 0, 0, 'R', 0);
 
-    $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-    $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    $pdf->Cell(1, 6, utf8_decode(''), 0, 1, 'L', 0);
+    // $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 
     //Sumas finales de deporte
     $totalEmp = $row['totempleados'];
@@ -213,7 +214,7 @@ $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 /**********************CONSULTA PARA CONTRATOS DE COMEM**********************/
 $consulta2 = "SELECT
 DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4)AS NomBanco,EmpGral.CURP,EmpCont.Dirgral,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
-EmpCont.CodCategoria,catcatego.Descripcion,catcatego.DescCorta,DetNomina.Del,DetNomina.Al,DetNomina.HrsMen,
+EmpCont.CodCategoria,catcatego.Descripcion,catcatego.DescCorta,DetNomina.Del,DetNomina.Al,EmpCont.HrsMen,
 COUNT(DetNomina.Clave=0202) AS indicador,
 #Total de sueldos eventuales
 '0202' AS cveeventuales,
@@ -256,187 +257,74 @@ $pdf->AddPage();
 $pdf->SetFont('Helvetica', '', 11);
 
 //Indicar salida del archivo pdf
-$pdf->SetFont('Helvetica', '', 10);
+$pdf->SetFont('Helvetica', '', 8);
 while ($row = $resultado2->fetch_assoc()) {
+    $pdf->Cell(2, 5, utf8_decode($row['CvePersonal']), 0, 0, 'C', 0);
+    $pdf->Cell(65, 5, utf8_decode($row['RFC']), 0, 0, 'C', 0);
+    $pdf->Cell(80, 5, utf8_decode($row['Nombre']), 0, 0, 'C', 0);
+    $pdf->Cell(55, 5, utf8_decode($row['CtaBanco']), 0, 0, 'C', 0);
+    $pdf->Cell(1, 5, utf8_decode('(' . $row['NomBanco'] . ')'), 0, 0, 'C', 0);
+    $pdf->Cell(74, 5, utf8_decode($row['CURP']), 0, 0, 'C', 0);
+    $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    $pdf->Cell(1, 5, utf8_decode($row['Dirgral']), 0, 0, 'C', 0);
+    $pdf->Cell(30, 5, utf8_decode($row['CveISSEMyM']), 0, 0, 'C', 0);
+    $pdf->Cell(10, 5, utf8_decode($row['UnidadRespon']), 0, 0, 'C', 0);
+    $pdf->Cell(90, 5, utf8_decode('DIR GRAL DE CULTURA FISICA Y DEPORTE'), 0, 0, 'C', 0);
+    $pdf->Cell(20, 5, utf8_decode($row['CodCategoria']), 0, 0, 'C', 0);
+    $pdf->Cell(65, 5, utf8_decode($row['Descripcion']), 0, 0, 'C', 0);
+    $pdf->Cell(15, 5, utf8_decode($row['Del']), 0, 0, 'C', 0);
+    $pdf->Cell(40, 5, utf8_decode($row['Al']), 0, 0, 'C', 0);
+    $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    $pdf->Cell(2, 5, utf8_decode($row['cveeventuales']), 0, 0, 'C', 0);
+    $pdf->Cell(55, 5, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+    $pdf->Cell(1, 5, utf8_decode('(' . $row['HrsMen'] . ')'), 0, 0, 'C', 0);
+    $pdf->Cell(1, 5, utf8_decode(' ' . ' ' . ' ' . $row['DescCorta'] . ''), 0, 0, 'L', 0);
+    $pdf->Cell(65, 5, utf8_decode("$" . number_format($row['toteventuales'], 2, ".", ",")), 0, 0, 'R', 0);
+    $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 
-    //Separando la impresion de los sueldos dobles
-    if ($row['indicador'] > 20) {
-        $pdf->Cell(2, 5, utf8_decode($row['CvePersonal']), 0, 0, 'C', 0);
-        $pdf->Cell(65, 5, utf8_decode($row['RFC']), 0, 0, 'C', 0);
-        $pdf->Cell(80, 5, utf8_decode($row['Nombre']), 0, 0, 'C', 0);
-        $pdf->Cell(55, 5, utf8_decode($row['CtaBanco']), 0, 0, 'C', 0);
-        $pdf->Cell(1, 5, utf8_decode('(' . $row['NomBanco'] . ')'), 0, 0, 'C', 0);
-        $pdf->Cell(74, 5, utf8_decode($row['CURP']), 0, 0, 'C', 0);
-        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        $pdf->Cell(1, 5, utf8_decode($row['Dirgral']), 0, 0, 'C', 0);
-        $pdf->Cell(30, 5, utf8_decode($row['CveISSEMyM']), 0, 0, 'C', 0);
-        $pdf->Cell(10, 5, utf8_decode($row['UnidadRespon']), 0, 0, 'C', 0);
-        $pdf->Cell(90, 5, utf8_decode('DIREC GRAL DEL COMEM'), 0, 0, 'C', 0);
-        $pdf->Cell(20, 5, utf8_decode($row['CodCategoria']), 0, 0, 'C', 0);
-        $pdf->Cell(65, 5, utf8_decode($row['Descripcion']), 0, 0, 'C', 0);
-        $pdf->Cell(15, 5, utf8_decode($row['Del']), 0, 0, 'C', 0);
-        $pdf->Cell(40, 5, utf8_decode($row['Al']), 0, 0, 'C', 0);
-        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-
-        //IF ELIMINAR (TRABAJARLO DINAMICAMENTE)
-        if ($row['CvePersonal'] == '000000086') {
-            $pdf->Cell(2, 5, utf8_decode($row['cveeventuales']), 0, 0, 'C', 0);
-            $pdf->Cell(55, 5, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-            $pdf->Cell(1, 5, utf8_decode('(' . '4' . ')'), 0, 0, 'C', 0);
-            $pdf->Cell(65, 5, utf8_decode("$" . number_format('1106.00', 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-
-            $pdf->Cell(2, 5, utf8_decode($row['cveeventuales']), 0, 0, 'C', 0);
-            $pdf->Cell(55, 5, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-            $pdf->Cell(1, 5, utf8_decode('(' . '17' . ')'), 0, 0, 'C', 0);
-            $pdf->Cell(65, 5, utf8_decode("$" . number_format('5183.30', 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        }
-
-        //IF ELIMINAR (TRABAJARLO DINAMICAMENTE)
-        if ($row['CvePersonal'] == '000000510') {
-            $pdf->Cell(2, 5, utf8_decode($row['cveeventuales']), 0, 0, 'C', 0);
-            $pdf->Cell(55, 5, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-            $pdf->Cell(1, 5, utf8_decode('(' . '5' . ')'), 0, 0, 'C', 0);
-            $pdf->Cell(65, 5, utf8_decode("$" . number_format('1160.50', 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-
-            $pdf->Cell(2, 5, utf8_decode($row['cveeventuales']), 0, 0, 'C', 0);
-            $pdf->Cell(55, 5, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-            $pdf->Cell(1, 5, utf8_decode('(' . '8' . ')'), 0, 0, 'C', 0);
-            $pdf->Cell(65, 5, utf8_decode("$" . number_format('2439.20', 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        }
-
-        //IF ELIMINAR (TRABAJARLO DINAMICAMENTE)
-        if ($row['CvePersonal'] == '000000533') {
-            $pdf->Cell(2, 5, utf8_decode($row['cveeventuales']), 0, 0, 'C', 0);
-            $pdf->Cell(55, 5, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-            $pdf->Cell(1, 5, utf8_decode('(' . '6' . ')'), 0, 0, 'C', 0);
-            $pdf->Cell(65, 5, utf8_decode("$" . number_format('1992.60', 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-
-            $pdf->Cell(2, 5, utf8_decode($row['cveeventuales']), 0, 0, 'C', 0);
-            $pdf->Cell(55, 5, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-            $pdf->Cell(1, 5, utf8_decode('(' . '10' . ')'), 0, 0, 'C', 0);
-            $pdf->Cell(65, 5, utf8_decode("$" . number_format('3049.00', 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        }
-
-        if ($row['totsubsidios'] > 0) {
-            $pdf->Cell(2, 5, utf8_decode($row['cvesubsidios']), 0, 0, 'C', 0);
-            $pdf->Cell(55, 5, utf8_decode('SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
-            $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsubsidios'] / 2, 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        }
-
-        if ($row['totisr'] > 0) {
-            $pdf->Cell(150, 5, utf8_decode($row['cveisr']), 0, 0, 'R', 0);
-            $pdf->Cell(55, 5, utf8_decode('IMPUESTO SOBRE LA RENTA'), 0, 0, 'R', 0);
-            $pdf->Cell(55, 5, utf8_decode("$" . number_format($row['totisr'] / 2, 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        }
-
-        if ($row['totsalud'] > 0) {
-            $pdf->Cell(150, 5, utf8_decode($row['cvesalud']), 0, 0, 'R', 0);
-            $pdf->Cell(55, 5, utf8_decode('SERVICIOS DE SALUD 4.625%'), 0, 0, 'R', 0);
-            $pdf->Cell(55, 5, utf8_decode("$" . number_format($row['totsalud'] / 2, 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        }
-
-        if ($row['totsisrep'] > 0) {
-            $pdf->Cell(150, 5, utf8_decode($row['cvesisrep']), 0, 0, 'R', 0);
-            $pdf->Cell(72, 5, utf8_decode('SISTEMA SOLIDARIO DE REPARTO 6.1%'), 0, 0, 'R', 0);
-            $pdf->Cell(38, 5, utf8_decode("$" . number_format($row['totsisrep'] / 2, 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        }
-
-        if ($row['totcapita'] > 0) {
-            $pdf->Cell(150, 5, utf8_decode($row['cvecapita']), 0, 0, 'R', 0);
-            $pdf->Cell(62, 5, utf8_decode('CAPITALIZACION INDIVIDUAL 1.4%'), 0, 0, 'R', 0);
-            $pdf->Cell(48, 5, utf8_decode("$" . number_format($row['totcapita'] / 2, 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        }
-
-        $pdf->Cell(122, 5, utf8_decode("$" . number_format($row['toteventuales'] / 2 + $row['totsubsidios'] / 2, 2, ".", ",")), 0, 0, 'R', 0);
-        $pdf->Cell(138, 5, utf8_decode("$" . number_format($row['totdeducciones'] / 2, 2, ".", ",")), 0, 0, 'R', 0);
-        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        $pdf->Cell(260, 5, utf8_decode("$" . number_format($row['sueldobruto'] / 2, 2, ".", ",")), 0, 0, 'R', 0);
-
-
-        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-    } else {
-        $pdf->Cell(2, 5, utf8_decode($row['CvePersonal']), 0, 0, 'C', 0);
-        $pdf->Cell(65, 5, utf8_decode($row['RFC']), 0, 0, 'C', 0);
-        $pdf->Cell(80, 5, utf8_decode($row['Nombre']), 0, 0, 'C', 0);
-        $pdf->Cell(55, 5, utf8_decode($row['CtaBanco']), 0, 0, 'C', 0);
-        $pdf->Cell(1, 5, utf8_decode('(' . $row['NomBanco'] . ')'), 0, 0, 'C', 0);
-        $pdf->Cell(74, 5, utf8_decode($row['CURP']), 0, 0, 'C', 0);
-        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        $pdf->Cell(1, 5, utf8_decode($row['Dirgral']), 0, 0, 'C', 0);
-        $pdf->Cell(30, 5, utf8_decode($row['CveISSEMyM']), 0, 0, 'C', 0);
-        $pdf->Cell(10, 5, utf8_decode($row['UnidadRespon']), 0, 0, 'C', 0);
-        $pdf->Cell(90, 5, utf8_decode('DIREC GRAL DEL COMEM'), 0, 0, 'C', 0);
-        $pdf->Cell(20, 5, utf8_decode($row['CodCategoria']), 0, 0, 'C', 0);
-        $pdf->Cell(65, 5, utf8_decode($row['Descripcion']), 0, 0, 'C', 0);
-        $pdf->Cell(15, 5, utf8_decode($row['Del']), 0, 0, 'C', 0);
-        $pdf->Cell(40, 5, utf8_decode($row['Al']), 0, 0, 'C', 0);
-        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-
-
-        $pdf->Cell(2, 5, utf8_decode($row['cveeventuales']), 0, 0, 'C', 0);
-        $pdf->Cell(55, 5, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-        $pdf->Cell(1, 5, utf8_decode('(' . $row['HrsMen'] . ')'), 0, 0, 'C', 0);
-        $pdf->Cell(65, 5, utf8_decode("$" . number_format($row['toteventuales'], 2, ".", ",")), 0, 0, 'R', 0);
-        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-
-        if ($row['totsubsidios'] > 0) {
-            $pdf->Cell(2, 5, utf8_decode($row['cvesubsidios']), 0, 0, 'C', 0);
-            $pdf->Cell(55, 5, utf8_decode('SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
-            $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsubsidios'], 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        }
-
-        if ($row['totisr'] > 0) {
-            $pdf->Cell(150, 5, utf8_decode($row['cveisr']), 0, 0, 'R', 0);
-            $pdf->Cell(55, 5, utf8_decode('IMPUESTO SOBRE LA RENTA'), 0, 0, 'R', 0);
-            $pdf->Cell(55, 5, utf8_decode("$" . number_format($row['totisr'], 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        }
-
-        if ($row['totsalud'] > 0) {
-            $pdf->Cell(150, 5, utf8_decode($row['cvesalud']), 0, 0, 'R', 0);
-            $pdf->Cell(55, 5, utf8_decode('SERVICIOS DE SALUD 4.625%'), 0, 0, 'R', 0);
-            $pdf->Cell(55, 5, utf8_decode("$" . number_format($row['totsalud'], 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        }
-
-        if ($row['totsisrep'] > 0) {
-            $pdf->Cell(150, 5, utf8_decode($row['cvesisrep']), 0, 0, 'R', 0);
-            $pdf->Cell(72, 5, utf8_decode('SISTEMA SOLIDARIO DE REPARTO 6.1%'), 0, 0, 'R', 0);
-            $pdf->Cell(38, 5, utf8_decode("$" . number_format($row['totsisrep'], 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        }
-
-        if ($row['totcapita'] > 0) {
-            $pdf->Cell(150, 5, utf8_decode($row['cvecapita']), 0, 0, 'R', 0);
-            $pdf->Cell(62, 5, utf8_decode('CAPITALIZACION INDIVIDUAL 1.4%'), 0, 0, 'R', 0);
-            $pdf->Cell(48, 5, utf8_decode("$" . number_format($row['totcapita'], 2, ".", ",")), 0, 0, 'R', 0);
-            $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        }
-
-        $pdf->Cell(122, 5, utf8_decode("$" . number_format($row['toteventuales'] + $row['totsubsidios'], 2, ".", ",")), 0, 0, 'R', 0);
-        $pdf->Cell(138, 5, utf8_decode("$" . number_format($row['totdeducciones'], 2, ".", ",")), 0, 0, 'R', 0);
-        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        $pdf->Cell(260, 5, utf8_decode("$" . number_format($row['sueldobruto'], 2, ".", ",")), 0, 0, 'R', 0);
-
-
-        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    if ($row['totsubsidios'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvesubsidios']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsubsidios'], 2, ".", ",")), 0, 0, 'R', 0);
         $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
     }
+
+    if ($row['totisr'] > 0) {
+        $pdf->Cell(150, 5, utf8_decode($row['cveisr']), 0, 0, 'R', 0);
+        $pdf->Cell(55, 5, utf8_decode('IMPUESTO SOBRE LA RENTA'), 0, 0, 'R', 0);
+        $pdf->Cell(55, 5, utf8_decode("$" . number_format($row['totisr'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totsalud'] > 0) {
+        $pdf->Cell(150, 5, utf8_decode($row['cvesalud']), 0, 0, 'R', 0);
+        $pdf->Cell(55, 5, utf8_decode('SERVICIOS DE SALUD 4.625%'), 0, 0, 'R', 0);
+        $pdf->Cell(55, 5, utf8_decode("$" . number_format($row['totsalud'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totsisrep'] > 0) {
+        $pdf->Cell(150, 5, utf8_decode($row['cvesisrep']), 0, 0, 'R', 0);
+        $pdf->Cell(72, 5, utf8_decode('SISTEMA SOLIDARIO DE REPARTO 6.1%'), 0, 0, 'R', 0);
+        $pdf->Cell(38, 5, utf8_decode("$" . number_format($row['totsisrep'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totcapita'] > 0) {
+        $pdf->Cell(150, 5, utf8_decode($row['cvecapita']), 0, 0, 'R', 0);
+        $pdf->Cell(62, 5, utf8_decode('CAPITALIZACION INDIVIDUAL 1.4%'), 0, 0, 'R', 0);
+        $pdf->Cell(48, 5, utf8_decode("$" . number_format($row['totcapita'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    $pdf->Cell(122, 5, utf8_decode("$" . number_format($row['totpercepciones'], 2, ".", ",")), 0, 0, 'R', 0);
+    $pdf->Cell(138, 5, utf8_decode("$" . number_format($row['totdeducciones'], 2, ".", ",")), 0, 0, 'R', 0);
+    $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    $pdf->Cell(260, 5, utf8_decode("$" . number_format($row['sueldobruto'], 2, ".", ",")), 0, 0, 'R', 0);
+
+    $pdf->Cell(1, 6, utf8_decode(''), 0, 1, 'L', 0);
+    // $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+
 
     //Declaraciones finales
     $totalEmp = $row['totempleados'];
@@ -478,7 +366,7 @@ $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 /**********************CONSULTA PARA CONTRATOS DE PATRIMONIO**********************/
 $consulta3 = "SELECT
 DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4)AS NomBanco,EmpCont.CtaBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
-EmpCont.CodCategoria,catcatego.Descripcion,DetNomina.Del,DetNomina.Al,
+EmpCont.CodCategoria,catcatego.Descripcion,catcatego.DescCorta,DetNomina.Del,DetNomina.Al,
 #Total de sueldos eventuales
 '0202' AS cveeventuales,
 SUM(CASE WHEN DetNomina.Clave=0202 THEN Importe ELSE 0 END) AS toteventuales,
@@ -520,7 +408,7 @@ $pdf->AddPage();
 $pdf->SetFont('Helvetica', '', 11);
 
 //Indicar salida del archivo pdf
-$pdf->SetFont('Helvetica', '', 10);
+$pdf->SetFont('Helvetica', '', 8);
 while ($row = $resultado3->fetch_assoc()) {
     $pdf->Cell(2, 5, utf8_decode($row['CvePersonal']), 0, 0, 'C', 0);
     $pdf->Cell(65, 5, utf8_decode($row['RFC']), 0, 0, 'C', 0);
@@ -541,6 +429,7 @@ while ($row = $resultado3->fetch_assoc()) {
     $pdf->Cell(2, 5, utf8_decode($row['cveeventuales']), 0, 0, 'C', 0);
     $pdf->Cell(55, 5, utf8_decode('SUELDOS EVENTUALES'), 0, 0, 'C', 0);
     $pdf->Cell(1, 5, utf8_decode('(' . $row['HrsMen'] . ')'), 0, 0, 'C', 0);
+    $pdf->Cell(1, 5, utf8_decode(' ' . ' ' . ' ' . $row['DescCorta'] . ''), 0, 0, 'L', 0);
     $pdf->Cell(65, 5, utf8_decode("$" . number_format($row['toteventuales'], 2, ".", ",")), 0, 0, 'R', 0);
     $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 
@@ -585,9 +474,8 @@ while ($row = $resultado3->fetch_assoc()) {
     $pdf->Cell(260, 5, utf8_decode("$" . number_format($row['sueldobruto'], 2, ".", ",")), 0, 0, 'R', 0);
 
 
-    $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-    $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-    $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    $pdf->Cell(1, 6, utf8_decode(''), 0, 1, 'L', 0);
+    // $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 
     //Declaraciones finales
     $totalEmp = $row['totempleados'];
@@ -612,9 +500,9 @@ $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 
 //Totales de toda la nomina
-$pdf->Cell(250, 5, utf8_decode("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"), 0, 0, 'C', 0);
+$pdf->Cell(250, 5, utf8_decode("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"), 0, 0, 'C', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
-$pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $contadorDeporte+$contadorPatri+$contadorComem), 0, 0, 'R', 0);
+$pdf->Cell(45, 5, utf8_decode("TOTALES DE EMPLEADOS: " . $contadorDeporte + $contadorPatri + $contadorComem), 0, 0, 'R', 0);
 $pdf->Cell(90, 5, utf8_decode("$" . number_format($defPercepciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(120, 5, utf8_decode("$" . number_format($defDeducciones, 2, ".", ",")), 0, 0, 'R', 0);
 $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);

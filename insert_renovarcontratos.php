@@ -14,7 +14,7 @@ echo '<br>';
 echo $NuevoInicio;
 echo '<br>';
 echo $NuevoFin;
-/*
+
 $sql = "INSERT INTO tmpRenovaCon (CveConAnterior,CveConNueva,NuevoInicio,NuevoFin)
 VALUES ('$CveConAnterior','$CveConNueva','$NuevoInicio','$NuevoFin')";
 $query = mysqli_query($mysqli, $sql);
@@ -37,4 +37,4 @@ $query = mysqli_query($mysqli, $sql3);
 
 if ($query) {
     Header("Location: alertas/contratorenovado.php");
-};*/
+};

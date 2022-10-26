@@ -229,7 +229,7 @@ while ($row = $resultado->fetch_assoc()) {
     $pdf->Cell(90, 7, utf8_decode("$" . number_format((($row['impsoremunA'] + $row['impsoremunB']) * 3 / 100), 2, ".", ",")), 0, 1, 'R', 0);
 }
 
-
+ 
 
 //CONSULTA PARA CONTRATOS DE DEPORTE//////////////////////////////////////////////////////////////////////////////////////////////////
 $consulta2 = "SELECT 

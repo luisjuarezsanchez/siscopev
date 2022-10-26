@@ -38,8 +38,18 @@ if ($num_rows > 0) {
         $html .= '<td>' . $row['Cerrado'] . '</td>';
         $html .= '<td>' . $row['Prisma'] . '</td>';
         $html .= '<td>' . $row['Anio'] . '</td>';
-        $html .= '<td><img src="img/expedientes/editar.png" height="40" width="40" title="Editar"></td>';
-        $html .= '<td><img src="img/expedientes/eliminar.png" height="40" width="40" title="Eliminar"></td>';
+
+        $CveContrato  = $row['CveContrato'];
+
+        $html .= '<td>
+        <a href="editar_contratos.php?CveContrato=' . $CveContrato . '"><img src="img/expedientes/editar.png" height="40" width="40" /></a>
+        </td>';
+
+        $html .= '<td>
+        <a href="delete_contratos.php?CveContrato=' . $CveContrato . ' " onclick="return confirm(\'Estás seguro que deseas eliminar el registro?\');"><img src="img/expedientes/eliminar.png" height="40" width="40" /></a>
+        </td>';
+
+
         $html .= '</td>';
     }
 } else {

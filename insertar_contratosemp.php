@@ -159,7 +159,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
         <br>
 
-        <form class="form-login5" id="insertarempleado" action="insert_empleado.php" method="POST">
+        <form class="form-login5" id="insertarempleado" action="#" method="POST">
             <p>Clave de personal</p>
             <p style="text-align:center;"><label><select id="lista" name="CvePersonal">
                         <?php

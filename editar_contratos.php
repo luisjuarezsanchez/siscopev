@@ -5,18 +5,15 @@ if (!isset($usuario)) {
     header("location: index.php");
 }
 require 'conexion.php';
-//$Incrementable = $_GET['Incrementable'];
+$CveContrato = $_GET['CveContrato'];
 
-//$sql = "SELECT * FROM EmpCont WHERE Incrementable='$Incrementable'";
-//$query = mysqli_query($mysqli, $sql);
-//$row = mysqli_fetch_array($query);
+$sql = "SELECT * FROM Contratos WHERE CveContrato='$CveContrato'";
+$query = mysqli_query($mysqli, $sql);
+$row = mysqli_fetch_array($query);
 
-
-//echo $Incrementable;
 
 ?>
 <?php
-$conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
 ?>
 <!DOCTYPE html>
 <html>
@@ -155,35 +152,38 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
 
     <div id="main-container">
         <br>
-        <h1 id="tituloTabla">Insertar nuevo contrato</h1>
+        <h1 id="tituloTabla">Editar campos de la tabla EmpCont</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
 
-        <form class="form-login3" action="insert_contratos.php" method="POST"> 
 
-            <p>Clave de contrato</p>
-            <input class="controls" type="text" name="CveContrato" placeholder="Ingresa la Clave de contrato" required pattern="^[A-Za-z0-9- ]+$" title="No se aceptan caracteres especiales en este campo">
+        <div id="campos_act"></div>
+        <form id="editar" action="update_contratos.php" method="POST">
 
-            <p>Descripción</p>
-            <p style="text-align: center;"><select name="Descripcion">
-                    <option value="DIREC GRAL CONSERVATORIO DE MUSICA DEL EDOMEX">DIREC GRAL CONSERVATORIO DE MUSICA DEL EDOMEX</option>
-                    <option value="DIREC. GRAL. DE CULTURA FISICA Y DEPORTE">DIREC. GRAL. DE CULTURA FISICA Y DEPORTE</option>
-                    <option value="DIR GRAL DE PATRIMONIO Y SERVICIOS CULTURALES">DIR GRAL DE PATRIMONIO Y SERVICIOS CULTURALES</option>
+            <input type="hidden" name="CveContrato" value="<?= $row['CveContrato'] ?>">
+
+            <p>Clave de Contrato</p>
+            <input type="text" name="CveContratoNueva" value="<?= $row['CveContrato'] ?>">
+
+            <p>Inicio</p>
+            <input type="date" name="Inicio" value="<?= $row['Inicio'] ?>">
+
+            <p>Fin</p>
+            <input type="date" name="Fin" value="<?= $row['Fin'] ?>">
+
+            <p>Cerrado</p>
+            <p style="text-align: center;"><select name="Cerrado" value="<?= $row['Cerrado'] ?>">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </select></p>
 
-            <p>Inicio de contrato</p>
-            <input class="controls" type="date" name="Inicio" placeholder="Ingresa la fecha de inicio" required>
-
-            <p>Fin de contrato</p>
-            <input class="controls" type="date" name="Fin" placeholder="Ingresa la fecha de fin de contato" required>
-
-            <p>Ingresa el año de contrato</p>
-            <input class="controls" type="text" name="Anio" placeholder="Ingresa el año del contrato" required pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
-
+            <p>Año</p>
+            <input type="text" name="Anio" value="<?= $row['Anio'] ?>">
             <br>
             <br>
-            <input class="buttons" type="submit" name="enviar" value="Agregar contrato">
+
+            <input type="submit" name="enviar" value="Actualizar">
+
         </form>
-
 
     </div>
     <br>

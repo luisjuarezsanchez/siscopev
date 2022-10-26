@@ -124,7 +124,7 @@ if (!isset($usuario)) {
                 </form>
             </tr>
             <tr>
-                <form action="resumen_alfabetico.php" method="post" enctype="multipart/form-data">
+                <form action="resumen_alfabetico_borrar.php" method="post" enctype="multipart/form-data">
                     <td>Alfabético <img src="img/reportes/alfabetico.png" height="55" width="55"></td>
                     <td><label><select id="lista" name="CveNomina">
                                 <?php

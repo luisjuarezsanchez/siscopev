@@ -197,7 +197,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
                     </select></label></p>
 
             <p>CURP</p>
-            <input class="controls" type="text" name="CURP" onKeyUp="this.value=this.value.toUpperCase();" placeholder="Ingresa la CURP" required pattern="^[A-Za-z0-9]+$" title="Solo se aceptan letras en este campo">
+            <input class="controls" type="text" name="CURP" onKeyUp="this.value=this.value.toUpperCase();" placeholder="Ingresa la CURP" required pattern="^[A-Za-z0-9]+$" title="No se aceptan caracteres especiales en este campo">
             <br>
             <br>
             <input class="buttons" type="submit" name="enviar" value="Dar de alta">

@@ -13,5 +13,5 @@ $sql = "INSERT INTO ExcentosDedApo (CvePersonal,Clave) VALUES
 $query = mysqli_query($mysqli, $sql);
 
 if($query){
-    Header("Location: crud_excentos.php");   
+    Header("Location: alertas/excentoagregado.php");   
 };
