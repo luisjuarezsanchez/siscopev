@@ -5,9 +5,9 @@ if (!isset($usuario)) {
     header("location: index.php");
 }
 require 'conexion.php';
-$Incrementable = $_GET['Incrementable'];
+$CveEmpCont = $_GET['CveEmpCont'];
 
-$sql = "SELECT * FROM EmpCont WHERE Incrementable='$Incrementable'";
+$sql = "SELECT * FROM EmpCont WHERE CveEmpCont='$CveEmpCont'";
 $query = mysqli_query($mysqli, $sql);
 $row = mysqli_fetch_array($query);
 
@@ -159,7 +159,7 @@ $row = mysqli_fetch_array($query);
         <div id="campos_act"></div>
         <form id="editar" action="update_empcont.php" method="POST">
 
-        <input type="hidden" name="Incrementable" value="<?= $row['Incrementable'] ?>">
+        <input type="hidden" name="CveEmpCont" value="<?= $row['CveEmpCont'] ?>">
 
             <p>Clave de Personal</p>
             <input type="text" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">

@@ -144,7 +144,7 @@ if (!isset($usuario)) {
             </tr>
 
             <tr>
-                <form action="resumen_nominas.php" method="post" enctype="multipart/form-data">
+                <form action="reporte_dispersion.php" method="post" enctype="multipart/form-data">
                     <td>Dispersion <img src="img/reportes/dispersion.png" height="55" width="55"></td>
                     <td><label><select id="lista" name="CveNomina">
                                 <?php

@@ -50,7 +50,7 @@ $consulta = "SELECT
 #Calculo de sueldos eventuales
 SUM(CASE WHEN DetNomina.Clave=0202 THEN Importe ELSE 0 END) AS eventuales,
 #Cuenta de sueldos eventuales
-(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE CveContrato LIKE '%DEPOR%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=0202) as sumaeventuales,
+(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE CveContrato LIKE '%DEPOR%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=0202) as sumaeventuales,
 #Cuenta de subsidios
 (SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE CveContrato LIKE '%DEPOR%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=0325) as sumasubsidios,
 #Calculo de subsidios al empleo
@@ -231,12 +231,12 @@ while ($row = $resultado->fetch_assoc()) {
 
  
 
-//CONSULTA PARA CONTRATOS DE DEPORTE//////////////////////////////////////////////////////////////////////////////////////////////////
+//CONSULTA PARA CONTRATOS DE COMEM//////////////////////////////////////////////////////////////////////////////////////////////////
 $consulta2 = "SELECT 
 #Calculo de sueldos eventuales
 SUM(CASE WHEN DetNomina.Clave=0202 THEN Importe ELSE 0 END) AS eventuales,
 #Cuenta de sueldos eventuales
-(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=0202) as sumaeventuales,
+(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=0202) as sumaeventuales,
 #Cuenta de subsidios
 (SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=0325) as sumasubsidios,
 #Calculo de subsidios al empleo
@@ -244,19 +244,19 @@ SUM(CASE WHEN DetNomina.Clave=0325 THEN Importe ELSE 0 END) AS subsidios,
 #Calculo de Total de percepciones
 SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END) AS totper,
 #Cuenta de SERVICIOS DE SALUD
-(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5540) as sumasalud,
+(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5540) as sumasalud,
 #Calculo de Total de SERVICIOS DE SALUD
 SUM(CASE WHEN DetNomina.Clave=5540 THEN Importe ELSE 0 END) AS sersalud,
 #Cuenta de SISTEMA SOLIDARIO DE REPARTO
-(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5541) as sumareparto,
+(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5541) as sumareparto,
 #Calculo de Total de SISTEMA SOLIDARIO DE REPARTO
 SUM(CASE WHEN DetNomina.Clave=5541 THEN Importe ELSE 0 END) AS sissolidario,
 #Cuenta de APITALIZACION INDIVIDUAL 
-(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5542) as sumacapita,
+(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5542) as sumacapita,
 #Calculo de Total de CAPITALIZACION INDIVIDUAL
 SUM(CASE WHEN DetNomina.Clave=5542 THEN Importe ELSE 0 END) AS siscapita,
 #Cuenta de IMPUESTO SOBRE LA RENTA
-(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5408) as sumaisr,
+(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5408) as sumaisr,
 #Calculo de Total de IMPUESTO SOBRE LA RENTA
 SUM(CASE WHEN DetNomina.Clave=5408 THEN Importe ELSE 0 END) AS isr,
 #Calculo de Total de TOTAL DE DEDUCCIONES
@@ -380,7 +380,7 @@ while ($row = $resultado2->fetch_assoc()) {
 
     //TOTAL SUELDOS EVENTUALES
     $pdf->Cell(80, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-    $pdf->Cell(195, 10, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
+    $pdf->Cell(195, 10, utf8_decode($row['sumasalud']), 0, 1, 'C', 0);
 
     //SERVICIOS DE SALUD
     $pdf->Cell(95, 10, utf8_decode('10.0% SERVICIOS DE SALUD'), 0, 0, 'C', 0);
@@ -424,7 +424,7 @@ $consulta3 = "SELECT
 #Calculo de sueldos eventuales
 SUM(CASE WHEN DetNomina.Clave=0202 THEN Importe ELSE 0 END) AS eventuales,
 #Cuenta de sueldos eventuales
-(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE CveContrato LIKE '%PATRI%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=0202) as sumaeventuales,
+(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE CveContrato LIKE '%PATRI%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=0202) as sumaeventuales,
 #Cuenta de subsidios
 (SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE CveContrato LIKE '%PATRI%' AND DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=0325) as sumasubsidios,
 #Calculo de subsidios al empleo
@@ -613,7 +613,7 @@ $consulta4 = "SELECT
 #Calculo de sueldos eventuales
 SUM(CASE WHEN DetNomina.Clave=0202 THEN Importe ELSE 0 END) AS eventuales,
 #Cuenta de sueldos eventuales
-(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=0202) as sumaeventuales,
+(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=0202) as sumaeventuales,
 #Cuenta de subsidios
 (SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=0325) as sumasubsidios,
 #Calculo de subsidios al empleo
@@ -621,19 +621,19 @@ SUM(CASE WHEN DetNomina.Clave=0325 THEN Importe ELSE 0 END) AS subsidios,
 #Calculo de Total de percepciones
 SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END) AS totper,
 #Cuenta de SERVICIOS DE SALUD
-(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5540) as sumasalud,
+(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5540) as sumasalud,
 #Calculo de Total de SERVICIOS DE SALUD
 SUM(CASE WHEN DetNomina.Clave=5540 THEN Importe ELSE 0 END) AS sersalud,
 #Cuenta de SISTEMA SOLIDARIO DE REPARTO
-(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5541) as sumareparto,
+(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5541) as sumareparto,
 #Calculo de Total de SISTEMA SOLIDARIO DE REPARTO
 SUM(CASE WHEN DetNomina.Clave=5541 THEN Importe ELSE 0 END) AS sissolidario,
 #Cuenta de APITALIZACION INDIVIDUAL 
-(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5542) as sumacapita,
+(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5542) as sumacapita,
 #Calculo de Total de CAPITALIZACION INDIVIDUAL
 SUM(CASE WHEN DetNomina.Clave=5542 THEN Importe ELSE 0 END) AS siscapita,
 #Cuenta de IMPUESTO SOBRE LA RENTA
-(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal WHERE DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5408) as sumaisr,
+(SELECT COUNT(*) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE DetNomina.CveNomina='$CveNomina' AND DetNomina.Clave=5408) as sumaisr,
 #Calculo de Total de IMPUESTO SOBRE LA RENTA
 SUM(CASE WHEN DetNomina.Clave=5408 THEN Importe ELSE 0 END) AS isr,
 #Calculo de Total de TOTAL DE DEDUCCIONES
@@ -753,7 +753,7 @@ while ($row = $resultado4->fetch_assoc()) {
 
     //TOTAL SUELDOS EVENTUALES
     $pdf->Cell(80, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
-    $pdf->Cell(195, 10, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
+    $pdf->Cell(195, 10, utf8_decode($row['sumasalud']), 0, 1, 'C', 0);
 
     //SERVICIOS DE SALUD
     $pdf->Cell(95, 10, utf8_decode('10.0% SERVICIOS DE SALUD'), 0, 0, 'C', 0);

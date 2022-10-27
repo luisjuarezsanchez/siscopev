@@ -162,7 +162,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
         <table>
             <thead>
                 <tr>
-                    <th>Incrementable</th>
+                    <th>CveEmpCont</th>
                     <th>Clave Personal</th>
                     <th>Nombbre empleado</th>
                     <th>Cta. Banco</th>
