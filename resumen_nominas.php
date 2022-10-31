@@ -193,7 +193,7 @@ while ($row = $resultado->fetch_assoc()) {
     $pdf->Cell(54, 5, utf8_decode(""), 0, 1, 'R', 0);
 
     //TOTAL SUELDOS EVENTUALES
-    $pdf->Cell(80, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL DE PROFESORES'), 0, 0, 'C', 0);
     $pdf->Cell(195, 10, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
 
     //SERVICIOS DE SALUD
@@ -379,7 +379,7 @@ while ($row = $resultado2->fetch_assoc()) {
     $pdf->Cell(54, 5, utf8_decode(""), 0, 1, 'R', 0);
 
     //TOTAL SUELDOS EVENTUALES
-    $pdf->Cell(80, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL DE PROFESORES'), 0, 0, 'C', 0);
     $pdf->Cell(195, 10, utf8_decode($row['sumasalud']), 0, 1, 'C', 0);
 
     //SERVICIOS DE SALUD
@@ -563,7 +563,7 @@ while ($row = $resultado3->fetch_assoc()) {
     $pdf->Cell(54, 5, utf8_decode(""), 0, 1, 'R', 0);
 
     //TOTAL SUELDOS EVENTUALES
-    $pdf->Cell(80, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL DE PROFESORES'), 0, 0, 'C', 0);
     $pdf->Cell(195, 10, utf8_decode($row['sumaeventuales']), 0, 1, 'C', 0);
 
     //SERVICIOS DE SALUD
@@ -752,7 +752,7 @@ while ($row = $resultado4->fetch_assoc()) {
     $pdf->Cell(54, 5, utf8_decode(""), 0, 1, 'R', 0);
 
     //TOTAL SUELDOS EVENTUALES
-    $pdf->Cell(80, 10, utf8_decode('TOTAL SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+    $pdf->Cell(80, 10, utf8_decode('TOTAL DE PROFESORES'), 0, 0, 'C', 0);
     $pdf->Cell(195, 10, utf8_decode($row['sumasalud']), 0, 1, 'C', 0);
 
     //SERVICIOS DE SALUD

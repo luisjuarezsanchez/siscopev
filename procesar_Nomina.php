@@ -128,7 +128,7 @@ if (!isset($usuario)) {
 	<br>
 	<section id="blog">
 		<h4 id="tituloTabla">Procesamiento de nómina</h4>
-		<br>
+		<br> 
 		<div>
 			<form class="form-login" action="procedimientos_funciones/sp_GeneraNomNor.php" method="post">
 				<p>Clave de nómina</p>
@@ -144,7 +144,6 @@ if (!isset($usuario)) {
 				<input class="buttons" type="submit" name="Enviar" value="Enviar información">
 				<br>
 				<input class="buttons" type="reset" name="" value="Vaciar campos">
-
 			</form>
 		</div>
 	</section>

@@ -18,5 +18,5 @@ $sql = "UPDATE EmpGral SET CvePersonal='$CvePersonal',Paterno = '$Paterno'
 $query = mysqli_query($mysqli, $sql);
 
 if ($query) {
-    Header("Location: crud_empleados.php");
+    Header("Location: alertas/empleadomodificado.php");
 };

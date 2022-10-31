@@ -159,7 +159,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
         <br>
 
-        <form class="form-login5" id="insertarempleado" action="#" method="POST">
+        <form class="form-login5" id="insertarempleado" action="insert_empcont.php" method="POST">
             <p>Clave de personal</p>
             <p style="text-align:center;"><label><select id="lista" name="CvePersonal">
                         <?php
@@ -176,10 +176,22 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
                     </select></label></p>
 
             <p>Cuenta de Banco</p>
-            <input id="CtaBanco" class="controls" type="text" name="CtaBanco" placeholder="Ingresa la cuenta de banco" required minlength="18" maxlength="18" pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
+            <input class="controls" type="text" name="CtaBanco" placeholder="Ingresa la cuenta de banco" required minlength="18" maxlength="18" pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
 
             <p>Clave de Contrato</p>
-            <input class="controls" type="text" name="CveContrato" placeholder="Ingresa la clave de contrato" required pattern="^[A-Za-z0-9- ]+$" title="Solo se aceptan letras en este campo">
+            <p style="text-align:center;"><label><select id="lista" name="CveContrato">
+                        <?php
+                        include 'conexion.php';
+                        $consulta = "SELECT * FROM Contratos WHERE Cerrado=0";
+                        $resultado = $mysqli->query($consulta);
+                        ?>
+                        <form action="" method="post" class="form-login">
+                            <?php foreach ($resultado as  $opciones) : ?>
+                                <option value="<?php echo $opciones['CveContrato'] ?>">
+                                    <?php echo $opciones['CveContrato'] ?>
+                                </option>
+                            <?php endforeach ?>
+                    </select></label></p>
 
             <!--Tipo empleado de tipo HIDDEN siempre en 0-->
             <input class="controls" type="hidden" name="TipoEmpleado" value="0">
@@ -190,14 +202,11 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
             <p>Fin de contrato</p>
             <input class="controls" type="date" name="Fin" required>
 
-            <p>Último día</p>
-            <input class="controls" type="date" name="UltDia" required>
+            <!--Ultimo dia igual que el date de fin de contrato-->
+            <input class="controls" type="hidden" name="UltDia" required>
 
             <!--Retenido de tipo HIDDEN siempre en 0-->
             <input class="controls" type="hidden" name="Retenido" value="0">
-
-            <p>Fecha de firma</p>
-            <input class="controls" type="date" name="FechaFirma" required>
 
             <!--PeriodosLab de tipo HIDDEN siempre en 0-->
             <input class="controls" type="hidden" name="PeriodosLab" value="0">
@@ -215,13 +224,13 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
             <p style="text-align:center;"><label><select id="lista" name="CodCategoria">
                         <?php
                         include 'conexion.php';
-                        $consulta = "SELECT ";
+                        $consulta = "SELECT * FROM catcatego";
                         $resultado = $mysqli->query($consulta);
                         ?>
                         <form action="" method="post" class="form-login">
                             <?php foreach ($resultado as  $opciones) : ?>
-                                <option value="<?php echo $opciones['CodCategoria'] ?>">
-                                    <?php echo $opciones['CodCategoria'] ?>
+                                <option value="<?php echo $opciones['CveCategoria'] ?>">
+                                    <?php echo $opciones['CveCategoria'] . ' $' . $opciones['CostoHra'] ?>
                                 </option>
                             <?php endforeach ?>
                     </select></label></p>
@@ -248,10 +257,16 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
             <input class="controls" type="hidden" name="Codigo" value="1">
 
             <p>Unidad Responsable</p>
-            <input class="controls" type="text" name="UnidadRespon" placeholder="Ingresa la Unidad Responsable" required pattern="^[A-Za-z0-9- ]+$" title="Solo se aceptan letras y números en este campo">
+            <p style="text-align: center;"><select name="UnidadRespon">
+                    <option value="22600001L">22600001L</option>
+                    <option value="22600002L">22600002L</option>
+                    <option value="22600003L">22600003L</option>
+                    <option value="22600005L">22600005L</option>
+                    <option value="K0113000">K0113000</option>
+                </select></p>
 
-            <p>Codigo de secretaría</p>
-            <input class="controls" type="text" name="CodSecre" placeholder="Ingresa el código de secretaría" required pattern="^[A-Za-z0-9- ]+$" title="Solo se aceptan letras y números en este campo">
+            <!--CodSecretaria de tipo HIDDEN siempre en 22600000L-->
+            <input class="controls" type="hidden" name="CodSecre" value="22600000L">
 
             <p>Prima Vacacional</p>
             <p style="text-align: center;"><select name="PrimaVac" id="PrimaVac">
@@ -264,9 +279,6 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
 
             <p>Horas mensuales</p>
             <input class="controls" type="number" name="HrsMen" placeholder="Ingresa las horas mensuales" required minlength="1" maxlength="5" pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
-
-            <p>Costo Hora</p>
-            <input class="controls" type="number" name="CostoHra" placeholder="Ingresa el valor por hora" required minlength="1" maxlength="5" pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
 
             <p>Dirección general</p>
             <p style="text-align: center;"><select name="DirGral" id="DirGral">

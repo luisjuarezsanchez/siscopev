@@ -1,15 +1,15 @@
 <?php
 require 'conexion.php';
 
-$CvePersonal =$_POST['CvePersonal'];
-$RFC=$_POST['RFC'];
-$Paterno=$_POST['Paterno'];
-$Materno=$_POST['Materno'];
-$Nombre=$_POST['Nombre'];
-$CveISSEMyM=$_POST['CveISSEMyM'];
-$FechaIngreso=$_POST['FechaIngreso'];
-$Nacionalidad=$_POST['Nacionalidad'];
-$CURP=$_POST['CURP'];
+$CvePersonal = $_POST['CvePersonal'];
+$RFC = $_POST['RFC'];
+$Paterno = $_POST['Paterno'];
+$Materno = $_POST['Materno'];
+$Nombre = $_POST['Nombre'];
+$CveISSEMyM = $_POST['CveISSEMyM'];
+$FechaIngreso = $_POST['FechaIngreso'];
+$Nacionalidad = $_POST['Nacionalidad'];
+$CURP = $_POST['CURP'];
 
 /*
 echo $CvePersonal;
@@ -35,6 +35,6 @@ $sql = "INSERT INTO EmpGral (CvePersonal,RFC,Paterno,Materno,Nombre,CveISSEMyM,F
 ('$CvePersonal','$RFC','$Paterno','$Materno','$Nombre','$CveISSEMyM','$FechaIngreso','$Nacionalidad','$CURP')";
 $query = mysqli_query($mysqli, $sql);
 
-if($query){
-    Header("Location: crud_empleados.php");   
+if ($query) {
+    Header("Location:alertas/empleadoagregado.php");
 };

@@ -13,6 +13,7 @@
 </head>
 
 <body>
+
 	<header class="header">
 		<div class="logo">
 			<img src="img/header/escudo_armas.png">

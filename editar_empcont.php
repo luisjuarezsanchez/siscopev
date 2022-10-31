@@ -159,40 +159,49 @@ $row = mysqli_fetch_array($query);
         <div id="campos_act"></div>
         <form id="editar" action="update_empcont.php" method="POST">
 
-        <input type="hidden" name="CveEmpCont" value="<?= $row['CveEmpCont'] ?>">
+            <input type="hidden" name="CveEmpCont" value="<?= $row['CveEmpCont'] ?>">
+            <input type="hidden" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
 
-            <p>Clave de Personal</p>
-            <input type="text" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
+            <label>Clave de Personal</label>
+            <input disabled type="text" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
+            <br><br>
 
-            <p>Cuenta de banco</p>
-            <input type="text" name="CtaBanco" value="<?= $row['CtaBanco'] ?>">
+            <label>Cuenta de banco</label>
+            <input type="text" name="CtaBanco" value="<?= $row['CtaBanco'] ?>" required minlength="18" maxlength="18" pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
+            <br><br>
 
-            <p>Clave de contrato</p>
-            <input type="text" name="CveContrato" value="<?= $row['CveContrato'] ?>">
+            <label>Clave de contrato</label>
+            <input type="text" name="CveContrato" value="<?= $row['CveContrato'] ?>" pattern="^[A-Za-z0-9- ]+$" title="Digita un formato válido">
+            <br><br>
 
-            <p>Tipo de empleado</p>
-            <input type="text" name="TipoEmpleado" value="<?= $row['TipoEmpleado'] ?>">
+            <label>Tipo de empleado</label>
+            <input type="text" name="TipoEmpleado" value="<?= $row['TipoEmpleado'] ?>" required minlength="1" maxlength="1" pattern="^[0-1]+$" title="Solo se aceptan los valores 0 y 1">
+            <br><br>
 
-            <p>Inicio</p>
-            <input type="date" name="Inicio" value="<?= $row['Inicio'] ?>">
+            <label>Inicio</label><br>
+            <input type="date" name="Inicio" value="<?= $row['Inicio'] ?>" required>
+            <br><br>
 
-            <p>Fin</p>
+            <label>Fin</label><br>
             <input type="date" name="Fin" value="<?= $row['Fin'] ?>">
+            <br><br>
 
-            <p>Ultimo día</p>
-            <input type="date" name="UltDia" value="<?= $row['UltDia'] ?>">
+            <label>Ultimo día</label>
+            <input type="date" name="UltDia" value="<?= $row['UltDia'] ?>" required>
+            <br><br>
 
-            <p>Código de categoría</p>
-            <input type="text" name="CodCategoria" value="<?= $row['CodCategoria'] ?>">
+            <label>Código de categoría</label>
+            <input type="hidden" name="CodCategoria" value="<?= $row['CodCategoria'] ?>">
+            <input disabled type="text" name="CodCategoria" value="<?= $row['CodCategoria'] ?>" required minlength="8" maxlength="8" pattern="^[A-Z0-9]+$" title="Digita un formato válido">
+            <br><br>
 
-            <p>Prima vacacional</p>
-            <input type="text" name="PrimaVac" value="<?= $row['PrimaVac'] ?>">
+            <label>Prima vacacional</label>
+            <input type="text" name="PrimaVac" value="<?= $row['PrimaVac'] ?>" required minlength="1" maxlength="1" pattern="^[0-1]+$" title="Solo se aceptan los valores 0 y 1">
+            <br><br>
 
-            <p>Horas mensuales</p>
-            <input type="text" name="HrsMen" value="<?= $row['HrsMen'] ?>">
-
-            <br>
-            <br>
+            <label>Horas mensuales</label>
+            <input type="text" name="HrsMen" value="<?= $row['HrsMen'] ?>" required minlength="1" maxlength="3" pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
+            <br><br>
 
             <input type="submit" name="enviar" value="Actualizar">
 
@@ -207,11 +216,9 @@ $row = mysqli_fetch_array($query);
     <script>
         const btn = document.querySelector('#menu-btn');
         const menu = document.querySelector('#sidemenu');
-
         btn.addEventListener('click', e => {
             menu.classList.toggle("menu-expanded");
             menu.classList.toggle("menu-collapsed");
-
             document.querySelector('body').classList.toggle('body-expanded')
         });
     </script>

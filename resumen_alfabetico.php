@@ -72,7 +72,7 @@ SUM(CASE WHEN DetNomina.Clave=0325 THEN Importe ELSE 0 END) AS totsubsidios,
 SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END) AS totpercepciones,
 #Total ISR
 '5408' AS cveisr,
-SUM(CASE WHEN DetNomina.Clave=5408 THEN Importe ELSE 0 END) AS totisr,
+SUM(CASE WHEN DetNomina.Clave=5408 THEN Importe ELSE 0 END) AS totisr, 
 #Total Servicios de salud
 '5540' AS cvesalud,
 SUM(CASE WHEN DetNomina.Clave=5540 THEN Importe ELSE 0 END) AS totsalud,

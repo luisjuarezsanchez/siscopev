@@ -180,7 +180,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
             function getData() {
                 let input = document.getElementById("campo").value
                 let content = document.getElementById("content")
-                let url = "load_excentos.php"
+                let url = "load_excentos.php" 
                 let formaData = new FormData()
                 formaData.append('campo', input)
 
