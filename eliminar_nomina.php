@@ -103,7 +103,7 @@ if (!isset($usuario)) {
 
 			<br>
 			<div style="text-align:center;">
-				<label><select id="lista" name="CveNomina">
+				<label><select required id="lista" name="CveNomina">
 						<?php
 						include 'conexion.php';
 						$consulta = "SELECT CveNomina FROM Nominas WHERE Cerrada=0 ORDER BY CveNomina DESC";
@@ -114,12 +114,12 @@ if (!isset($usuario)) {
 								<option value="<?php echo $opciones['CveNomina'] ?>">
 									<?php echo $opciones['CveNomina'] ?>
 								</option>
-							<?php endforeach ?>
+							<?php endforeach ?> 
 					</select></label>
 				<br>
 				<img id="img" src="img/iconos/borrar.png" height="200" width="200">
 				<br>
-				<button class="buttons">Eliminar nómina seleccionada</button>
+				<button onclick="return confirm('¿Estás seguro que deseas eliminar la nómina seleccionada?');" class="buttons">Eliminar nómina seleccionada</button>
 				<br>
 			</div>
 		</form>

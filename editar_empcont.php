@@ -157,24 +157,24 @@ $row = mysqli_fetch_array($query);
 
 
         <div id="campos_act"></div>
-        <form id="editar" action="update_empcont.php" method="POST">
+        <form id="editar4" action="update_empcont.php" method="POST">
 
             <input type="hidden" name="CveEmpCont" value="<?= $row['CveEmpCont'] ?>">
             <input type="hidden" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
 
-            <label>Clave de Personal</label>
+            <label>Clave de Personal</label><br>
             <input disabled type="text" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
             <br><br>
 
-            <label>Cuenta de banco</label>
+            <label>Cuenta de banco</label><br>
             <input type="text" name="CtaBanco" value="<?= $row['CtaBanco'] ?>" required minlength="18" maxlength="18" pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
             <br><br>
 
-            <label>Clave de contrato</label>
+            <label>Clave de contrato</label><br>
             <input type="text" name="CveContrato" value="<?= $row['CveContrato'] ?>" pattern="^[A-Za-z0-9- ]+$" title="Digita un formato válido">
             <br><br>
 
-            <label>Tipo de empleado</label>
+            <label>Tipo de empleado</label><br>
             <input type="text" name="TipoEmpleado" value="<?= $row['TipoEmpleado'] ?>" required minlength="1" maxlength="1" pattern="^[0-1]+$" title="Solo se aceptan los valores 0 y 1">
             <br><br>
 
@@ -186,20 +186,34 @@ $row = mysqli_fetch_array($query);
             <input type="date" name="Fin" value="<?= $row['Fin'] ?>">
             <br><br>
 
-            <label>Ultimo día</label>
+            <label>Ultimo día</label><br>
             <input type="date" name="UltDia" value="<?= $row['UltDia'] ?>" required>
             <br><br>
 
-            <label>Código de categoría</label>
+            <label>Código de categoría</label><br>
             <input type="hidden" name="CodCategoria" value="<?= $row['CodCategoria'] ?>">
-            <input disabled type="text" name="CodCategoria" value="<?= $row['CodCategoria'] ?>" required minlength="8" maxlength="8" pattern="^[A-Z0-9]+$" title="Digita un formato válido">
-            <br><br>
+            <input disabled type="hidden" name="CodCategoria" value="<?= $row['CodCategoria'] ?>" required minlength="8" maxlength="8" pattern="^[A-Z0-9]+$" title="Digita un formato válido">
+            <p style="text-align:center;"><label><select id="lista" name="CodCategoria">
+                        <?php
+                        include 'conexion.php';
+                        $codigoUpdate = $row['CodCategoria'];
+                        $consulta = "SELECT CveCategoria,Descripcion,CostoHra FROM catcatego ORDER BY CASE WHEN CveCategoria = '$codigoUpdate' THEN 1 ELSE 2 END,CveCategoria";
+                        $resultado = $mysqli->query($consulta);
+                        ?>
+                        <form action="" method="post" class="form-login">
+                            <?php foreach ($resultado as  $opciones) : ?>
+                                <option value="<?php echo $opciones['CveCategoria'] ?>">
+                                    <?php echo $opciones['CveCategoria'].' $'. $opciones['CostoHra'] ?>
+                                </option>
+                            <?php endforeach ?>
+                    </select></label></p>
+    
 
-            <label>Prima vacacional</label>
+            <label>Prima vacacional</label><br>
             <input type="text" name="PrimaVac" value="<?= $row['PrimaVac'] ?>" required minlength="1" maxlength="1" pattern="^[0-1]+$" title="Solo se aceptan los valores 0 y 1">
             <br><br>
 
-            <label>Horas mensuales</label>
+            <label>Horas mensuales</label><br>
             <input type="text" name="HrsMen" value="<?= $row['HrsMen'] ?>" required minlength="1" maxlength="3" pattern="^[0-9]+$" title="Solo se aceptan valores númericos">
             <br><br>
 

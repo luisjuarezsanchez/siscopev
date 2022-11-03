@@ -157,7 +157,7 @@ $row = mysqli_fetch_array($query);
 
 
         <div id="campos_act"></div>
-        <form id="editar" action="update_contratos.php" method="POST">
+        <form id="editar3" action="update_contratos.php" method="POST">
 
             <input type="hidden" name="CveContrato" value="<?= $row['CveContrato'] ?>">
 
@@ -171,10 +171,22 @@ $row = mysqli_fetch_array($query);
             <input type="date" name="Fin" value="<?= $row['Fin'] ?>">
 
             <p>Cerrado</p>
-            <p style="text-align: center;"><select name="Cerrado" value="<?= $row['Cerrado'] ?>">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </select></p>
+            <input disabled type="hidden" name="Cerrado" value="<?= $row['Cerrado'] ?>">
+
+            <p style="text-align:center;"><label><select id="lista" name="Cerrado">
+                        <?php
+                        include 'conexion.php';
+                        $cerradoUpdate = $row['Cerrado'];
+                        $consulta = "SELECT Cerrado FROM Contratos GROUP BY Cerrado ORDER BY CASE WHEN Cerrado = '$cerradoUpdate' THEN 1 ELSE 2 END,Cerrado ";
+                        $resultado = $mysqli->query($consulta);
+                        ?>
+                        <form action="" method="post" class="form-login">
+                            <?php foreach ($resultado as  $opciones) : ?>
+                                <option value="<?php echo $opciones['Cerrado'] ?>">
+                                    <?php echo $opciones['Cerrado'] ?>
+                                </option>
+                            <?php endforeach ?>
+                    </select></label></p>
 
             <p>Año</p>
             <input type="text" name="Anio" value="<?= $row['Anio'] ?>">

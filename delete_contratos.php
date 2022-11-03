@@ -15,5 +15,5 @@ $sql = "DELETE FROM Contratos WHERE CveContrato = '$CveContrato'";
 $query = mysqli_query($mysqli, $sql);
 
 if ($query) {
-    Header("Location: alertas/contratoeliminado.php");
+    Header("Location: alertas/contratoeliminado.php"); 
 };

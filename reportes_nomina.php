@@ -107,7 +107,7 @@ if (!isset($usuario)) {
             <tr>
                 <form action="resumen_nominas.php" method="post" enctype="multipart/form-data">
                     <td>Resumen <img src="img/reportes/resumen.png" height="55" width="55"></td>
-                    <td><label><select id="lista" name="CveNomina">
+                    <td><label><select required id="lista" name="CveNomina">
                                 <?php
                                 include 'conexion.php';
                                 $consulta = "SELECT CveNomina FROM Nominas ORDER BY CveNomina DESC";
@@ -126,7 +126,7 @@ if (!isset($usuario)) {
             <tr>
                 <form action="resumen_alfabetico.php" method="post" enctype="multipart/form-data">
                     <td>Alfabético <img src="img/reportes/alfabetico.png" height="55" width="55"></td>
-                    <td><label><select id="lista" name="CveNomina">
+                    <td><label><select required id="lista" name="CveNomina">
                                 <?php
                                 include 'conexion.php';
                                 $consulta = "SELECT CveNomina FROM Nominas ORDER BY CveNomina DESC";
@@ -146,7 +146,7 @@ if (!isset($usuario)) {
             <tr>
                 <form action="reporte_dispersion.php" method="post" enctype="multipart/form-data">
                     <td>Dispersion <img src="img/reportes/dispersion.png" height="55" width="55"></td>
-                    <td><label><select id="lista" name="CveNomina">
+                    <td><label><select required id="lista" name="CveNomina">
                                 <?php
                                 include 'conexion.php';
                                 $consulta = "SELECT CveNomina FROM Nominas ORDER BY CveNomina DESC";
@@ -166,7 +166,7 @@ if (!isset($usuario)) {
             <tr>
                 <form action="resumen_nominas.php" method="post" enctype="multipart/form-data">
                     <td>Comprobante Deducciones<img src="img/reportes/cuarto.png" height="55" width="55"></td>
-                    <td><label><select id="lista" name="CveNomina">
+                    <td><label><select required id="lista" name="CveNomina">
                                 <?php
                                 include 'conexion.php';
                                 $consulta = "SELECT CveNomina FROM Nominas ORDER BY CveNomina DESC";

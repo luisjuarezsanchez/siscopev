@@ -98,7 +98,7 @@ if (!isset($usuario)) {
 	<br>
 	<form class="form-login" action="reporte_Prisma.php" method="post" enctype="multipart/form-data">
 		<div style="text-align:center;">
-			<label><select id="lista" name="CveNomina">
+			<label><select required id="lista" name="CveNomina">
 					<?php
 					include 'conexion.php';
 					$consulta = "SELECT CveNomina FROM Nominas ORDER BY CveNomina DESC LIMIT 2";

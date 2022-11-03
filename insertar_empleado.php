@@ -189,8 +189,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
                         ?>
                         <form action="" method="post" class="form-login">
                             <?php foreach ($resultado as  $opciones) : ?>
-                                <option value="<?php echo $opciones['Nacionalidad'] ?>">
-
+                                <option value="<?php echo $opciones['CveNacion'] ?>">
                                     <?php echo $opciones['CveNacion'] . ' ' . substr($opciones['Nacionalidad'], 0, 15)  ?>
                                 </option>
                             <?php endforeach ?>

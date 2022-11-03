@@ -28,7 +28,7 @@ echo $HrsMen = $_POST['HrsMen'];
 $sql = "UPDATE EmpCont SET CvePersonal='$CvePersonal', CtaBanco='$CtaBanco',CveContrato='$CveContrato',
 TipoEmpleado = '$TipoEmpleado',Inicio='$Inicio',Fin='$Fin',UltDia='$UltDia',CodCategoria='$CodCategoria',
 PrimaVac=$PrimaVac,HrsMen = '$HrsMen' WHERE CveEmpCont='$CveEmpCont'";
-$query = mysqli_query($mysqli, $sql);
+$query = mysqli_query($mysqli, $sql); 
 
 if ($query) {
     Header("Location: alertas/empcontactualizado.php");

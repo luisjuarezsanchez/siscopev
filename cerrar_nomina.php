@@ -103,7 +103,7 @@ if (!isset($usuario)) {
 		<form class="form-login" action="lock_nomina.php" method="post" enctype="multipart/form-data">
 			<br>
 			<div style="text-align:center;">
-				<label><select id="lista" name="CveNomina">
+				<label><select required id="lista" name="CveNomina">
 						<?php
 						include 'conexion.php';
 						$consulta = "SELECT CveNomina FROM Nominas WHERE Cerrada=0 ORDER BY CveNomina DESC";
@@ -119,7 +119,7 @@ if (!isset($usuario)) {
 				<br>
 				<img id="img" src="img/iconos/candado.png" height="200" width="200">
 				<br>
-				<button class="buttons">Cerrar nómina</button>
+				<button onclick="return confirm('¿Estás seguro que deseas cerrar la nómina seleccionada?');" class="buttons">Cerrar nómina</button>
 				<br>
 			</div>
 		</form>

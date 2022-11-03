@@ -175,7 +175,7 @@ if (!isset($usuario)) {
                 if ($Nomselect > 0 and $Cveselect > 0) {
                     echo '<h4 id="tituloTabla">Verifica que los datos cargados sean correctos de lo contrario<br>
                     vuelve a seleccionar los valores correspondientes</h4>';
-                    $sql = "SELECT HrsMen,CONCAT(EmpGral.Paterno,' ',EmpGral.Materno,' ',EmpGral.Nombre) AS Nombre,DetNomina.Del,DetNomina.Al,DetNomina.CveNomina,DetNomina.CvePersonal 
+                    $sql = "SELECT HrsMen,CONCAT(EmpGral.Paterno,' ',EmpGral.Materno,' ',EmpGral.Nombre) AS Nombre,DetNomina.Del,DetNomina.Al,DetNomina.CveNomina,DetNomina.CvePersonal,DetNomina.CveEmpCont 
                     FROM DetNomina INNER JOIN EmpGral ON DetNomina.CvePersonal=EmpGral.CvePersonal
                     WHERE DetNomina.CveNomina='$Nomselect' AND DetNomina.CvePersonal='$Cveselect' GROUP BY DetNomina.CvePersonal;";
                     $result = mysqli_query($conexion, $sql);
@@ -184,6 +184,7 @@ if (!isset($usuario)) {
                         $Nombreselect = $mostrar['Nombre'];
                         $Delselect = $mostrar['Del'];
                         $Alselect = $mostrar['Al'];
+                        $CveEmpContselect = $mostrar['CveEmpCont'];
                     }
                     echo "Clave de nomina: " . $Nomselect;
                     echo '<br>';
@@ -197,7 +198,7 @@ if (!isset($usuario)) {
                     echo '<div style="text-align:center;">';
                     echo '<form action="insert_perded.php" method="post">';
                     echo '<label><select id="lista" name="ClavePerDedApo">';
-                    $consulta3 = "SELECT Clave,Concepto FROM PerDedApo";
+                    $consulta3 = "SELECT Clave,Concepto,TipoPDA FROM PerDedApo WHERE TipoPDA=0 OR TipoPDA=1";
                     $resultado3 = $mysqli->query($consulta3);
                     foreach ($resultado3 as  $opciones3) :
                 ?>
@@ -213,6 +214,7 @@ if (!isset($usuario)) {
                     echo '<input type="hidden" name="Al" value="' . $Alselect . '">';
                     echo '<input type="hidden" name="CvePersonal" value="' . $Cveselect . '">';
                     echo '<input type="hidden" name="HrsMen" value="' . $Hrsselect . '">';
+                    echo '<input type="hidden" name="CveEmpCont" value="' . $CveEmpContselect . '">';
 
                     echo '<button class="buttons">Insertar PerDedApo manual</button>';
                     echo '</form>';

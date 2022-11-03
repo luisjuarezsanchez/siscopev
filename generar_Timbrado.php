@@ -107,7 +107,7 @@ if (!isset($usuario)) {
 	<br>
 	<form id="timbrado" class="form-login" action="reportes_excel.php" method="post" enctype="multipart/form-data">
 		<div style="text-align:center;">
-			<label><select id="lista" name="CveNomina">
+			<label><select required id="lista" name="CveNomina">
 					<?php
 					include 'conexion.php';
 					$consulta = "SELECT CveNomina FROM Nominas WHERE Cerrada=1 ORDER BY CveNomina DESC";

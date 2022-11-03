@@ -211,8 +211,43 @@ body {
 #editar {
   margin: auto;
   background-color: #364653;
-  width: 300px;
-  height: 1078px;
+  width: 514px;
+  height: 376px;
+  margin: auto;
+  padding: 20px 30px;
+  border-top: 6px solid #ff004a;
+  color: white;
+  text-align: center;
+}
+
+#editar2 {
+  margin: auto;
+  background-color: #364653;
+  width: 414px;
+  height: 728px;
+  margin: auto;
+  padding: 20px 30px;
+  border-top: 6px solid #ff004a;
+  color: white;
+  text-align: center;
+}
+
+#editar3 {
+  margin: auto;
+  background-color: #364653;
+  width: 441px;
+  height: 500px;
+  margin: auto;
+  padding: 20px 30px;
+  border-top: 6px solid #ff004a;
+  color: white;
+  text-align: center;
+}
+#editar4 {
+  margin: auto;
+  background-color: #364653;
+  width: 441px;
+  height: 1032px;
   margin: auto;
   padding: 20px 30px;
   border-top: 6px solid #ff004a;

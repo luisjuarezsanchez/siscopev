@@ -47,11 +47,13 @@ if ($num_rows > 0) {
         $CvePersonal = $row['CvePersonal']; 
 
         $html .= '<td>
-        <a href="editar_empcont.php?CveEmpCont=' . $CveEmpCont . '"><img src="img/expedientes/editar.png" height="40" width="40" /></a>
+        <a href="editar_empcont.php?CveEmpCont=' . $CveEmpCont . '">
+        <img src="img/expedientes/editar.png" height="40" width="40" /></a>
         </td>';
 
         $html .= '<td> 
-        <a href="delete_empcont.php?CveEmpcont=' . $CveEmpCont . ' " onclick="return confirm(\'Estás seguro que deseas eliminar el registro?\');"><img src="img/expedientes/eliminar.png" height="40" width="40" /></a>
+        <a href="delete_empcont.php?CveEmpcont=' . $CveEmpCont . ' " onclick="return confirm(\'Estás seguro que deseas eliminar el registro?\');">
+        <img src="img/expedientes/eliminar.png" height="40" width="40" /></a>
         </td>';
     }
 } else {

@@ -59,17 +59,146 @@ class PDF extends FPDF
 //Solicitando la conexion con la BD
 require 'conexion.php';
 /**********************CONSULTA PARA CONTRATOS DE DEPORTE**********************/
-$consulta = "SELECT
+$consulta = "SELECT 
 DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4) AS NomBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
 EmpCont.CodCategoria,catcatego.Descripcion,catcatego.DescCorta,DetNomina.Del,DetNomina.Al,
 #Total de sueldos eventuales
 '0202' AS cveeventuales,
 SUM(CASE WHEN DetNomina.Clave=0202 THEN Importe ELSE 0 END) AS toteventuales,
+#Total Prima vacacional
+'0305' AS cveprimavac,
+SUM(CASE WHEN DetNomina.Clave=0305 THEN Importe ELSE 0 END) AS totprimavac,
+#Total Aguinaldo
+'0308' AS cveaguinaldo,
+SUM(CASE WHEN DetNomina.Clave=0308 THEN Importe ELSE 0 END) AS totaguinaldo,
 #Total de subsidios
 '0325' AS cvesubsidios,
 SUM(CASE WHEN DetNomina.Clave=0325 THEN Importe ELSE 0 END) AS totsubsidios,
+#Total de retroactivos
+'1202' AS cveretroactivos,
+SUM(CASE WHEN DetNomina.Clave=1202 THEN Importe ELSE 0 END) AS totretroactivos,
+#Total de primavacacional
+'1305' AS cveprimavac2,
+SUM(CASE WHEN DetNomina.Clave=1305 THEN Importe ELSE 0 END) AS totprimavac2,
+#Total de retroactivos
+'1308' AS cveretaguieve,
+SUM(CASE WHEN DetNomina.Clave=1308 THEN Importe ELSE 0 END) AS totretaguieve,
+#Total de retroactivos
+'1325' AS cveretsubemp,
+SUM(CASE WHEN DetNomina.Clave=1325 THEN Importe ELSE 0 END) AS totretsubemp,
+#Total de retroactivos
+'2408' AS cvedevisr,
+SUM(CASE WHEN DetNomina.Clave=2408 THEN Importe ELSE 0 END) AS totdevisr,
+#Total de Devolucion de tiempo no laborado
+'2450' AS cvedevtinolab,
+SUM(CASE WHEN DetNomina.Clave=2450 THEN Importe ELSE 0 END) AS totdevtinolab,
+#Total de Devolucion de auscentismo
+'2451' AS cvedevaus,
+SUM(CASE WHEN DetNomina.Clave=2451 THEN Importe ELSE 0 END) AS totcvedevaus,
+#Total de Devolucion de auscentismo
+'2540' AS cvedevsersa,
+SUM(CASE WHEN DetNomina.Clave=2540 THEN Importe ELSE 0 END) AS totdevsersa,
+#Total de Devolucion del sistema solidario de reparto
+'2541' AS cvesissolrep,
+SUM(CASE WHEN DetNomina.Clave=2541 THEN Importe ELSE 0 END) AS totsissolrep,
+#Total de Devolucion del sistema capitalizacion individual
+'2542' AS cvesiscapindividual,
+SUM(CASE WHEN DetNomina.Clave=2542 THEN Importe ELSE 0 END) AS totsiscapindividual,
+#Total de D/D/I ISR AJUSTE MENSUAL
+'2651' AS cveddiajusmen,
+SUM(CASE WHEN DetNomina.Clave=2651 THEN Importe ELSE 0 END) AS totddiajusmen,
+#Total de D/D/I SUB PAGADO INDEB A SP
+'2652' AS cveddisubpaginasp,
+SUM(CASE WHEN DetNomina.Clave=2652 THEN Importe ELSE 0 END) AS totddisubpaginasp,
+#Total de D/D/I AJUSTE SUBSIDIO CAUSADO
+'2653' AS cveddiajussubcausado,
+SUM(CASE WHEN DetNomina.Clave=2653 THEN Importe ELSE 0 END) AS totddiajussubcausado,
+#Total de ESTANCIA INFANTIL
+'5431' AS cveestanciainf,
+SUM(CASE WHEN DetNomina.Clave=5431 THEN Importe ELSE 0 END) AS totestanciainf,
+#Total de C.VACACIONAL VALLE DE BRAVO
+'5438' AS cvevacvallebra,
+SUM(CASE WHEN DetNomina.Clave=5438 THEN Importe ELSE 0 END) AS totvacvallebra,
+#Total de DESCUENTO POR TIEMPO
+'5450' AS cvedescportiempo,
+SUM(CASE WHEN DetNomina.Clave=5450 THEN Importe ELSE 0 END) AS totdescportiempo,
+#Total de SANCION POR IMPUNTUALIDAD
+'5451' AS cvesancionimp,
+SUM(CASE WHEN DetNomina.Clave=5451 THEN Importe ELSE 0 END) AS totsancionimp,
+#Total de CUOTA VOLUNTARIA S.C.I.
+'5545' AS cvecuotavol,
+SUM(CASE WHEN DetNomina.Clave=5545 THEN Importe ELSE 0 END) AS totcuotavol,
+#Total de APORT. ESTANCIAS ($1,025.00)
+'5631' AS cveaporestan,
+SUM(CASE WHEN DetNomina.Clave=5631 THEN Importe ELSE 0 END) AS totaporestan,
+#Total de ISR AJUSTE MENSUAL
+'5651' AS cveisrajusmensual,
+SUM(CASE WHEN DetNomina.Clave=5651 THEN Importe ELSE 0 END) AS totajusmensual,
+#Total de SUB PAGADO INDEB AL SP
+'5652' AS cvesubpagalsp,
+SUM(CASE WHEN DetNomina.Clave=5652 THEN Importe ELSE 0 END) AS totsubpagalsp,
+#Total de AJUSTE AL SUBSIDIO CAUSADO
+'5653' AS cveajusalsubpag,
+SUM(CASE WHEN DetNomina.Clave=5653 THEN Importe ELSE 0 END) AS totajusalsubpag,
+#Total de DED.PEND. IMPUESTO SOBRE LA RENTA
+'6408' AS cvependisr,
+SUM(CASE WHEN DetNomina.Clave=6408 THEN Importe ELSE 0 END) AS totpendisr,
+#Total de DEDUCC. PEND. ESTANCIAS
+'6431' AS cvededucpendest,
+SUM(CASE WHEN DetNomina.Clave=6431 THEN Importe ELSE 0 END) AS totdeducpendest,
+#Total de DEDUC.PEND.CEN.VACA.VALLE DE BRAVO
+'6438' AS cvededpencenvdbra,
+SUM(CASE WHEN DetNomina.Clave=6438 THEN Importe ELSE 0 END) AS totdedpencenvdbra,
+#Total de DEDUC.PEND.APLICACION AUSENTISMO
+'6451' AS cvededpenaplaus,
+SUM(CASE WHEN DetNomina.Clave=6451 THEN Importe ELSE 0 END) AS totdedpenaplaus,
+#Total de 6.1% DEDUC.PEND.SIST.SOLIDARIO REP.
+'6541' AS cvededucpensissolrep,
+SUM(CASE WHEN DetNomina.Clave=6541 THEN Importe ELSE 0 END) AS totdeducpensissolrep,
+#Total de 1.4% DEDUC.PEND.CAPITALI.INDIVIDUAL
+'6542' AS cvededucpcapind,
+SUM(CASE WHEN DetNomina.Clave=6542 THEN Importe ELSE 0 END) AS totdeducpcapind,
+#Total de D/P/A ISR AJUSTE MENSUAL
+'6651' AS cvedpaisrajusmen,
+SUM(CASE WHEN DetNomina.Clave=6651 THEN Importe ELSE 0 END) AS totdpaisrajusmen,
+#Total de D/P/A SUB PAGADO INDEB A SP
+'6652' AS cvedpasubpagado,
+SUM(CASE WHEN DetNomina.Clave=6652 THEN Importe ELSE 0 END) AS totdpasubpagado,
+#Total de D/P/A AJUSTE SUBSIDIO CAUSADO
+'6653' AS cvedpaasubsidiocausado,
+SUM(CASE WHEN DetNomina.Clave=6653 THEN Importe ELSE 0 END) AS totdpaasubsidiocausado,
+#Total de DED.PERC.IND. SUELDOS EVENTUALES
+'8202' AS cvededpercind,
+SUM(CASE WHEN DetNomina.Clave=8202 THEN Importe ELSE 0 END) AS totdedpercind,
+#Total de DEDUC. PRIMA VAC. INDEBIDO
+'8305' AS cvededucpvacind,
+SUM(CASE WHEN DetNomina.Clave=8305 THEN Importe ELSE 0 END) AS totdeducpvacind,
+#Total de DED.PERC.INDB. SUBSIDIO AL EMPLEO
+'8325' AS cvededperindsubemp,
+SUM(CASE WHEN DetNomina.Clave=8325 THEN Importe ELSE 0 END) AS totdedperindsubemp,
+#Total de DEDUC.PERCEP.INDEBIDA DEVOL.AUSEN.
+'8451' AS cvededucinddevaus,
+SUM(CASE WHEN DetNomina.Clave=8451 THEN Importe ELSE 0 END) AS totdeducinddevaus,
+#Total de DEVOL. SERVICIO DE SALUD 4.625%
+'8540' AS cve8540,
+SUM(CASE WHEN DetNomina.Clave=8540 THEN Importe ELSE 0 END) AS tot8540,
+#Total de DEVOL. SIST. SOLID. REPART 6.1%
+'8541' AS cve8541,
+SUM(CASE WHEN DetNomina.Clave=8541 THEN Importe ELSE 0 END) AS tot8541,
+#Total de DEVOL. CAPITAL. INDIVIDUAL 1.4%
+'8542' AS cve8542,
+SUM(CASE WHEN DetNomina.Clave=8542 THEN Importe ELSE 0 END) AS tot8542,
+#Total de D/P/I AJUSTE MENSUAL
+'8651' AS cve8651,
+SUM(CASE WHEN DetNomina.Clave=8651 THEN Importe ELSE 0 END) AS tot8651,
+#Total de D/P/I SUB PAGADO INDEB A SP
+'8652' AS cve8652,
+SUM(CASE WHEN DetNomina.Clave=8652 THEN Importe ELSE 0 END) AS tot8652,
+#Total de D/P/I SUB PAGADO INDEB A SP
+'8653' AS cve8653,
+SUM(CASE WHEN DetNomina.Clave=8653 THEN Importe ELSE 0 END) AS tot8653,
 #Total de percepciones
-SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END) AS totpercepciones,
+SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=0) THEN Importe ELSE 0 END) AS totpercepciones,
 #Total ISR
 '5408' AS cveisr,
 SUM(CASE WHEN DetNomina.Clave=5408 THEN Importe ELSE 0 END) AS totisr, 
@@ -83,9 +212,9 @@ SUM(CASE WHEN DetNomina.Clave=5541 THEN Importe ELSE 0 END) AS totsisrep,
 '5542' AS cvecapita,
 SUM(CASE WHEN DetNomina.Clave=5542 THEN Importe ELSE 0 END) AS totcapita,
 #Total deducciones
-SUM(CASE WHEN DetNomina.Clave IN (5408,5540,5541,5542) THEN Importe ELSE 0 END) AS totdeducciones,
+SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=1) THEN Importe ELSE 0 END) AS totdeducciones,
 #Sueldo Bruto
-SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END)- SUM(CASE WHEN DetNomina.Clave IN (5408,5540,5541,5542) THEN Importe ELSE 0 END) AS sueldobruto,
+SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=0) THEN Importe ELSE 0 END)- SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=1) THEN Importe ELSE 0 END) AS sueldobruto,
 #Total de empleados
 (SELECT COUNT(*) FROM EmpCont WHERE EmpCont.Dirgral=0) AS totempleados
 FROM EmpCont INNER JOIN 
@@ -139,6 +268,308 @@ while ($row = $resultado->fetch_assoc()) {
         $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
     }
 
+    if ($row['totprimavac'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveprimavac']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('PRIMA VACACIONAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totprimavac'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totaguinaldo'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveaguinaldo']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('AGUINALDO EVENTUALES'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totaguinaldo'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totretroactivos'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveretroactivos']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('RET. SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totretroactivos'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totprimavac2'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveprimavac2']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('PRIMA VACACIONAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totprimavac2'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totretaguieve'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveretaguieve']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('RETR AGUINALDO EVENTUALES'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totretaguieve'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totretsubemp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveretsubemp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('RETRO. SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totretsubemp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdevisr'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedevisr']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. IMPUESTO SOBRE LA RENTA'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdevisr'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdevtinolab'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedevtinolab']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. TIEMPO NO LABORADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdevtinolab'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totcvedevaus'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvecvedevaus']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOLUCION AUSENTISMO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totcvedevaus'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdevsersa'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedevsersa']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SERVICIOS DE SALUD 4.625%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdevsersa'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totsissolrep'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvesissolrep']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SIS. SOLIDA. DE REPARTO 6.1%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsissolrep'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totsiscapindividual'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvesiscapindividual']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SISTEMA DE CAPITAL. INDIV.'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsiscapindividual'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totddiajusmen'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveddiajusmen']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/D/I ISR AJUSTE MENSUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totddiajusmen'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totddisubpaginasp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveddisubpaginasp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/D/I SUB PAGADO INDEB A SP'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totddisubpaginasp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totddiajussubcausado'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveddiajussubcausado']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/D/I AJUSTE SUBSIDIO CAUSADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totddiajussubcausado'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totestanciainf'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveestanciainf']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('ESTANCIA INFANTIL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totestanciainf'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totvacvallebra'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvevacvallebra']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('C.VACACIONAL VALLE DE BRAVO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totvacvallebra'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdescportiempo'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedescportiempo']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DESCUENTO POR TIEMPO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdescportiempo'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totsancionimp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvesancionimp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('SANCION POR IMPUNTUALIDAD'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsancionimp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totcuotavol'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvecuotavol']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('CUOTA VOLUNTARIA S.C.I.'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totcuotavol'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totaporestan'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveaporestan']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('APORT. ESTANCIAS ($1,025.00)'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totaporestan'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totajusmensual'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveajusmensual']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('ISR AJUSTE MENSUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totajusmensual'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totsubpagalsp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvesubpagalsp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('SUB PAGADO INDEB AL SP'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsubpagalsp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totajusalsubpag'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveajusalsubpag']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('AJUSTE AL SUBSIDIO CAUSADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totajusalsubpag'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totpendisr'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvependisr']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DED.PEND. IMPUESTO SOBRE LA RENTA'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totpendisr'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducpendest'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucpendest']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUCC. PEND. ESTANCIAS'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducpendest'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdedpencenvdbra'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededpencenvdbra']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUC.PEND.CEN.VACA.VALLE DE BRAVO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdedpencenvdbra'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdedpenaplaus'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededpenaplaus']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUC.PEND.APLICACION AUSENTISMO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdedpenaplaus'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducpensissolrep'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucpensissolrep']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('6.1% DEDUC.PEND.SIST.SOLIDARIO REP.'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducpensissolrep'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducpcapind'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucpcapind']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('1.4% DEDUC.PEND.CAPITALI.INDIVIDUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducpcapind'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdpaisrajusmen'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedpaisrajusmen']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/A ISR AJUSTE MENSUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdpaisrajusmen'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdpasubpagado'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedpasubpagado']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/A SUB PAGADO INDEB A SP'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdpasubpagado'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdpaasubsidiocausado'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedpaasubsidiocausado']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/A AJUSTE SUBSIDIO CAUSADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdpaasubsidiocausado'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdedpercind'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededpercind']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DED.PERC.IND. SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdedpercind'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducpvacind'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucpvacind']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUC. PRIMA VAC. INDEBIDO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducpvacind'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdedperindsubemp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededperindsubemp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DED.PERC.INDB. SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdedperindsubemp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducinddevaus'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucinddevaus']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUC.PERCEP.INDEBIDA DEVOL.AUSEN.'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducinddevaus'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8540'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8540']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SERVICIO DE SALUD 4.625%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8540'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8541'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8541']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SIST. SOLID. REPART 6.1%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8541'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8542'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8542']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. CAPITAL. INDIVIDUAL 1.4%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8542'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8651'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8651']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/I AJUSTE MENSUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8651'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8652'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8652']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/I SUB PAGADO INDEB A SP'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8652'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8653'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8653']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/I AJUSTE SUBSIDIO CAUSADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8653'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    /*DEDUCCIONES**********************************************/
     if ($row['totisr'] > 0) {
         $pdf->Cell(150, 5, utf8_decode($row['cveisr']), 0, 0, 'R', 0);
         $pdf->Cell(55, 5, utf8_decode('IMPUESTO SOBRE LA RENTA'), 0, 0, 'R', 0);
@@ -212,21 +643,149 @@ $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 
 
 /**********************CONSULTA PARA CONTRATOS DE COMEM**********************/
-$consulta2 = "SELECT
-DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4)AS NomBanco,EmpGral.CURP,EmpCont.Dirgral,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
-EmpCont.CodCategoria,catcatego.Descripcion,catcatego.DescCorta,DetNomina.Del,DetNomina.Al,EmpCont.HrsMen,
-COUNT(DetNomina.Clave=0202) AS indicador,
+$consulta2 = "SELECT 
+DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4) AS NomBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
+EmpCont.CodCategoria,catcatego.Descripcion,catcatego.DescCorta,DetNomina.Del,DetNomina.Al,
 #Total de sueldos eventuales
 '0202' AS cveeventuales,
 SUM(CASE WHEN DetNomina.Clave=0202 THEN Importe ELSE 0 END) AS toteventuales,
+#Total Prima vacacional
+'0305' AS cveprimavac,
+SUM(CASE WHEN DetNomina.Clave=0305 THEN Importe ELSE 0 END) AS totprimavac,
+#Total Aguinaldo
+'0308' AS cveaguinaldo,
+SUM(CASE WHEN DetNomina.Clave=0308 THEN Importe ELSE 0 END) AS totaguinaldo,
 #Total de subsidios
 '0325' AS cvesubsidios,
 SUM(CASE WHEN DetNomina.Clave=0325 THEN Importe ELSE 0 END) AS totsubsidios,
+#Total de retroactivos
+'1202' AS cveretroactivos,
+SUM(CASE WHEN DetNomina.Clave=1202 THEN Importe ELSE 0 END) AS totretroactivos,
+#Total de primavacacional
+'1305' AS cveprimavac2,
+SUM(CASE WHEN DetNomina.Clave=1305 THEN Importe ELSE 0 END) AS totprimavac2,
+#Total de retroactivos
+'1308' AS cveretaguieve,
+SUM(CASE WHEN DetNomina.Clave=1308 THEN Importe ELSE 0 END) AS totretaguieve,
+#Total de retroactivos
+'1325' AS cveretsubemp,
+SUM(CASE WHEN DetNomina.Clave=1325 THEN Importe ELSE 0 END) AS totretsubemp,
+#Total de retroactivos
+'2408' AS cvedevisr,
+SUM(CASE WHEN DetNomina.Clave=2408 THEN Importe ELSE 0 END) AS totdevisr,
+#Total de Devolucion de tiempo no laborado
+'2450' AS cvedevtinolab,
+SUM(CASE WHEN DetNomina.Clave=2450 THEN Importe ELSE 0 END) AS totdevtinolab,
+#Total de Devolucion de auscentismo
+'2451' AS cvedevaus,
+SUM(CASE WHEN DetNomina.Clave=2451 THEN Importe ELSE 0 END) AS totcvedevaus,
+#Total de Devolucion de auscentismo
+'2540' AS cvedevsersa,
+SUM(CASE WHEN DetNomina.Clave=2540 THEN Importe ELSE 0 END) AS totdevsersa,
+#Total de Devolucion del sistema solidario de reparto
+'2541' AS cvesissolrep,
+SUM(CASE WHEN DetNomina.Clave=2541 THEN Importe ELSE 0 END) AS totsissolrep,
+#Total de Devolucion del sistema capitalizacion individual
+'2542' AS cvesiscapindividual,
+SUM(CASE WHEN DetNomina.Clave=2542 THEN Importe ELSE 0 END) AS totsiscapindividual,
+#Total de D/D/I ISR AJUSTE MENSUAL
+'2651' AS cveddiajusmen,
+SUM(CASE WHEN DetNomina.Clave=2651 THEN Importe ELSE 0 END) AS totddiajusmen,
+#Total de D/D/I SUB PAGADO INDEB A SP
+'2652' AS cveddisubpaginasp,
+SUM(CASE WHEN DetNomina.Clave=2652 THEN Importe ELSE 0 END) AS totddisubpaginasp,
+#Total de D/D/I AJUSTE SUBSIDIO CAUSADO
+'2653' AS cveddiajussubcausado,
+SUM(CASE WHEN DetNomina.Clave=2653 THEN Importe ELSE 0 END) AS totddiajussubcausado,
+#Total de ESTANCIA INFANTIL
+'5431' AS cveestanciainf,
+SUM(CASE WHEN DetNomina.Clave=5431 THEN Importe ELSE 0 END) AS totestanciainf,
+#Total de C.VACACIONAL VALLE DE BRAVO
+'5438' AS cvevacvallebra,
+SUM(CASE WHEN DetNomina.Clave=5438 THEN Importe ELSE 0 END) AS totvacvallebra,
+#Total de DESCUENTO POR TIEMPO
+'5450' AS cvedescportiempo,
+SUM(CASE WHEN DetNomina.Clave=5450 THEN Importe ELSE 0 END) AS totdescportiempo,
+#Total de SANCION POR IMPUNTUALIDAD
+'5451' AS cvesancionimp,
+SUM(CASE WHEN DetNomina.Clave=5451 THEN Importe ELSE 0 END) AS totsancionimp,
+#Total de CUOTA VOLUNTARIA S.C.I.
+'5545' AS cvecuotavol,
+SUM(CASE WHEN DetNomina.Clave=5545 THEN Importe ELSE 0 END) AS totcuotavol,
+#Total de APORT. ESTANCIAS ($1,025.00)
+'5631' AS cveaporestan,
+SUM(CASE WHEN DetNomina.Clave=5631 THEN Importe ELSE 0 END) AS totaporestan,
+#Total de ISR AJUSTE MENSUAL
+'5651' AS cveisrajusmensual,
+SUM(CASE WHEN DetNomina.Clave=5651 THEN Importe ELSE 0 END) AS totajusmensual,
+#Total de SUB PAGADO INDEB AL SP
+'5652' AS cvesubpagalsp,
+SUM(CASE WHEN DetNomina.Clave=5652 THEN Importe ELSE 0 END) AS totsubpagalsp,
+#Total de AJUSTE AL SUBSIDIO CAUSADO
+'5653' AS cveajusalsubpag,
+SUM(CASE WHEN DetNomina.Clave=5653 THEN Importe ELSE 0 END) AS totajusalsubpag,
+#Total de DED.PEND. IMPUESTO SOBRE LA RENTA
+'6408' AS cvependisr,
+SUM(CASE WHEN DetNomina.Clave=6408 THEN Importe ELSE 0 END) AS totpendisr,
+#Total de DEDUCC. PEND. ESTANCIAS
+'6431' AS cvededucpendest,
+SUM(CASE WHEN DetNomina.Clave=6431 THEN Importe ELSE 0 END) AS totdeducpendest,
+#Total de DEDUC.PEND.CEN.VACA.VALLE DE BRAVO
+'6438' AS cvededpencenvdbra,
+SUM(CASE WHEN DetNomina.Clave=6438 THEN Importe ELSE 0 END) AS totdedpencenvdbra,
+#Total de DEDUC.PEND.APLICACION AUSENTISMO
+'6451' AS cvededpenaplaus,
+SUM(CASE WHEN DetNomina.Clave=6451 THEN Importe ELSE 0 END) AS totdedpenaplaus,
+#Total de 6.1% DEDUC.PEND.SIST.SOLIDARIO REP.
+'6541' AS cvededucpensissolrep,
+SUM(CASE WHEN DetNomina.Clave=6541 THEN Importe ELSE 0 END) AS totdeducpensissolrep,
+#Total de 1.4% DEDUC.PEND.CAPITALI.INDIVIDUAL
+'6542' AS cvededucpcapind,
+SUM(CASE WHEN DetNomina.Clave=6542 THEN Importe ELSE 0 END) AS totdeducpcapind,
+#Total de D/P/A ISR AJUSTE MENSUAL
+'6651' AS cvedpaisrajusmen,
+SUM(CASE WHEN DetNomina.Clave=6651 THEN Importe ELSE 0 END) AS totdpaisrajusmen,
+#Total de D/P/A SUB PAGADO INDEB A SP
+'6652' AS cvedpasubpagado,
+SUM(CASE WHEN DetNomina.Clave=6652 THEN Importe ELSE 0 END) AS totdpasubpagado,
+#Total de D/P/A AJUSTE SUBSIDIO CAUSADO
+'6653' AS cvedpaasubsidiocausado,
+SUM(CASE WHEN DetNomina.Clave=6653 THEN Importe ELSE 0 END) AS totdpaasubsidiocausado,
+#Total de DED.PERC.IND. SUELDOS EVENTUALES
+'8202' AS cvededpercind,
+SUM(CASE WHEN DetNomina.Clave=8202 THEN Importe ELSE 0 END) AS totdedpercind,
+#Total de DEDUC. PRIMA VAC. INDEBIDO
+'8305' AS cvededucpvacind,
+SUM(CASE WHEN DetNomina.Clave=8305 THEN Importe ELSE 0 END) AS totdeducpvacind,
+#Total de DED.PERC.INDB. SUBSIDIO AL EMPLEO
+'8325' AS cvededperindsubemp,
+SUM(CASE WHEN DetNomina.Clave=8325 THEN Importe ELSE 0 END) AS totdedperindsubemp,
+#Total de DEDUC.PERCEP.INDEBIDA DEVOL.AUSEN.
+'8451' AS cvededucinddevaus,
+SUM(CASE WHEN DetNomina.Clave=8451 THEN Importe ELSE 0 END) AS totdeducinddevaus,
+#Total de DEVOL. SERVICIO DE SALUD 4.625%
+'8540' AS cve8540,
+SUM(CASE WHEN DetNomina.Clave=8540 THEN Importe ELSE 0 END) AS tot8540,
+#Total de DEVOL. SIST. SOLID. REPART 6.1%
+'8541' AS cve8541,
+SUM(CASE WHEN DetNomina.Clave=8541 THEN Importe ELSE 0 END) AS tot8541,
+#Total de DEVOL. CAPITAL. INDIVIDUAL 1.4%
+'8542' AS cve8542,
+SUM(CASE WHEN DetNomina.Clave=8542 THEN Importe ELSE 0 END) AS tot8542,
+#Total de D/P/I AJUSTE MENSUAL
+'8651' AS cve8651,
+SUM(CASE WHEN DetNomina.Clave=8651 THEN Importe ELSE 0 END) AS tot8651,
+#Total de D/P/I SUB PAGADO INDEB A SP
+'8652' AS cve8652,
+SUM(CASE WHEN DetNomina.Clave=8652 THEN Importe ELSE 0 END) AS tot8652,
+#Total de D/P/I SUB PAGADO INDEB A SP
+'8653' AS cve8653,
+SUM(CASE WHEN DetNomina.Clave=8653 THEN Importe ELSE 0 END) AS tot8653,
 #Total de percepciones
-SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END) AS totpercepciones,
+SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=0) THEN Importe ELSE 0 END) AS totpercepciones,
 #Total ISR
 '5408' AS cveisr,
-SUM(CASE WHEN DetNomina.Clave=5408 THEN Importe ELSE 0 END) AS totisr,
+SUM(CASE WHEN DetNomina.Clave=5408 THEN Importe ELSE 0 END) AS totisr, 
 #Total Servicios de salud
 '5540' AS cvesalud,
 SUM(CASE WHEN DetNomina.Clave=5540 THEN Importe ELSE 0 END) AS totsalud,
@@ -237,11 +796,11 @@ SUM(CASE WHEN DetNomina.Clave=5541 THEN Importe ELSE 0 END) AS totsisrep,
 '5542' AS cvecapita,
 SUM(CASE WHEN DetNomina.Clave=5542 THEN Importe ELSE 0 END) AS totcapita,
 #Total deducciones
-SUM(CASE WHEN DetNomina.Clave IN (5408,5540,5541,5542) THEN Importe ELSE 0 END) AS totdeducciones,
+SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=1) THEN Importe ELSE 0 END) AS totdeducciones,
 #Sueldo Bruto
-SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END)- SUM(CASE WHEN DetNomina.Clave IN (5408,5540,5541,5542) THEN Importe ELSE 0 END) AS sueldobruto,
+SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=0) THEN Importe ELSE 0 END)- SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=1) THEN Importe ELSE 0 END) AS sueldobruto,
 #Total de empleados
-(SELECT COUNT(*) FROM EmpCont WHERE EmpCont.Dirgral=1) AS totempleados
+(SELECT COUNT(*) FROM EmpCont WHERE EmpCont.Dirgral=0) AS totempleados
 FROM EmpCont INNER JOIN 
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal INNER JOIN
 EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal INNER JOIN
@@ -289,6 +848,308 @@ while ($row = $resultado2->fetch_assoc()) {
         $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
     }
 
+    if ($row['totprimavac'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveprimavac']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('PRIMA VACACIONAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totprimavac'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totaguinaldo'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveaguinaldo']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('AGUINALDO EVENTUALES'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totaguinaldo'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totretroactivos'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveretroactivos']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('RET. SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totretroactivos'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totprimavac2'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveprimavac2']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('PRIMA VACACIONAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totprimavac2'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totretaguieve'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveretaguieve']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('RETR AGUINALDO EVENTUALES'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totretaguieve'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totretsubemp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveretsubemp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('RETRO. SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totretsubemp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdevisr'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedevisr']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. IMPUESTO SOBRE LA RENTA'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdevisr'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdevtinolab'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedevtinolab']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. TIEMPO NO LABORADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdevtinolab'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totcvedevaus'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvecvedevaus']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOLUCION AUSENTISMO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totcvedevaus'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdevsersa'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedevsersa']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SERVICIOS DE SALUD 4.625%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdevsersa'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totsissolrep'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvesissolrep']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SIS. SOLIDA. DE REPARTO 6.1%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsissolrep'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totsiscapindividual'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvesiscapindividual']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SISTEMA DE CAPITAL. INDIV.'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsiscapindividual'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totddiajusmen'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveddiajusmen']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/D/I ISR AJUSTE MENSUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totddiajusmen'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totddisubpaginasp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveddisubpaginasp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/D/I SUB PAGADO INDEB A SP'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totddisubpaginasp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totddiajussubcausado'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveddiajussubcausado']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/D/I AJUSTE SUBSIDIO CAUSADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totddiajussubcausado'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totestanciainf'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveestanciainf']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('ESTANCIA INFANTIL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totestanciainf'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totvacvallebra'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvevacvallebra']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('C.VACACIONAL VALLE DE BRAVO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totvacvallebra'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdescportiempo'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedescportiempo']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DESCUENTO POR TIEMPO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdescportiempo'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totsancionimp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvesancionimp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('SANCION POR IMPUNTUALIDAD'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsancionimp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totcuotavol'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvecuotavol']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('CUOTA VOLUNTARIA S.C.I.'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totcuotavol'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totaporestan'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveaporestan']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('APORT. ESTANCIAS ($1,025.00)'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totaporestan'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totajusmensual'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveajusmensual']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('ISR AJUSTE MENSUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totajusmensual'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totsubpagalsp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvesubpagalsp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('SUB PAGADO INDEB AL SP'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsubpagalsp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totajusalsubpag'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveajusalsubpag']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('AJUSTE AL SUBSIDIO CAUSADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totajusalsubpag'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totpendisr'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvependisr']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DED.PEND. IMPUESTO SOBRE LA RENTA'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totpendisr'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducpendest'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucpendest']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUCC. PEND. ESTANCIAS'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducpendest'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdedpencenvdbra'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededpencenvdbra']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUC.PEND.CEN.VACA.VALLE DE BRAVO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdedpencenvdbra'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdedpenaplaus'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededpenaplaus']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUC.PEND.APLICACION AUSENTISMO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdedpenaplaus'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducpensissolrep'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucpensissolrep']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('6.1% DEDUC.PEND.SIST.SOLIDARIO REP.'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducpensissolrep'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducpcapind'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucpcapind']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('1.4% DEDUC.PEND.CAPITALI.INDIVIDUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducpcapind'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdpaisrajusmen'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedpaisrajusmen']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/A ISR AJUSTE MENSUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdpaisrajusmen'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdpasubpagado'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedpasubpagado']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/A SUB PAGADO INDEB A SP'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdpasubpagado'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdpaasubsidiocausado'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedpaasubsidiocausado']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/A AJUSTE SUBSIDIO CAUSADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdpaasubsidiocausado'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdedpercind'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededpercind']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DED.PERC.IND. SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdedpercind'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducpvacind'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucpvacind']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUC. PRIMA VAC. INDEBIDO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducpvacind'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdedperindsubemp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededperindsubemp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DED.PERC.INDB. SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdedperindsubemp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducinddevaus'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucinddevaus']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUC.PERCEP.INDEBIDA DEVOL.AUSEN.'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducinddevaus'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8540'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8540']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SERVICIO DE SALUD 4.625%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8540'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8541'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8541']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SIST. SOLID. REPART 6.1%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8541'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8542'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8542']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. CAPITAL. INDIVIDUAL 1.4%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8542'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8651'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8651']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/I AJUSTE MENSUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8651'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8652'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8652']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/I SUB PAGADO INDEB A SP'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8652'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8653'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8653']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/I AJUSTE SUBSIDIO CAUSADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8653'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    /*DEDUCCIONES**********************************************/
     if ($row['totisr'] > 0) {
         $pdf->Cell(150, 5, utf8_decode($row['cveisr']), 0, 0, 'R', 0);
         $pdf->Cell(55, 5, utf8_decode('IMPUESTO SOBRE LA RENTA'), 0, 0, 'R', 0);
@@ -364,20 +1225,149 @@ $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
 
 
 /**********************CONSULTA PARA CONTRATOS DE PATRIMONIO**********************/
-$consulta3 = "SELECT
-DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4)AS NomBanco,EmpCont.CtaBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
+$consulta3 = "SELECT 
+DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4) AS NomBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
 EmpCont.CodCategoria,catcatego.Descripcion,catcatego.DescCorta,DetNomina.Del,DetNomina.Al,
 #Total de sueldos eventuales
 '0202' AS cveeventuales,
 SUM(CASE WHEN DetNomina.Clave=0202 THEN Importe ELSE 0 END) AS toteventuales,
+#Total Prima vacacional
+'0305' AS cveprimavac,
+SUM(CASE WHEN DetNomina.Clave=0305 THEN Importe ELSE 0 END) AS totprimavac,
+#Total Aguinaldo
+'0308' AS cveaguinaldo,
+SUM(CASE WHEN DetNomina.Clave=0308 THEN Importe ELSE 0 END) AS totaguinaldo,
 #Total de subsidios
 '0325' AS cvesubsidios,
 SUM(CASE WHEN DetNomina.Clave=0325 THEN Importe ELSE 0 END) AS totsubsidios,
+#Total de retroactivos
+'1202' AS cveretroactivos,
+SUM(CASE WHEN DetNomina.Clave=1202 THEN Importe ELSE 0 END) AS totretroactivos,
+#Total de primavacacional
+'1305' AS cveprimavac2,
+SUM(CASE WHEN DetNomina.Clave=1305 THEN Importe ELSE 0 END) AS totprimavac2,
+#Total de retroactivos
+'1308' AS cveretaguieve,
+SUM(CASE WHEN DetNomina.Clave=1308 THEN Importe ELSE 0 END) AS totretaguieve,
+#Total de retroactivos
+'1325' AS cveretsubemp,
+SUM(CASE WHEN DetNomina.Clave=1325 THEN Importe ELSE 0 END) AS totretsubemp,
+#Total de retroactivos
+'2408' AS cvedevisr,
+SUM(CASE WHEN DetNomina.Clave=2408 THEN Importe ELSE 0 END) AS totdevisr,
+#Total de Devolucion de tiempo no laborado
+'2450' AS cvedevtinolab,
+SUM(CASE WHEN DetNomina.Clave=2450 THEN Importe ELSE 0 END) AS totdevtinolab,
+#Total de Devolucion de auscentismo
+'2451' AS cvedevaus,
+SUM(CASE WHEN DetNomina.Clave=2451 THEN Importe ELSE 0 END) AS totcvedevaus,
+#Total de Devolucion de auscentismo
+'2540' AS cvedevsersa,
+SUM(CASE WHEN DetNomina.Clave=2540 THEN Importe ELSE 0 END) AS totdevsersa,
+#Total de Devolucion del sistema solidario de reparto
+'2541' AS cvesissolrep,
+SUM(CASE WHEN DetNomina.Clave=2541 THEN Importe ELSE 0 END) AS totsissolrep,
+#Total de Devolucion del sistema capitalizacion individual
+'2542' AS cvesiscapindividual,
+SUM(CASE WHEN DetNomina.Clave=2542 THEN Importe ELSE 0 END) AS totsiscapindividual,
+#Total de D/D/I ISR AJUSTE MENSUAL
+'2651' AS cveddiajusmen,
+SUM(CASE WHEN DetNomina.Clave=2651 THEN Importe ELSE 0 END) AS totddiajusmen,
+#Total de D/D/I SUB PAGADO INDEB A SP
+'2652' AS cveddisubpaginasp,
+SUM(CASE WHEN DetNomina.Clave=2652 THEN Importe ELSE 0 END) AS totddisubpaginasp,
+#Total de D/D/I AJUSTE SUBSIDIO CAUSADO
+'2653' AS cveddiajussubcausado,
+SUM(CASE WHEN DetNomina.Clave=2653 THEN Importe ELSE 0 END) AS totddiajussubcausado,
+#Total de ESTANCIA INFANTIL
+'5431' AS cveestanciainf,
+SUM(CASE WHEN DetNomina.Clave=5431 THEN Importe ELSE 0 END) AS totestanciainf,
+#Total de C.VACACIONAL VALLE DE BRAVO
+'5438' AS cvevacvallebra,
+SUM(CASE WHEN DetNomina.Clave=5438 THEN Importe ELSE 0 END) AS totvacvallebra,
+#Total de DESCUENTO POR TIEMPO
+'5450' AS cvedescportiempo,
+SUM(CASE WHEN DetNomina.Clave=5450 THEN Importe ELSE 0 END) AS totdescportiempo,
+#Total de SANCION POR IMPUNTUALIDAD
+'5451' AS cvesancionimp,
+SUM(CASE WHEN DetNomina.Clave=5451 THEN Importe ELSE 0 END) AS totsancionimp,
+#Total de CUOTA VOLUNTARIA S.C.I.
+'5545' AS cvecuotavol,
+SUM(CASE WHEN DetNomina.Clave=5545 THEN Importe ELSE 0 END) AS totcuotavol,
+#Total de APORT. ESTANCIAS ($1,025.00)
+'5631' AS cveaporestan,
+SUM(CASE WHEN DetNomina.Clave=5631 THEN Importe ELSE 0 END) AS totaporestan,
+#Total de ISR AJUSTE MENSUAL
+'5651' AS cveisrajusmensual,
+SUM(CASE WHEN DetNomina.Clave=5651 THEN Importe ELSE 0 END) AS totajusmensual,
+#Total de SUB PAGADO INDEB AL SP
+'5652' AS cvesubpagalsp,
+SUM(CASE WHEN DetNomina.Clave=5652 THEN Importe ELSE 0 END) AS totsubpagalsp,
+#Total de AJUSTE AL SUBSIDIO CAUSADO
+'5653' AS cveajusalsubpag,
+SUM(CASE WHEN DetNomina.Clave=5653 THEN Importe ELSE 0 END) AS totajusalsubpag,
+#Total de DED.PEND. IMPUESTO SOBRE LA RENTA
+'6408' AS cvependisr,
+SUM(CASE WHEN DetNomina.Clave=6408 THEN Importe ELSE 0 END) AS totpendisr,
+#Total de DEDUCC. PEND. ESTANCIAS
+'6431' AS cvededucpendest,
+SUM(CASE WHEN DetNomina.Clave=6431 THEN Importe ELSE 0 END) AS totdeducpendest,
+#Total de DEDUC.PEND.CEN.VACA.VALLE DE BRAVO
+'6438' AS cvededpencenvdbra,
+SUM(CASE WHEN DetNomina.Clave=6438 THEN Importe ELSE 0 END) AS totdedpencenvdbra,
+#Total de DEDUC.PEND.APLICACION AUSENTISMO
+'6451' AS cvededpenaplaus,
+SUM(CASE WHEN DetNomina.Clave=6451 THEN Importe ELSE 0 END) AS totdedpenaplaus,
+#Total de 6.1% DEDUC.PEND.SIST.SOLIDARIO REP.
+'6541' AS cvededucpensissolrep,
+SUM(CASE WHEN DetNomina.Clave=6541 THEN Importe ELSE 0 END) AS totdeducpensissolrep,
+#Total de 1.4% DEDUC.PEND.CAPITALI.INDIVIDUAL
+'6542' AS cvededucpcapind,
+SUM(CASE WHEN DetNomina.Clave=6542 THEN Importe ELSE 0 END) AS totdeducpcapind,
+#Total de D/P/A ISR AJUSTE MENSUAL
+'6651' AS cvedpaisrajusmen,
+SUM(CASE WHEN DetNomina.Clave=6651 THEN Importe ELSE 0 END) AS totdpaisrajusmen,
+#Total de D/P/A SUB PAGADO INDEB A SP
+'6652' AS cvedpasubpagado,
+SUM(CASE WHEN DetNomina.Clave=6652 THEN Importe ELSE 0 END) AS totdpasubpagado,
+#Total de D/P/A AJUSTE SUBSIDIO CAUSADO
+'6653' AS cvedpaasubsidiocausado,
+SUM(CASE WHEN DetNomina.Clave=6653 THEN Importe ELSE 0 END) AS totdpaasubsidiocausado,
+#Total de DED.PERC.IND. SUELDOS EVENTUALES
+'8202' AS cvededpercind,
+SUM(CASE WHEN DetNomina.Clave=8202 THEN Importe ELSE 0 END) AS totdedpercind,
+#Total de DEDUC. PRIMA VAC. INDEBIDO
+'8305' AS cvededucpvacind,
+SUM(CASE WHEN DetNomina.Clave=8305 THEN Importe ELSE 0 END) AS totdeducpvacind,
+#Total de DED.PERC.INDB. SUBSIDIO AL EMPLEO
+'8325' AS cvededperindsubemp,
+SUM(CASE WHEN DetNomina.Clave=8325 THEN Importe ELSE 0 END) AS totdedperindsubemp,
+#Total de DEDUC.PERCEP.INDEBIDA DEVOL.AUSEN.
+'8451' AS cvededucinddevaus,
+SUM(CASE WHEN DetNomina.Clave=8451 THEN Importe ELSE 0 END) AS totdeducinddevaus,
+#Total de DEVOL. SERVICIO DE SALUD 4.625%
+'8540' AS cve8540,
+SUM(CASE WHEN DetNomina.Clave=8540 THEN Importe ELSE 0 END) AS tot8540,
+#Total de DEVOL. SIST. SOLID. REPART 6.1%
+'8541' AS cve8541,
+SUM(CASE WHEN DetNomina.Clave=8541 THEN Importe ELSE 0 END) AS tot8541,
+#Total de DEVOL. CAPITAL. INDIVIDUAL 1.4%
+'8542' AS cve8542,
+SUM(CASE WHEN DetNomina.Clave=8542 THEN Importe ELSE 0 END) AS tot8542,
+#Total de D/P/I AJUSTE MENSUAL
+'8651' AS cve8651,
+SUM(CASE WHEN DetNomina.Clave=8651 THEN Importe ELSE 0 END) AS tot8651,
+#Total de D/P/I SUB PAGADO INDEB A SP
+'8652' AS cve8652,
+SUM(CASE WHEN DetNomina.Clave=8652 THEN Importe ELSE 0 END) AS tot8652,
+#Total de D/P/I SUB PAGADO INDEB A SP
+'8653' AS cve8653,
+SUM(CASE WHEN DetNomina.Clave=8653 THEN Importe ELSE 0 END) AS tot8653,
 #Total de percepciones
-SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END) AS totpercepciones,
+SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=0) THEN Importe ELSE 0 END) AS totpercepciones,
 #Total ISR
 '5408' AS cveisr,
-SUM(CASE WHEN DetNomina.Clave=5408 THEN Importe ELSE 0 END) AS totisr,
+SUM(CASE WHEN DetNomina.Clave=5408 THEN Importe ELSE 0 END) AS totisr, 
 #Total Servicios de salud
 '5540' AS cvesalud,
 SUM(CASE WHEN DetNomina.Clave=5540 THEN Importe ELSE 0 END) AS totsalud,
@@ -388,11 +1378,11 @@ SUM(CASE WHEN DetNomina.Clave=5541 THEN Importe ELSE 0 END) AS totsisrep,
 '5542' AS cvecapita,
 SUM(CASE WHEN DetNomina.Clave=5542 THEN Importe ELSE 0 END) AS totcapita,
 #Total deducciones
-SUM(CASE WHEN DetNomina.Clave IN (5408,5540,5541,5542) THEN Importe ELSE 0 END) AS totdeducciones,
+SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=1) THEN Importe ELSE 0 END) AS totdeducciones,
 #Sueldo Bruto
-SUM(CASE WHEN DetNomina.Clave IN (0325,0202) THEN Importe ELSE 0 END)- SUM(CASE WHEN DetNomina.Clave IN (5408,5540,5541,5542) THEN Importe ELSE 0 END) AS sueldobruto,
+SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=0) THEN Importe ELSE 0 END)- SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=1) THEN Importe ELSE 0 END) AS sueldobruto,
 #Total de empleados
-(SELECT COUNT(*) FROM EmpCont WHERE EmpCont.Dirgral=2) AS totempleados
+(SELECT COUNT(*) FROM EmpCont WHERE EmpCont.Dirgral=0) AS totempleados
 FROM EmpCont INNER JOIN 
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal INNER JOIN
 EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal INNER JOIN
@@ -440,6 +1430,308 @@ while ($row = $resultado3->fetch_assoc()) {
         $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
     }
 
+    if ($row['totprimavac'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveprimavac']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('PRIMA VACACIONAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totprimavac'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totaguinaldo'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveaguinaldo']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('AGUINALDO EVENTUALES'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totaguinaldo'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totretroactivos'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveretroactivos']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('RET. SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totretroactivos'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totprimavac2'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveprimavac2']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('PRIMA VACACIONAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totprimavac2'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totretaguieve'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveretaguieve']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('RETR AGUINALDO EVENTUALES'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totretaguieve'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totretsubemp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveretsubemp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('RETRO. SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totretsubemp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdevisr'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedevisr']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. IMPUESTO SOBRE LA RENTA'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdevisr'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdevtinolab'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedevtinolab']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. TIEMPO NO LABORADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdevtinolab'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totcvedevaus'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvecvedevaus']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOLUCION AUSENTISMO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totcvedevaus'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdevsersa'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedevsersa']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SERVICIOS DE SALUD 4.625%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdevsersa'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totsissolrep'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvesissolrep']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SIS. SOLIDA. DE REPARTO 6.1%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsissolrep'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totsiscapindividual'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvesiscapindividual']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SISTEMA DE CAPITAL. INDIV.'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsiscapindividual'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totddiajusmen'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveddiajusmen']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/D/I ISR AJUSTE MENSUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totddiajusmen'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totddisubpaginasp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveddisubpaginasp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/D/I SUB PAGADO INDEB A SP'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totddisubpaginasp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totddiajussubcausado'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveddiajussubcausado']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/D/I AJUSTE SUBSIDIO CAUSADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totddiajussubcausado'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totestanciainf'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveestanciainf']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('ESTANCIA INFANTIL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totestanciainf'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totvacvallebra'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvevacvallebra']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('C.VACACIONAL VALLE DE BRAVO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totvacvallebra'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdescportiempo'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedescportiempo']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DESCUENTO POR TIEMPO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdescportiempo'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totsancionimp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvesancionimp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('SANCION POR IMPUNTUALIDAD'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsancionimp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totcuotavol'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvecuotavol']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('CUOTA VOLUNTARIA S.C.I.'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totcuotavol'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totaporestan'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveaporestan']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('APORT. ESTANCIAS ($1,025.00)'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totaporestan'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totajusmensual'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveajusmensual']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('ISR AJUSTE MENSUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totajusmensual'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totsubpagalsp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvesubpagalsp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('SUB PAGADO INDEB AL SP'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totsubpagalsp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totajusalsubpag'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cveajusalsubpag']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('AJUSTE AL SUBSIDIO CAUSADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totajusalsubpag'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totpendisr'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvependisr']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DED.PEND. IMPUESTO SOBRE LA RENTA'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totpendisr'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducpendest'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucpendest']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUCC. PEND. ESTANCIAS'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducpendest'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdedpencenvdbra'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededpencenvdbra']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUC.PEND.CEN.VACA.VALLE DE BRAVO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdedpencenvdbra'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdedpenaplaus'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededpenaplaus']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUC.PEND.APLICACION AUSENTISMO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdedpenaplaus'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducpensissolrep'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucpensissolrep']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('6.1% DEDUC.PEND.SIST.SOLIDARIO REP.'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducpensissolrep'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducpcapind'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucpcapind']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('1.4% DEDUC.PEND.CAPITALI.INDIVIDUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducpcapind'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdpaisrajusmen'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedpaisrajusmen']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/A ISR AJUSTE MENSUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdpaisrajusmen'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdpasubpagado'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedpasubpagado']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/A SUB PAGADO INDEB A SP'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdpasubpagado'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdpaasubsidiocausado'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvedpaasubsidiocausado']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/A AJUSTE SUBSIDIO CAUSADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdpaasubsidiocausado'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdedpercind'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededpercind']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DED.PERC.IND. SUELDOS EVENTUALES'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdedpercind'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducpvacind'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucpvacind']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUC. PRIMA VAC. INDEBIDO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducpvacind'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdedperindsubemp'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededperindsubemp']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DED.PERC.INDB. SUBSIDIO AL EMPLEO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdedperindsubemp'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['totdeducinddevaus'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cvededucinddevaus']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEDUC.PERCEP.INDEBIDA DEVOL.AUSEN.'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['totdeducinddevaus'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8540'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8540']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SERVICIO DE SALUD 4.625%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8540'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8541'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8541']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. SIST. SOLID. REPART 6.1%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8541'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8542'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8542']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('DEVOL. CAPITAL. INDIVIDUAL 1.4%'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8542'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8651'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8651']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/I AJUSTE MENSUAL'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8651'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8652'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8652']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/I SUB PAGADO INDEB A SP'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8652'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    if ($row['tot8653'] > 0) {
+        $pdf->Cell(2, 5, utf8_decode($row['cve8653']), 0, 0, 'C', 0);
+        $pdf->Cell(55, 5, utf8_decode('D/P/I AJUSTE SUBSIDIO CAUSADO'), 0, 0, 'C', 0);
+        $pdf->Cell(66, 5, utf8_decode("$" . number_format($row['tot8653'], 2, ".", ",")), 0, 0, 'R', 0);
+        $pdf->Cell(10, 5, utf8_decode(''), 0, 1, 'L', 0);
+    }
+
+    /*DEDUCCIONES**********************************************/
     if ($row['totisr'] > 0) {
         $pdf->Cell(150, 5, utf8_decode($row['cveisr']), 0, 0, 'R', 0);
         $pdf->Cell(55, 5, utf8_decode('IMPUESTO SOBRE LA RENTA'), 0, 0, 'R', 0);

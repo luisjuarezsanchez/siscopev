@@ -153,7 +153,7 @@ $row = mysqli_fetch_array($query);
 
     <div id="main-container">
         <br>
-        <h1 id="tituloTabla">Editar campos de la tabla EmpCont</h1>
+        <h1 id="tituloTabla">Editar campos de la tabla Excentos de aportación</h1>
         <h5 id="tituloUsuario"><?php echo "Estas modificando como usuario: " . $usuario; ?></h5>
 
 
@@ -162,6 +162,9 @@ $row = mysqli_fetch_array($query);
 
             <input type="hidden" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
             <input type="hidden" name="ClaveA" value="<?= $row['Clave'] ?>">
+
+
+
 
             <p>Clave de Personal</p>
             <input disabled type="text" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
@@ -173,7 +176,8 @@ $row = mysqli_fetch_array($query);
             <p style="text-align:center;"><label><select id="lista" name="Clave">
                         <?php
                         include 'conexion.php';
-                        $consulta = "SELECT Clave,Concepto FROM PerDedApo";
+                        $ClaveUpdate = $row['Clave'];
+                        $consulta = "SELECT Clave,Concepto FROM PerDedApo ORDER BY CASE WHEN Clave = '$ClaveUpdate' THEN 1 ELSE 2 END, Clave;";
                         $resultado = $mysqli->query($consulta);
                         ?>
                         <form action="" method="post" class="form-login">

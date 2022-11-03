@@ -155,12 +155,12 @@ $row = mysqli_fetch_array($query);
 
 
         <div id="campos_act"></div>
-        <form id="editar" action="update_empgral.php" method="POST">
+        <form id="editar2" action="update_empgral.php" method="POST">
 
             <input type="hidden" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
 
-            <p>CvePersonal</p>
-            <input type="text" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
+            <p>Clave de Personal</p>
+            <input disabled type="text" name="CvePersonal" value="<?= $row['CvePersonal'] ?>">
 
             <p>Paterno</p>
             <input type="text" name="Paterno" value="<?= $row['Paterno'] ?>">
@@ -178,7 +178,21 @@ $row = mysqli_fetch_array($query);
             <input type="date" name="FechaIngreso" value="<?= $row['FechaIngreso'] ?>">
 
             <p>Nacionalidad</p>
-            <input type="text" name="Nacionalidad" value="<?= $row['Nacionalidad'] ?>">
+            <input disabled type="hidden" name="Nacionalidad" value="<?= $row['Nacionalidad'] ?>">
+            <p style="text-align:center;"><label><select id="lista" name="Nacionalidad">
+                        <?php
+                        include 'conexion.php';
+                        $nacionUpdate = $row['Nacionalidad'];
+                        $consulta = "SELECT CveNacion,Nacionalidad FROM catnacion ORDER BY CASE WHEN CveNacion= '$nacionUpdate' THEN 1 ELSE 2 END, CveNacion";
+                        $resultado = $mysqli->query($consulta);
+                        ?>
+                        <form action="" method="post" class="form-login"> 
+                            <?php foreach ($resultado as  $opciones) : ?>
+                                <option value="<?php echo $opciones['CveNacion'] ?>">
+                                    <?php echo $opciones['CveNacion'] . ' ' . substr($opciones['Nacionalidad'], 0, 15) ?>
+                                </option>
+                            <?php endforeach ?>
+                    </select></label></p>
 
             <p>CURP</p>
             <input type="text" name="CURP" value="<?= $row['CURP'] ?>">
