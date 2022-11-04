@@ -164,7 +164,7 @@ if (!isset($usuario)) {
             </tr>
 
             <tr>
-                <form action="resumen_nominas.php" method="post" enctype="multipart/form-data">
+                <form action="actionpdf.php" method="post" enctype="multipart/form-data">
                     <td>Comprobante Deducciones<img src="img/reportes/cuarto.png" height="55" width="55"></td>
                     <td><label><select required id="lista" name="CveNomina">
                                 <?php
