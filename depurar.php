@@ -35,7 +35,7 @@ $CveNomina = $_POST['CveNomina'];
     EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal INNER JOIN
     catbanco ON SUBSTR(EmpCont.CtaBanco, 1, 3) = catbanco.CveBanco INNER JOIN
     catcatego ON EmpCont.CodCategoria = catcatego.CveCategoria
-    WHERE EmpCont.CveContrato LIKE '%DEPOR%' AND DetNomina.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal";
+    WHERE (EmpCont.CveContrato LIKE '%DEPOR%' OR EmpCont.CveContrato LIKE '%COMEM%' OR EmpCont.CveContrato LIKE '%PATRI%') AND DetNomina.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal";
     $resultado = $mysqli->query($consulta);
 
     ?>
@@ -43,7 +43,7 @@ $CveNomina = $_POST['CveNomina'];
     <?php
     while ($row = $resultado->fetch_assoc()) {
         $Clavecaptura = $row['CvePersonal'];
-        $BancoCaptura = $row['CtaBanco']; 
+        $BancoCaptura = $row['CtaBanco'];
         $Al = $row['Al'];
         echo '
         <table style="text-align: center; margin: 0 auto;">
@@ -142,17 +142,15 @@ $CveNomina = $_POST['CveNomina'];
         
     <tr>
     <th id="contenido" colspan="3">
-    <div id="contenido">
+    
     ';
         while ($row = $resultado2->fetch_assoc()) {
-            echo $row['Clave'].' ';
-            echo $row['Concepto'].' ';
-            echo $row['Importe'].' ';
-            //echo number_format($row['Importe'], 2, ".", ",").' ';
+            echo  $row['Clave'] . ' ' . $row['Concepto'] . ' $ ' . number_format($row['Importe'], 2, ".", ",");
             echo '<br>';
         }
         echo '
-        </div>
+        <p style="text-align:center;"><img id="agua"   src="img/iconos/escudoarmas_agua.png" height="250" width="250"></p>
+        
         </th>
 
 
@@ -165,7 +163,7 @@ $CveNomina = $_POST['CveNomina'];
         }
 
         echo ' 
-        <p style="text-align:center;"><img id="agua"   src="img/iconos/escudoarmas_agua.png" height="300" width="300"></p>
+        <p style="text-align:center;"><img id="agua"   src="img/iconos/escudoarmas_agua.png" height="250" width="250"></p>
     </th>
 </tr>
 
@@ -207,13 +205,6 @@ $CveNomina = $_POST['CveNomina'];
         ';
     }
     ?>
-
-
-
-
-
-
-
 </body>
 
 </html>

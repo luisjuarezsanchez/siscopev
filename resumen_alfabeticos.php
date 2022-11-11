@@ -43,15 +43,16 @@ $CveNomina = $_POST['CveNomina'];
     WHERE EmpCont.CveContrato LIKE '%DEPOR%' AND DetNomina.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal";
     $resultado = $mysqli->query($consulta);
     ?>
+
     <table style="text-align: center; margin: 0 auto;">
         <tr>
             <th colspan="2">
-                <p style="text-align: left;"><img src="img/reportes/gob.jpg" width="100" height="100"></p>
+                <p style="text-align: left;"><img src="img/reportes/gob.jpg" width="150" height="100"></p>
             </th>
             <th colspan="2"></th>
             <th colspan="2"></th>
             <th colspan="2">
-                <p style="text-align: right;"><img src="img/reportes/logo_vertical.png" width="100" height="100"></p>
+                <p style="text-align: right;"><img src="img/reportes/logo_vertical.png" width="125" height="100"></p>
             </th>
         </tr>
 
@@ -67,7 +68,6 @@ $CveNomina = $_POST['CveNomina'];
                 <h1>RESUMEN DE PERCEPCIONES Y DEDUCCIONES DE LA QUINCENA</h1>
             </th>
         </tr>
-
         <?php
         while ($row = $resultado->fetch_assoc()) {
             $CvePersonalcaptura = $row['CvePersonal'];
@@ -93,18 +93,7 @@ $CveNomina = $_POST['CveNomina'];
             </th>
         </tr>
 
-        <tr>
-            <th colspan="1"><th>
-            <th colspan="1"><th>
-            <th colspan="1"><th>
-            <th colspan="1"><th>
-            <th colspan="1"><th>
-            <th colspan="1"><th>
-            <th colspan="1"><th>
-            <th colspan="1"><th>
-        <tr>
-    
-        <tr>
+            <tr>
             <th colspan="1">
                 <p style="text-align:center;"></p>' . $row['Dirgral'] . '
             </th>
@@ -123,131 +112,77 @@ $CveNomina = $_POST['CveNomina'];
             <th colspan="1">
                 <p style="text-align:center;"></p>' . $row['Descripcion'] . '
             </th>
-    
+
             <th colspan="1">
                 <p style="text-align:center;"></p>' . $row['Del'] . '
             </th>
-    
+
             <th colspan="1">
                 <p style="text-align:center;"></p>' . $row['Al'] . '
             </th>
         </tr>
-
             ';
-
             $consulta2 = "SELECT DetNomina.Clave,PerDedApo.Concepto,DetNomina.Importe,EmpCont.HrsMen,catcatego.DescCorta
-        FROM DetNomina
-        INNER JOIN PerDedApo ON DetNomina.Clave = PerDedApo.Clave
-        INNER JOIN EmpCont ON DetNomina.CvePersonal = EmpCont.CvePersonal
-        INNER JOIN catcatego ON EmpCont.CodCategoria = catcatego.CveCategoria
-        WHERE DetNomina.CvePersonal=$CvePersonalcaptura AND DetNomina.CveNomina='$CveNomina' AND PerDedApo.TipoPDA=0";
-            $resultado2 = $mysqli->query($consulta2);
-
-            $consulta3 = "SELECT DetNomina.Clave,PerDedApo.Concepto,DetNomina.Importe,EmpCont.HrsMen,catcatego.DescCorta
             FROM DetNomina
             INNER JOIN PerDedApo ON DetNomina.Clave = PerDedApo.Clave
             INNER JOIN EmpCont ON DetNomina.CvePersonal = EmpCont.CvePersonal
             INNER JOIN catcatego ON EmpCont.CodCategoria = catcatego.CveCategoria
-            WHERE DetNomina.CvePersonal=$CvePersonalcaptura AND DetNomina.CveNomina='$CveNomina' AND PerDedApo.TipoPDA=1";
+            WHERE DetNomina.CvePersonal=$CvePersonalcaptura AND DetNomina.CveNomina='$CveNomina' AND PerDedApo.TipoPDA=0";
+            $resultado2 = $mysqli->query($consulta2);
+
+            $consulta3 = "SELECT DetNomina.Clave,PerDedApo.Concepto,DetNomina.Importe,EmpCont.HrsMen,catcatego.DescCorta
+                FROM DetNomina
+                INNER JOIN PerDedApo ON DetNomina.Clave = PerDedApo.Clave
+                INNER JOIN EmpCont ON DetNomina.CvePersonal = EmpCont.CvePersonal
+                INNER JOIN catcatego ON EmpCont.CodCategoria = catcatego.CveCategoria
+                WHERE DetNomina.CvePersonal=$CvePersonalcaptura AND DetNomina.CveNomina='$CveNomina' AND PerDedApo.TipoPDA=1";
             $resultado3 = $mysqli->query($consulta3);
 
-            while ($row = $resultado2->fetch_assoc()) {
-                echo '
+
+            echo '
+        
             <tr>
-            <th colspan="1">' . $row['Clave'] . '<p style="text-align: right;"></p>
-            </th>
-            <th colspan="1">' . $row['Concepto'] . '<p style="text-align: right;"></p>
-            </th>
-            <th colspan="1">
+            <th id="contenido" colspan="4">
+            <div id="contenido">
             ';
-                if ($row['Clave'] == '0202') {
-                    echo '(' . $row['HrsMen'] . ')';
-                }
-                echo ' 
-            <p style="text-align: right;"></p>
-            </th>
-            <th colspan="1">
-            ';
-
-                if ($row['Clave'] == '0202') {
-                    echo $row['DescCorta'];
-                }
-                echo ' 
-            <p style="text-align: right;"></p>
-            </th>
-            <th colspan="1">' . $row['Importe'] . '<p style="text-align: right;"></p>
-            </th>';
-
-                while ($row = $resultado3->fetch_assoc()) {
-                    echo ' 
-                <th colspan="1">' . $row['Clave'] . '<p style="text-align: right;"></p>
-                </th>
-                <th colspan="1">' . $row['Concepto'] . '<p style="text-align: right;"></p>
-                </th>
-                <th colspan="1">' . $row['Importe'] . '<p style="text-align: right;"></p>
-                </th>
-            </tr>
-                ';
-                }
+            while ($row = $resultado2->fetch_assoc()) {
+                echo '<p  id="importe">' .  $row['Clave'] . ' ' . $row['Concepto'] . '(' . $row['HrsMen']  . ')' . '</p>'.'<p style="text-align: right">'.'$' . number_format($row['Importe'], 2, ".", ",").'</p>' ;
+                echo '<br>';
             }
+            echo '
+            </div>
+                </th>
+        
+        
+            <th class="consulta" id="contenido" colspan="4">
+            <div id="contenido">
+            ';
+
+            while ($row = $resultado3->fetch_assoc()) {
+                echo '<p style="text-align: left">' . $row['Clave'] . ' ' . $row['Concepto'] . ' $ ' . number_format($row['Importe'], 2, ".", ",") . '</p>';
+                echo '<br>';
+            }
+            echo ' 
+            </div>
+            </th>
+        </tr>';
         }
+
         ?>
 
 
 
-
-
-
         <tr>
-            <th colspan="1">
-                <p style="text-align: left;"></p>
-            </th>
-            <th colspan="1">
-                <p style="text-align: left;"></p>
-            </th>
-            <th colspan="1">
-                <p style="text-align: left;"></p>
-            </th>
-            <th colspan="1">
-                <p style="text-align: left;"></p>
-            </th>
-            <th colspan="1">$1,839.45<p style="text-align: left;"></p>
-            </th>
-            <th colspan="1">
-                <p style="text-align: left;"></p>
-            </th>
-            <th colspan="1">
-                <p style="text-align: left;"></p>
-            </th>
-            <th colspan="1">$318.77<p style="text-align: left;"></p>
-            </th>
+            <th colspan="4"></th>
+            <th colspan="4"> <br> </th>
         </tr>
 
         <tr>
-            <th colspan="1">
-                <p style="text-align: left;"></p>
-            </th>
-            <th colspan="1">
-                <p style="text-align: left;"></p>
-            </th>
-            <th colspan="1">
-                <p style="text-align: left;"></p>
-            </th>
-            <th colspan="1">
-                <p style="text-align: left;"></p>
-            </th>
-            <th colspan="1">
-                <p style="text-align: left;"></p>
-            </th>
-            <th colspan="1">
-                <p style="text-align: left;"></p>
-            </th>
-            <th colspan="1">
-                <p style="text-align: left;"></p>
-            </th>
-            <th colspan="1">$1,520.68<p style="text-align: left;"></p>
-            </th>
+            <th colspan="4">Total</th>
+            <th colspan="4">Total</th>
         </tr>
+
+
 
 
     </table>
