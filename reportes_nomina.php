@@ -169,7 +169,7 @@ if (!isset($usuario)) {
                     <td><label><select required id="lista" name="CveNomina">
                                 <?php
                                 include 'conexion.php';
-                                $consulta = "SELECT CveNomina FROM Nominas ORDER BY CveNomina DESC";
+                                $consulta = "SELECT CveNomina FROM Nominas WHERE Cerrada=1 ORDER BY CveNomina DESC";
                                 $resultado = $mysqli->query($consulta);
                                 ?>
                                 <form action="resumen_nominas.php" method="post" class="form-login">

@@ -17,6 +17,9 @@ $query = mysqli_query($mysqli, $sql);
 $sql2 = "DELETE FROM DetNomina WHERE CveNomina='$CveNomina'";
 $query2 = mysqli_query($mysqli, $sql2);
 
+$sql3 = "DELETE FROM ComPerDed WHERE CveNomina='$CveNomina'";
+$query3 = mysqli_query($mysqli, $sql3);
+
 // No mostrar los errores de PHP
 error_reporting(0);
 

@@ -5,6 +5,7 @@ if (!isset($usuario)) {
     header("location: index.php");
 }
 $CveNomina = $_POST['CveNomina'];
+$pagina = 0;
 ?>
 
 <!DOCTYPE html>
@@ -29,14 +30,21 @@ $CveNomina = $_POST['CveNomina'];
     DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4) AS NomBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
     EmpCont.CodCategoria,catcatego.Descripcion,catcatego.DescCorta,DetNomina.Del,DetNomina.Al,
     SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=0) THEN Importe ELSE 0 END)- SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=1) THEN Importe ELSE 0 END) AS sueldobruto,
-    SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=0) THEN Importe ELSE 0 END) AS totpercepciones
+    SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=0) THEN Importe ELSE 0 END) AS totpercepciones,Contratos.Descripcion,ComPerDed.Folio
     FROM EmpCont INNER JOIN 
     DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal INNER JOIN
     EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal INNER JOIN
     catbanco ON SUBSTR(EmpCont.CtaBanco, 1, 3) = catbanco.CveBanco INNER JOIN
-    catcatego ON EmpCont.CodCategoria = catcatego.CveCategoria
-    WHERE (EmpCont.CveContrato LIKE '%DEPOR%' OR EmpCont.CveContrato LIKE '%COMEM%' OR EmpCont.CveContrato LIKE '%PATRI%') AND DetNomina.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal";
+    catcatego ON EmpCont.CodCategoria = catcatego.CveCategoria INNER JOIN
+    Contratos ON EmpCont.CveContrato = Contratos.CveContrato INNER JOIN
+    ComPerDed ON EmpCont.CvePersonal = ComPerDed.CvePersonal
+    WHERE (EmpCont.CveContrato LIKE '%DEPOR%' OR EmpCont.CveContrato LIKE '%COMEM%' OR EmpCont.CveContrato LIKE '%PATRI%') 
+    AND DetNomina.CveNomina='$CveNomina' AND ComPerDed.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal ORDER BY EmpCont.Dirgral,DetNomina.CvePersonal";
     $resultado = $mysqli->query($consulta);
+
+
+
+
 
     ?>
 
@@ -49,13 +57,17 @@ $CveNomina = $_POST['CveNomina'];
         <table style="text-align: center; margin: 0 auto;">
         <tr id="espacio">
             <th id="logo" colspan="6">
-                <p style="text-align: left;"><img src="img/iconos/escudo_comprobantes.png" width="300" height="100"></p>
-            </th>
+              <p style="text-align: left;"><img src="img/iconos/escudo_comprobantes.png" width="300" height="100"></p>
+                </th>
         </tr>
-        <tr id="espacio">
-            <th id="titulo" colspan="6">COMPROBANTE DE PRECEPCIONES Y DEDUCCIONES RECIBO</th>
 
+        <tr id="espacio">
+            <th style = "text-align: center;" id="titulo" colspan="6">COMPROBANTE DE PRECEPCIONES Y DEDUCCIONES 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            RECIBO:' . $row['Folio'] . ' </th>
         </tr>
+
+
 
         <tr>
             <th style="text-align: left;" class="sinlinea" colspan="3">
@@ -63,7 +75,7 @@ $CveNomina = $_POST['CveNomina'];
                 <p>CURP:  ' . $row['CURP'] . ' </p>
                 <p>Puesto: CONT.TIEMPO INDETERMINADO</p> 
                 <p>Dependencia: SECRETARÍA DE CULTURA </p>
-                <p>Unidad Admva: DIR GRAL DE CULTURA FISICA Y DEPORTE</p> 
+                <p>Unidad Admva: ' . $row['Descripcion'] . '</p> 
             </th>
             <th style="text-align: left;" class="sinlinea" colspan="3">
             <p>RFC:' . $row['CURP'] . ' </p>
@@ -139,23 +151,22 @@ $CveNomina = $_POST['CveNomina'];
         ";
         $resultado5 = $mysqli->query($consulta5);
         echo '
-        
+        <div class="texto">
     <tr>
-    <th id="contenido" colspan="3">
     
-    ';
+    <th id="contenido" colspan="3">';
         while ($row = $resultado2->fetch_assoc()) {
             echo  $row['Clave'] . ' ' . $row['Concepto'] . ' $ ' . number_format($row['Importe'], 2, ".", ",");
             echo '<br>';
         }
         echo '
-        <p style="text-align:center;"><img id="agua"   src="img/iconos/escudoarmas_agua.png" height="250" width="250"></p>
+        <p style="text-align:center;"><img id="agua" src="img/iconos/escudoarmas_agua.png" height="250" width="250"></p>
         
         </th>
+        
 
 
-    <th class="consulta" id="contenido" colspan="3">
-    ';
+    <th class="consulta" id="contenido" colspan="3">';
 
         while ($row = $resultado3->fetch_assoc()) {
             echo  $row['Clave'] . ' ' . $row['Concepto'] . ' $ ' . number_format($row['Importe'], 2, ".", ",");
@@ -166,6 +177,7 @@ $CveNomina = $_POST['CveNomina'];
         <p style="text-align:center;"><img id="agua"   src="img/iconos/escudoarmas_agua.png" height="250" width="250"></p>
     </th>
 </tr>
+</div>
 
 
 <tr>';
@@ -182,10 +194,12 @@ $CveNomina = $_POST['CveNomina'];
 
 </tr>
 
-<tr>
-    <th style="text-align: left;" colspan="6">SE REALIZO EL ABONO EN LA CUENTA ' . substr($BancoCaptura, 7, 10) . '<br>
-        CONSTITUYE EL RECIBO DE PAGO CORRESPONDIENTE <br>
-        EL DÍA: ' . $Al . '
+<tr>';
+        $originalDate = "$Al";
+        $newDate = date("d/m/Y", strtotime($originalDate));
+        echo ' 
+    <th style="text-align: left;" colspan="6">SE REALIZÓ EL ABONO EN LA CUENTA Num: ' . substr($BancoCaptura, 7, 10) . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EL DÍA: ' . $newDate . '' . '<br>
+        CONSTITUYE EL RECIBO DE PAGO CORRESPONDIENTE 
     </th>
 </tr>
 
@@ -199,8 +213,12 @@ $CveNomina = $_POST['CveNomina'];
 
 
 <br><br><br><br><br><br><br><br><br><br><br>
-<hr>
-<p style="text-align: center;">página 1/209</p>
+<hr>';
+
+        $pagina = $pagina + 1;
+        echo ' 
+
+<p style="text-align: center;">Página ' . $pagina . '</p>
 
         ';
     }

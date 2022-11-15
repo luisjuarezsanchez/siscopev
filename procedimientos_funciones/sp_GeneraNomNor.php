@@ -24,8 +24,9 @@
 		$mysqli->query("TRUNCATE TABLE DetNomina");
 		$mysqli->query("DELETE FROM Nominas");
 		$mysqli->query("DELETE FROM tmpDetNomina");
+		$mysqli->query("DELETE FROM ComPerDed WHERE Folio <> 318066");
 	} else {
-		$mysqli->query("CALL sp_GeneraEventuales ('$CveNomina','$Del','$Al','$GenHon')");//Correcto
+		$mysqli->query("CALL sp_GeneraEventuales ('$CveNomina','$Del','$Al','$GenHon')"); //Correcto
 		$mysqli->query("CALL sp_GeneraClavesPerDedApo()");
 		$mysqli->query("CALL sp_GeneraExcentosDedApo()");
 		$mysqli->query("CALL sp_GeneraSubsidioISR('$CveNomina')");

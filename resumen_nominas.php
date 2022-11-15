@@ -92,7 +92,7 @@ $consulta = "SELECT
 #0.104% PRIMA RIESGO NO CONTROLADO
 (SELECT SUM(Importe) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE CveContrato LIKE '%DEPOR%' AND DetNomina.CveNomina ='$CveNomina' AND DetNomina.Clave = 5647) AS primriesgo,
 #3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES
-SUM(CASE WHEN DetNomina.Clave IN(0202,0325,0308+1202+1305+1308) THEN Importe ELSE 0 END) AS impsoremunA,
+SUM(CASE WHEN DetNomina.Clave IN(0202,0308+1202+1305+1308) THEN Importe ELSE 0 END) AS impsoremunA,
 SUM(CASE WHEN DetNomina.Clave IN(8202,8305,8308) THEN Importe ELSE 0 END) AS impsoremunB
 FROM EmpCont 
 INNER JOIN
@@ -278,7 +278,7 @@ $consulta2 = "SELECT
 #0.104% PRIMA RIESGO NO CONTROLADO
 (SELECT SUM(Importe) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE CveContrato LIKE '%COMEM%' AND DetNomina.CveNomina ='$CveNomina' AND DetNomina.Clave = 5647) AS primriesgo,
 #3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES
-SUM(CASE WHEN DetNomina.Clave IN(0202,0325,0308+1202+1305+1308) THEN Importe ELSE 0 END) AS impsoremunA,
+SUM(CASE WHEN DetNomina.Clave IN(0202,0308+1202+1305+1308) THEN Importe ELSE 0 END) AS impsoremunA,
 SUM(CASE WHEN DetNomina.Clave IN(8202,8305,8308) THEN Importe ELSE 0 END) AS impsoremunB
 FROM EmpCont 
 INNER JOIN
@@ -466,7 +466,7 @@ $consulta3 = "SELECT
 #0.104% PRIMA RIESGO NO CONTROLADO
 (SELECT SUM(Importe) FROM EmpCont INNER JOIN DetNomina ON EmpCont.CveEmpCont = DetNomina.CveEmpCont WHERE CveContrato LIKE '%PATRI%' AND DetNomina.CveNomina ='$CveNomina' AND DetNomina.Clave = 5647) AS primriesgo,
 #3.0% TOTAL IMPUESTO SOBRE REMUNERACIONES
-SUM(CASE WHEN DetNomina.Clave IN(0202,0325,0308+1202+1305+1308) THEN Importe ELSE 0 END) AS impsoremunA,
+SUM(CASE WHEN DetNomina.Clave IN(0202,0308+1202+1305+1308) THEN Importe ELSE 0 END) AS impsoremunA,
 SUM(CASE WHEN DetNomina.Clave IN(8202,8305,8308) THEN Importe ELSE 0 END) AS impsoremunB
 FROM EmpCont 
 INNER JOIN
