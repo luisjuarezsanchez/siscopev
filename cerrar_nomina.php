@@ -33,7 +33,6 @@ if (!isset($usuario)) {
 </head>
 
 <body>
-
 	<header class="header">
 		<div class="logo">
 			<a href="menu.php"><img class="logos" src="img/header/escudo_armas.png"></a>

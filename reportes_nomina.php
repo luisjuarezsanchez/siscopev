@@ -163,8 +163,8 @@ if (!isset($usuario)) {
                 </form>
             </tr>
 
-            <tr> 
-                <form action="depurar.php" method="post" enctype="multipart/form-data">
+            <tr>
+                <form action="depurar2.php" method="post" enctype="multipart/form-data">
                     <td>Comprobante Deducciones<img src="img/reportes/cuarto.png" height="55" width="55"></td>
                     <td><label><select required id="lista" name="CveNomina">
                                 <?php
