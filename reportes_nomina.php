@@ -169,7 +169,7 @@ if (!isset($usuario)) {
                     <td><label><select required id="lista" name="CveNomina">
                                 <?php
                                 include 'conexion.php';
-                                $consulta = "SELECT CveNomina FROM Nominas WHERE Cerrada=1 ORDER BY CveNomina DESC";
+                                $consulta = "SELECT CveNomina FROM Nominas ORDER BY CveNomina DESC";
                                 $resultado = $mysqli->query($consulta);
                                 ?>
                                 <form action="resumen_nominas.php" method="post" class="form-login">
@@ -181,7 +181,46 @@ if (!isset($usuario)) {
                             </select></label></td>
                     <td><button class="buttons">Generar reporte</button></td>
                 </form>
-            </tr>>
+            </tr>
+
+
+
+            <tr>
+                <!--BORRAR-->
+                <form action="depuracion.php" method="post" enctype="multipart/form-data">
+                    <td>Prototipo deducciones<img src="img/reportes/cuarto.png" height="55" width="55"></td>
+                    <td><label><select required id="lista" name="CveNomina">
+                                <?php
+                                include 'conexion.php';
+                                $consulta = "SELECT CveNomina FROM Nominas ORDER BY CveNomina DESC";
+                                $resultado = $mysqli->query($consulta);
+                                ?>
+                                <form action="resumen_nominas.php" method="post" class="form-login">
+                                    <?php foreach ($resultado as  $opciones) : ?>
+                                        <option value="<?php echo $opciones['CveNomina'] ?>">
+                                            <?php echo $opciones['CveNomina'] ?>
+                                        </option>
+                                    <?php endforeach ?>
+                            </select></label></td>
+                    <td><button class="buttons">Generar reporte</button></td>
+                </form>
+                <!--BORRAR-->
+            </tr>
+
+            <tr>
+                <!--BORRAR-->
+                <form action="depuracion2.php" method="post" enctype="multipart/form-data">
+                    <td>Pruebas de plantilla HTML<img src="img/reportes/cuarto.png" height="55" width="55"></td>
+
+                    </select></label></td>
+                    <td><button class="buttons">Generar reporte</button></td>
+                </form>
+                <!--BORRAR-->
+            </tr>
+
+
+
+
 
             </tbody>
         </table>

@@ -4,63 +4,51 @@
   font-size: 14px;
 }
 
-#agua {
-  opacity: 0.1;
+.cabecera {
+  text-align: center;
+  font-weight: bold; /*Texto en negrita*/
+}
+
+.informacion {
+  vertical-align: text-top;
+  padding: 5px;
+  border-top: 0px;
+  border-right: 0px;
+  border-bottom: 0px solid black;
+  border-left: 0px;
+}
+
+.cabeceras_perded {
   text-align: center;
 }
 
-th {
-  border: black 0.5px solid;
+.claconimp {
+  text-align: center;
+  padding: 5px;
+  border-top: 0px;
+  border-right: 0px;
+  border-bottom: 0px solid black;
+  border-left: 0px;
 }
 
-.sinlinea {
-  border: none;
+.consultaperded {
+  text-align: center;
 }
 
-#logo {
-  padding-left: 6px;
-  padding-top: 1px;
-  padding-bottom: -4px;
+.consultainfo {
+  display: inline;
 }
 
-#titulo {
-  padding-left: 165px;
-  padding-top: 8px;
-  padding-right: 67px;
-  padding-bottom: 6px;
+.consultaperded {
+  vertical-align: text-top;
+  text-align: inherit;
 }
 
-.perded {
-  padding-top: -5px;
-  padding-bottom: -6px;
+.escudoagua {
+  opacity: 0.2;
+  vertical-align: text-bottom;
 }
 
-#inferior {
-  border-bottom: 1px solid #000000;
-}
-
-#izquierdo {
-  border-left: 1px solid #000000;
-}
-
-#derecho {
-  border-right: 1px solid #000000;
-}
-table {
-  table-layout: fixed;
-  width: 890px;
-  height: 890px;
-  border: black 0.5px solid;
-  padding-left: 10px;
-  padding-top: 10px;
-  padding-right: 10px;
-  padding-bottom: 10px;
-  align-items: center;
-}
-
-#contenido {
-  text-align: initial;
-  width: 200px;
-  height: 405px;
-
+.totales{
+  text-align: right;
 }
