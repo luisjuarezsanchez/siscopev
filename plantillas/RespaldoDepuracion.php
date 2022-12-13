@@ -1,22 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+// Verificando sesion iniciada
+session_start();
+$usuario = $_SESSION['username'];
+if (!isset($usuario)) {
+    header("location: index.php");
+}
+$CveNomina = $_POST['CveNomina'];
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/comprobantes.css">
-    <title>Document</title>
-</head>
+// Solicitando los archivos de la biblioteca
+require_once __DIR__ . '/vendor/autoload.php';
 
-<body>
+// Efectuando conexion a la Base de Datos
+require 'conexion.php';
+// Haciendo la consulta SQL
+$consulta = "SELECT 
+DetNomina.CvePersonal,EmpGral.RFC,CONCAT(EmpGral.Nombre,' ',EmpGral.Paterno,' ',EmpGral.Materno) AS Nombre,EmpCont.CtaBanco,SUBSTR(catbanco.NomBanco,1,4) AS NomBanco,EmpGral.CURP,EmpCont.Dirgral,EmpCont.HrsMen,EmpGral.CveISSEMyM,EmpCont.UnidadRespon,
+EmpCont.CodCategoria,catcatego.Descripcion,catcatego.DescCorta,DetNomina.Del,DetNomina.Al,
+SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=0) THEN Importe ELSE 0 END)- SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=1) THEN Importe ELSE 0 END) AS sueldobruto,
+SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=0) THEN Importe ELSE 0 END) AS totpercepciones,
+    SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=1) THEN Importe ELSE 0 END) AS totdeducciones
+,Contratos.Descripcion,ComPerDed.Folio
+FROM EmpCont INNER JOIN 
+DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal INNER JOIN
+EmpGral ON EmpCont.CvePersonal = EmpGral.CvePersonal INNER JOIN
+catbanco ON SUBSTR(EmpCont.CtaBanco, 1, 3) = catbanco.CveBanco INNER JOIN
+catcatego ON EmpCont.CodCategoria = catcatego.CveCategoria INNER JOIN
+Contratos ON EmpCont.CveContrato = Contratos.CveContrato INNER JOIN
+ComPerDed ON EmpCont.CvePersonal = ComPerDed.CvePersonal
+WHERE (EmpCont.CveContrato LIKE '%DEPOR%' OR EmpCont.CveContrato LIKE '%COMEM%' OR EmpCont.CveContrato LIKE '%PATRI%') 
+AND DetNomina.CveNomina='$CveNomina' AND ComPerDed.CveNomina='$CveNomina' GROUP BY DetNomina.CvePersonal ORDER BY EmpCont.Dirgral,DetNomina.CvePersonal";
+$resultado = $mysqli->query($consulta);
+
+
+// Solicitando los estilos CSS del reporte
+$css = file_get_contents('css/comprobantes.css');
+
+// Creando una instancia de la clase 
+$mpdf = new \Mpdf\Mpdf();
+
+//Insertado estilos CSS
+$mpdf->WriteHTML($css, \Mpdf\HTMLParserMode::HEADER_CSS);
+
+// Escribiendo el codigo HTML en el PDF
+while ($row = $resultado->fetch_assoc()) {
+    $mpdf->WriteHTML(
+        $plantilla = '  
+    <body>
     <table border="1" align="center">
         <tr>
             <td colspan="6" width="1000" height="200"><img src="img/iconos/escudo_comprobantes.png" alt=""></td>
         </tr>
 
         <tr>
-            <td colspan="6" class="cabecera" width="1000" height="50">COMPROBANTE DE PERCEPCIONES Y DEDUCCIONES &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Recibo: 317860</td>
+            <td colspan="6" class="cabecera" width="1000" height="50">COMPROBANTE DE PERCEPCIONES Y DEDUCCIONES &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Recibo: '.$row['Folio'].'  </td>
         </tr>
 
         <tr>
@@ -54,7 +90,6 @@
         </tr>
 
         <tr>
-            <!--
             <td colspan="3" cellspacing="0" class="consultaperded" valign="top">
                 0202 SUELDOS EVENTUALES (7)1,740.00 <br>
                 0325 SUBSIDIO AL EMPLEO 99.46 <br> <br>
@@ -65,19 +100,7 @@
                 5541 SISTEMA SOLIDARIO DE REPARTO 6.1% 160.37 <br>
                 5542 CAPITALIZACION INDIVIDUAL 1.4% 36.81 <br>
                 <img class="escudoagua" src="img/iconos/escudo_armas.png" width="500" height="450">
-            </td>-->
-
-            <td colspan="3" cellspacing="0" class="consultaclave" valign="top">
-                <p style="text-align: center;">0202</p>
-
             </td>
-
-
-            <td colspan="3" cellspacing="0" class="consultaconcepto" valign="top">5540 &nbsp;&nbsp; SERVICIOS DE SALUD 4.625% 121.59</td>
-
-
-
-
         </tr>
 
         <tr>
@@ -104,5 +127,14 @@
         </tr>
     </table>
 </body>
+',
+        \Mpdf\HTMLParserMode::HTML_BODY
+    );
 
-</html>
+    /*Descomentar esta linea en caso de que los reportes no se 
+    generen 1 por cada página*/
+    //$mpdf->AddPage(); )
+}
+
+// Indicando la salida del PDF al navegador
+$mpdf->Output();

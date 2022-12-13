@@ -1,15 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+// Verificando sesion iniciada
+session_start();
+$usuario = $_SESSION['username'];
+if (!isset($usuario)) {
+    header("location: index.php");
+}
+// Recibiendo la clave de la nómina
+$CveNomina = $_POST['CveNomina'];
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/comprobantes.css">
-    <title>Document</title>
-</head>
-
-<body>
+function getPlantilla()
+{
+    $plantilla = '  
+    <body>
     <table border="1" align="center">
         <tr>
             <td colspan="6" width="1000" height="200"><img src="img/iconos/escudo_comprobantes.png" alt=""></td>
@@ -54,7 +56,6 @@
         </tr>
 
         <tr>
-            <!--
             <td colspan="3" cellspacing="0" class="consultaperded" valign="top">
                 0202 SUELDOS EVENTUALES (7)1,740.00 <br>
                 0325 SUBSIDIO AL EMPLEO 99.46 <br> <br>
@@ -65,19 +66,7 @@
                 5541 SISTEMA SOLIDARIO DE REPARTO 6.1% 160.37 <br>
                 5542 CAPITALIZACION INDIVIDUAL 1.4% 36.81 <br>
                 <img class="escudoagua" src="img/iconos/escudo_armas.png" width="500" height="450">
-            </td>-->
-
-            <td colspan="3" cellspacing="0" class="consultaclave" valign="top">
-                <p style="text-align: center;">0202</p>
-
             </td>
-
-
-            <td colspan="3" cellspacing="0" class="consultaconcepto" valign="top">5540 &nbsp;&nbsp; SERVICIOS DE SALUD 4.625% 121.59</td>
-
-
-
-
         </tr>
 
         <tr>
@@ -104,5 +93,7 @@
         </tr>
     </table>
 </body>
+';
 
-</html>
+    return $plantilla;
+}

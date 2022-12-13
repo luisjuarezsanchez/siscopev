@@ -35,20 +35,35 @@
   text-align: center;
 }
 
-.consultainfo {
+p {
   display: inline;
+  text-align: right;
 }
 
 .consultaperded {
   vertical-align: text-top;
-  text-align: inherit;
+  text-align: left;
+}
+
+.consultaclave {
+  vertical-align: text-top;
+  text-align: left;
+}
+
+.consultaconcepto {
+  vertical-align: text-top;
+  text-align: left;
+}
+
+.consultaimporte {
+  vertical-align: text-top;
+  text-align: right;
 }
 
 .escudoagua {
-  opacity: 0.2;
   vertical-align: text-bottom;
 }
 
-.totales{
+.totales {
   text-align: right;
 }
