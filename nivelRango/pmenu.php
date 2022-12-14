@@ -35,7 +35,7 @@ if (!isset($usuario)) {
 <body>
     <header class="header">
         <div class="logo">
-            <a href="index.php"><img class="logos" src="../img/header/escudo_armas.png"></a>
+            <a href="../index.php"><img class="logos" src="../img/header/escudo_armas.png"></a>
         </div>
         <nav>
             <ul class="nav-links">
@@ -121,8 +121,6 @@ if (!isset($usuario)) {
                     </div>
                 </div>
 
-
-
             </td>
             <td>
                 <div class="card">
@@ -178,7 +176,6 @@ if (!isset($usuario)) {
 
 
     <!--/////////////////Animacion del menu desplegable/////////////////-->
-
     <script>
         const btn = document.querySelector('#menu-btn');
         const menu = document.querySelector('#sidemenu');
