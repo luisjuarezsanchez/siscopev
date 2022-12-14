@@ -21,7 +21,7 @@
 
 
 <body>
-	<header class="header">
+	<header class="header"> 
 		<div class="logo">
 			<a href="menu.php"><img class="logos" src="img/header/escudo_armas.png"></a>
 			<a href="menu.php"><img class="logos" src="img/header/logo_vertical.png"></a>
