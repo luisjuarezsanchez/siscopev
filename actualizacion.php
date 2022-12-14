@@ -28,7 +28,7 @@
 		</div>
 		<nav>
 			<ul class="nav-links">
-				<li id="producto1"><a href="#">Sistema de nóminas</a></li>
+				<li id="producto1"><a href="#">Sistema de nóminass</a></li>
 				<li id="producto2"><a href="#">Secretaria de Cultura y Turismo</a></li>
 			</ul>
 		</nav>
