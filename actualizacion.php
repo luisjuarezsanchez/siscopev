@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
+	<meta charset="utf-8"> 
 	<!--Icono de la pagina web-->
 	<link rel="icon" href="img/iconos/escudo_armas.png">
 	<!--Titulo de la página-->
