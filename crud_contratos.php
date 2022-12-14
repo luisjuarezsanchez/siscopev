@@ -6,9 +6,7 @@ if (!isset($usuario)) {
     header("location: index.php");
 }
 ?>
-<?php
-$conexion = mysqli_connect('localhost', 'root', '', 'erbase');
-?>
+
 <!DOCTYPE html>
 <html>
 

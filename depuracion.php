@@ -60,13 +60,11 @@ while ($row = $resultado->fetch_assoc()) {
 <body>
 <table border="1" align="center">
     <tr>
-        <td colspan="6" width="1000" height="200"><img src="img/iconos/escudo_comprobantes.png" alt=""></td>
+        <td colspan="6" width="1000" height="200"><img src="img/iconos/escudo_comprobantes.jpg" alt=""></td>
     </tr>
-
     <tr>
         <td colspan="6" class="cabecera" width="1000" height="50">COMPROBANTE DE PERCEPCIONES Y DEDUCCIONES &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Recibo: ' . $row['Folio'] . '  </td>
     </tr>
-
     <tr>
         <td colspan="3" class="informacion" valign="top" height="100" width="500">
             <strong>Nombre: &nbsp;</strong>' . $row['Nombre'] . ' <br>
@@ -75,7 +73,6 @@ while ($row = $resultado->fetch_assoc()) {
             <strong>Dependencia: &nbsp;</strong>SECRETARIA DE CULTURA <br>
             <strong>Unidad Admva: &nbsp;</strong>' . $row['DescripcionCon'] . '<br>
         </td>
-
         <td colspan="3" class="informacion" valign="top" height="100" width="500">
             <strong>RFC: &nbsp;</strong>' . $row['RFC'] . ' <br>
             <strong>Clave de ISSEMYM: &nbsp;</strong>' . $row['CveISSEMyM'] . ' <br>
@@ -85,17 +82,14 @@ while ($row = $resultado->fetch_assoc()) {
             <strong>Total neto: &nbsp;</strong>' . $row['sueldobruto'] . '<br>
         </td>
     </tr>
-
     <tr>
         <td colspan="3" cellspacing="0" class="cabeceras_perded"><strong>Percepciones</strong></td>
         <td colspan="3" cellspacing="0" class="cabeceras_perded"><strong>Deducciones</strong></td>
     </tr>
-
     <tr>
         <td colspan="1" cellspacing="0" class="claconimp">Clave</td>
         <td colspan="1" cellspacing="0" class="claconimp">Concepto</td>
         <td colspan="1" cellspacing="0" class="claconimp">Importe</td>
-
         <td colspan="1" cellspacing="0" class="claconimp">Clave</td>
         <td colspan="1" cellspacing="0" class="claconimp">Concepto</td>
         <td colspan="1" cellspacing="0" class="claconimp">Importe</td>
@@ -126,7 +120,7 @@ while ($row = $resultado->fetch_assoc()) {
         $plantilla .= '<br>';
     }
     $plantilla .= ' 
-    <img class="escudoagua" src="img/iconos/escudo_agua.png" width="500" height="450">
+    <img class="escudoagua" src="img/iconos/escudo_agua.jpg" width="500" height="450">
     </td>
     <td colspan="3" cellspacing="0" class="consultaperded" valign="top">';
     //Consulta para enlistar las DEDUCCIONES de cada servidor
@@ -150,16 +144,14 @@ while ($row = $resultado->fetch_assoc()) {
         $plantilla .= '<br>';
     }
     $plantilla .= ' 
-    <img class="escudoagua" src="img/iconos/escudo_agua.png" width="500" height="450">
+    <img class="escudoagua" src="img/iconos/escudo_agua.jpg" width="500" height="450">
         </td>
     </tr>
-
     <tr>
         <td colspan="3" class="totales">Total de percepcionesss: ' . number_format($totpercepciones, 2, ".", ",")  . '</td>
         <td colspan="3" class="totales">Total de deducciones: ' . number_format($totdeducciones, 2, ".", ",")  . '
         </td>
     </tr>
-
     <tr>
         <td colspan="6">
             <br>
@@ -170,7 +162,6 @@ while ($row = $resultado->fetch_assoc()) {
             CONSTITUYE EL RECIBO DE PAGO CORRESPONDIENTE. <br><br><br><br>
         </td>
     </tr>
-
     <tr>
         <td colspan="6">
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br>

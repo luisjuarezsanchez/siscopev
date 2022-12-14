@@ -11,7 +11,7 @@ $array = mysqli_fetch_array($consulta);
 
 if ($array['contar'] > 0) {
     $_SESSION['username'] = $usuario;
-    header("location: ../menu.php");
+    header("location: ../eleccion_menu.php");
 } else {
     // header("location: ../index.php");
     echo '<script language="javascript">alert("Datos de inicio de sesion incorrectos");</script>';

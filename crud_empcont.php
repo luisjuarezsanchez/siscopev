@@ -8,9 +8,6 @@ require 'conexion.php';
 $sql = "SELECT * FROM EmpCont";
 $query = mysqli_query($mysqli, $sql);
 ?>
-<?php
-$conexion = mysqli_connect('localhost', 'root', '', 'Siscopevw2');
-?>
 <!DOCTYPE html>
 <html>
 

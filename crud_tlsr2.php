@@ -5,9 +5,7 @@ if (!isset($usuario)) {
     header("location: index.php");
 }
 ?>
-<?php
-$conexion = mysqli_connect('localhost', 'root', '', 'erbase');
-?>
+
 <!DOCTYPE html>
 <html>
 
@@ -34,7 +32,6 @@ $conexion = mysqli_connect('localhost', 'root', '', 'erbase');
     <link rel="stylesheet" href="css/menulateral.css">
     <link rel="stylesheet" href="css/tablas.css">
 </head>
-
 
 <body>
     <!--Header de la pagina web-->
