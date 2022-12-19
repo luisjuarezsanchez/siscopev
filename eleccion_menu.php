@@ -70,7 +70,6 @@ if (!isset($usuario)) {
             </div>
         </div>
         <!--Profile-->
-
         <div id="profile">
             <a href="menu.php">
                 <div id="photo"><img src="img/header/logo_vertical.png" alt=""></div>
@@ -78,7 +77,6 @@ if (!isset($usuario)) {
             </a>
         </div>
         <!--Items-->
-
         <div id="menu-items">
             <div class="item">
                 <a href="#">
@@ -105,12 +103,12 @@ if (!isset($usuario)) {
         <tr>
             <td>
                 <div class="card">
-                    <div class="card text-bg-light mb-3">
-                        <div class="card-body">
-                            <a href="menu.php"><img src="img/menu/HorasClase.png" width="280" height="260"></a>
+                    <div class="">
+                        <div class=""><br>
+                            <a href="menu.php"><img src="img/menu/HorasClase.png" width="180" height="180"></a>
                             <h5 class="card-title">Nómina Horas-Clase</h5>
                             <p class="card-text">Operaciones de nómoina de profesores Horas-Clase</p>
-                            <a href="menu.php" class="btn btn-primary">Ir</a>
+                            <a href="menu.php" class="btn btn-primary">Ir</a><br>
                         </div>
                     </div>
                 </div>
@@ -120,12 +118,12 @@ if (!isset($usuario)) {
             </td>
             <td>
                 <div class="card">
-                    <div class="card text-bg-light mb-3">
-                        <div class="card-body">
-                            <a href="nivelRango/pmenu.php"><img src="img/menu/NivelRango.png" width="280" height="260"></a>
+                    <div class="">
+                        <div class=""><br>
+                            <a href="nivelRango/menu.php"><img src="img/menu/NivelRango.png" width="180" height="180"></a>
                             <h5 class="card-title">Nomina Nivel-Rango</h5>
                             <p class="card-text">Generación de la nómina de Nivel-Rango</p>
-                            <a href="nivelRango/pmenu.php" class="btn btn-primary">Ir</a>
+                            <a href="nivelRango/menu.php" class="btn btn-primary">Ir</a><br>
                         </div>
                     </div>
                 </div>

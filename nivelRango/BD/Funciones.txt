@@ -1,0 +1,130 @@
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `ObtenNomPertenece`(`Del` DATE, `Al` DATE) RETURNS tinyint(4)
+    NO SQL
+BEGIN
+  DECLARE Qna tinyint; 
+SELECT SUBSTRING(Nominas.CveNomina, 5, 2) INTO Qna 
+FROM Nominas WHERE Nominas.Del<=Del AND Nominas.Al>=Al;
+  RETURN Qna;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `CalculaImpNom`(`Factor` REAL, `SueldoM` DECIMAL(13,2), `TopeMax` DECIMAL(8,2), `TopeMin` DECIMAL(8,2), `Del` DATE, `Inicio` DATE, `Clave` CHAR(10), `CvePersonal` VARCHAR(11)) RETURNS decimal(13,2)
+    NO SQL
+BEGIN
+  DECLARE DiasDescontar int;
+  DECLARE Importe decimal(13,2);
+  
+/* Verifica que el empleado esté excento */  
+IF (SELECT Count(*) FROM ExcentosDedApo WHERE ExcentosDedApo.CvePersonal=CvePersonal AND ExcentosDedApo.Clave=Clave)>0
+THEN
+  RETURN 0;
+END IF;
+
+/* Obtiene los días a descontar cuando no es un período completo */
+IF CAST(Del AS int)- CAST(Inicio AS int)<0
+THEN 
+SET DiasDescontar=CAST(Del AS int)-CAST(Inicio AS int);
+ELSE 
+	SET DiasDescontar = 0;
+END IF;
+
+/* Obtiene el importe */
+SET Importe=Factor*SueldoM*(15.2+DiasDescontar)/15.2;
+
+IF Importe<TopeMin
+THEN 
+  RETURN TopeMin;
+END IF;
+
+IF Importe>TopeMax
+THEN
+  RETURN TopeMax;
+END IF;
+
+RETURN Importe;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `ObtenSueldoBruto`(`CveTabulador` VARCHAR(10)) RETURNS decimal(14,2)
+    NO SQL
+BEGIN
+DECLARE SueldoBruto decimal(8,2);
+DECLARE sueldobase decimal (8,2);
+DECLARE gratificacion decimal (8,2);
+DECLARE compensacion decimal (8,2);
+DECLARE despensa decimal (8,2);
+
+SELECT Tabulador.SueldoBase INTO sueldobase FROM Tabulador WHERE CveTabulador = Tabulador.CveTabulador;
+
+SELECT Tabulador.Gratificacion INTO gratificacion FROM Tabulador WHERE CveTabulador = Tabulador.CveTabulador;
+
+SELECT Tabulador.Compensacion INTO compensacion FROM Tabulador WHERE CveTabulador = Tabulador.CveTabulador ;
+
+SELECT Tabulador.Despensa INTO despensa FROM Tabulador WHERE CveTabulador = Tabulador.CveTabulador;
+
+SET SueldoBruto = sueldobase+gratificacion+despensa+compensacion;
+
+RETURN SueldoBruto;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `calculo`(`Monto` DECIMAL(13,2)) RETURNS varchar(20) CHARSET utf8mb4
+    NO SQL
+BEGIN
+DECLARE liminf decimal(13,2);
+DECLARE diferencia decimal(13,2);
+DECLARE excedente decimal(5,2);
+DECLARE marginal decimal(13,2);
+DECLARE cuotafija decimal(13,2);
+DECLARE cantidad decimal(13,2);
+DECLARE subsidio decimal(13,2);
+DECLARE isr decimal(13,2);
+DECLARE total decimal(13,2);
+DECLARE retencion decimal(13,2);
+DECLARE clave varchar(4);
+DECLARE final decimal(13,2);
+
+SELECT tlsr1.LimInf INTO liminf FROM tlsr1 WHERE Monto BETWEEN tlsr1.LimInf AND tlsr1.LimSup;
+
+SELECT tlsr1.Excede INTO excedente FROM tlsr1 WHERE Monto BETWEEN tlsr1.LimInf AND tlsr1.LimSup;
+
+SELECT tlsr1.Cuota INTO cuotafija FROM tlsr1 WHERE Monto BETWEEN tlsr1.LimInf AND tlsr1.LimSup;
+
+SET diferencia = Monto - liminf;
+SET marginal = (excedente/100)*diferencia;
+SET isr = cuotafija+marginal;
+SET cantidad = Monto-isr;
+
+SELECT tlsr2.Subsidio INTO subsidio FROM tlsr2 WHERE Monto BETWEEN tlsr2.LimInf AND tlsr2.LimSup;
+
+SET total = cantidad+subsidio;
+SET retencion = isr-subsidio;
+
+IF retencion/2>0
+THEN SET final = retencion;
+SET clave = '5408';
+END IF;
+
+IF retencion/2<=0
+THEN SET final = (retencion-retencion)+(retencion-retencion)-retencion;
+SET clave = '0325';
+END IF;
+
+RETURN CONCAT(final,' ',clave);
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `prueba`(`numero` DECIMAL(13,2)) RETURNS varchar(50) CHARSET utf8mb4
+    NO SQL
+BEGIN
+DECLARE varresultado decimal;
+SET varresultado = calculo(numero);
+RETURN varresultado;
+
+END$$
+DELIMITER ;

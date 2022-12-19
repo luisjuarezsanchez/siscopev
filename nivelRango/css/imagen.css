@@ -1,0 +1,12 @@
+img {
+  width: 400;
+  height: 250;
+  margin: 20px;
+  object-fit: cover;
+  object-position: center right;
+  display: block;
+}
+
+.card {
+  display: inline-block;
+}

@@ -1,0 +1,4 @@
+Steph -> Crear las tablas con su s encabezados
+Mandar llamar la consulta y cargar los datos
+
+3
