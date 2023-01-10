@@ -1,1 +1,0 @@
-alert("El archivo .txt seleccionado no fue originado por sistema PRISMA");

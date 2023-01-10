@@ -97,7 +97,7 @@ SUM(CASE WHEN DetNomina.Clave IN(8202,8305,8308) THEN Importe ELSE 0 END) AS imp
 FROM EmpCont 
 INNER JOIN
 DetNomina ON EmpCont.CvePersonal = DetNomina.CvePersonal 
-WHERE CveContrato LIKE '%DEPOR%' AND DetNomina.CveNomina='$CveNomina' ";
+WHERE CveContrato LIKE '%DEPOR%' AND DetNomina.CveNomina='$CveNomina'";
 //EFECTUANDO CONSULTA
 $resultado = $mysqli->query($consulta);
 

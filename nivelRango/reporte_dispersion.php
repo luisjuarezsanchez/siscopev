@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 //Solicitando la conexion con la BD y Biblioteca
 require 'conexion.php';
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 
 //Estilos de la hoja de Excel
