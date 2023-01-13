@@ -141,7 +141,7 @@ if (!isset($usuario)) {
                             </select></label></td>
                     <td><button class="buttons">Generar reporte</button></td>
                 </form>
-            </tr>
+            </tr> 
 
             <tr>
                 <form action="reporte_dispersion.php" method="post" enctype="multipart/form-data">
@@ -161,7 +161,7 @@ if (!isset($usuario)) {
                             </select></label></td>
                     <td><button class="buttons">Generar reporte</button></td>
                 </form>
-            </tr>
+            </tr> 
 
             <tr>
                 <!--BORRAR-->
@@ -170,7 +170,7 @@ if (!isset($usuario)) {
                     <td><label><select required id="lista" name="CveNomina">
                                 <?php
                                 include 'conexion.php';
-                                $consulta = "SELECT CveNomina FROM Nominas WHERE Cerrada=1 ORDER BY CveNomina DESC";
+                                $consulta = "SELECT CveNomina FROM Nominas ORDER BY CveNomina DESC";
                                 $resultado = $mysqli->query($consulta);
                                 ?>
                                 <form action="resumen_nominas.php" method="post" class="form-login">
