@@ -54,7 +54,7 @@ $CveNomina = $_POST['CveNomina'];
 
         <tr>
             <th colspan="8">
-                <h1>Secretaría de Cultura y Turismo</h1>
+                <h1>SECRETARÍA DE CULTURA Y TURISMO</h1>
             </th>
 
         </tr>
@@ -74,18 +74,23 @@ $CveNomina = $_POST['CveNomina'];
             <th colspan="1">
                 <p style="text-align:center;"></p>' . $row['CvePersonal'] . '
             </th>
+
             <th colspan="1">
                 <p style="text-align:center;"></p>' . $row['RFC'] . '
             </th>
+
             <th colspan="2">
                 <p style="text-align:center;"></p>' . $row['Nombre'] . '
             </th>
+
             <th colspan="1">
                 <p style="text-align:center;"></p>' . $row['CtaBanco'] . '
             </th>
+
             <th colspan="1">
-                <p style="text-align:center;"></p>' . $row['NomBanco'] . '
+                <p style="text-align:center;"></p>' . '('.$row['NomBanco'].')' . '
             </th>
+
             <th colspan="2">
                 <p style="text-align:center;"></p>' . $row['CURP'] . '
             </th>
@@ -95,14 +100,28 @@ $CveNomina = $_POST['CveNomina'];
             <th colspan="1">
                 <p style="text-align:center;"></p>' . $row['Dirgral'] . '
             </th>
+
             <th colspan="1">
                 <p style="text-align:center;"></p>' . $row['CveISSEMyM'] . '
             </th>
+
             <th colspan="1">
                 <p style="text-align:center;"></p>' . $row['UnidadRespon'] . '
             </th>
-            <th colspan="1">
-                <p style="text-align:center;"></p>DIR GRAL DE CULTURA FISICA Y DEPORTE
+
+            <th colspan="1">';
+            if ($row['Dirgral'] == 3 or $row['Dirgral'] == 4) {
+                echo '<p style="text-align:center;">DIR GRAL PAT Y SERV CULT</p>';
+            }
+
+            if ($row['Dirgral'] == 5) {
+                echo '<p style="text-align:center;">DIREC GRAL DEL COMEM</p>';
+            }
+
+            if ($row['Dirgral'] == 6) {
+                echo '<p style="text-align:center;">DIR GRAL DE CULTURA FISICA Y DEPORTE</p>';
+            }
+            echo' 
             </th>
             <th colspan="1">
                 <p style="text-align:center;"></p>' . $row['CodCategoria'] . '
@@ -172,6 +191,11 @@ $CveNomina = $_POST['CveNomina'];
         <tr>
             <th class="consulta" colspan="4">' . '$' . number_format($totPercepciones, 2, ".", ",") . '</th>
             <th class="consulta" colspan="4">' . '$' . number_format($totDeducciones, 2, ".", ",") . '</th>
+        </tr>
+
+        <tr>
+            <th class="consulta" colspan="4">' . '' . '</th>
+            <th class="consulta" colspan="4">' . '$' . number_format(($totPercepciones - $totDeducciones), 2, ".", ",") . '</th>
         </tr>
 
         

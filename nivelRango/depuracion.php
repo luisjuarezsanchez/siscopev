@@ -29,7 +29,7 @@ $resultado = $mysqli->query($consulta);
 
 
 // Solicitando los estilos CSS del reporte
-$css = file_get_contents('css/comprobantes.css');
+$css = file_get_contents('css/comprobantes.css'); 
 
 // Creando una instancia de la clase 
 $mpdf = new \Mpdf\Mpdf();

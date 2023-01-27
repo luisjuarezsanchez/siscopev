@@ -14,10 +14,14 @@
 		echo "Falló la conexión con MySQL: (" . $mysqli->connect_errno . ")" . $mysqli->connect_error;
 	}
 
-	$CveNomina = $_POST['CveNomina'];
-	$Del = $_POST['Del'];
-	$Al = $_POST['Al'];
-	$GenHon = $_POST['GenHon'];
+	/*echo*/ $CveNomina = $_POST['CveNomina'];
+	/*echo '<br>';*/
+	/*echo*/ $Del = $_POST['Del'];
+	/*echo '<br>';
+	/*echo*/ $Al = $_POST['Al'];
+	/*echo '<br>';*/
+	/*echo*/ $GenHon = $_POST['GenHon'];
+	/*echo '<br>';*/
 
 
 	if ($GenHon == 1) {

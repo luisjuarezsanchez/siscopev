@@ -81,7 +81,7 @@ echo "Ña bandera es: ".$bandera;
 echo "<br>";
 
 /*Recuperar informacion con base a las posiciones de PRISMA*/
-if()
+if()*/
 $strCURP = file_get_contents('archivos/'.$nombre,null,null,2,18);
 echo "La CURP es: ".$strCURP;
 echo "<br>";
