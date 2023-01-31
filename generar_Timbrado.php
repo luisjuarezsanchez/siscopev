@@ -101,7 +101,7 @@ if (!isset($usuario)) {
 			</div>
 
 		</div>
-	</section>
+	</section> 
 
 	<h4 id="tituloTabla">Conciliación con PRISMA</h4> 
 	<br>

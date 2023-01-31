@@ -143,7 +143,7 @@ if (!isset($usuario)) {
                 </form>
             </tr>
 
-            <tr>
+            <tr> 
                 <form action="reporte_dispersion.php" method="post" enctype="multipart/form-data">
                     <td>Dispersion <img src="img/reportes/dispersion.png" height="55" width="55"></td>
                     <td><label><select required id="lista" name="CveNomina">

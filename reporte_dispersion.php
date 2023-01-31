@@ -51,7 +51,7 @@ SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE Pe
 SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=0) THEN Importe ELSE 0 END) - SUM(CASE WHEN DetNomina.Clave IN (SELECT PerDedApo.Clave FROM PerDedApo WHERE PerDedApo.TipoPDA=1) THEN Importe ELSE 0 END) AS TotNeto,
 DetNomina.CvePersonal,EmpGral.RFC,EmpGral.CURP,CONCAT('QUINCENA',' ',SUBSTR(DetNomina.CveNomina,5,2)) AS Quincena
 FROM DetNomina
-INNER JOIN EmpCont ON DetNomina.CvePersonal = EmpCont.CvePersonal
+INNER JOIN EmpCont ON DetNomina.CveEmpCont = EmpCont.CveEmpCont
 INNER JOIN EmpGral ON DetNomina.CvePersonal = EmpGral.CvePersonal
 INNER JOIN PerDedApo ON DetNomina.Clave = PerDedApo.Clave
 INNER JOIN catbanco ON SUBSTR(EmpCont.CtaBanco, 1, 3) = catbanco.CveBanco
