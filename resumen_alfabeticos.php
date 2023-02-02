@@ -146,7 +146,6 @@ $CveNomina = $_POST['CveNomina'];
 
 
             echo '
-        
             <tr>
             <th id="contenido" colspan="4">
             <div id="contenido">
@@ -155,7 +154,6 @@ $CveNomina = $_POST['CveNomina'];
                 echo '<p  id="importe">' .  $row['Clave'] . ' ' . $row['Concepto'] . '(' . $row['HrsMen']  . ')' . '</p>' . '<p style="text-align: right">' . '$' . number_format($row['Importe'], 2, ".", ",") . '</p>';
                 echo '<br>';
                 $totper = $row['TotPer'];
-
             }
             echo '
             </div>
@@ -195,7 +193,7 @@ $CveNomina = $_POST['CveNomina'];
         <p></p>
         </th>
         <th colspan="4" class="consulta">
-        <p>' . '$' . number_format(($totper-$totded), 2, ".", ",") . '</p>
+        <p>' . '$' . number_format(($totper - $totded), 2, ".", ",") . '</p>
         </th>
     </tr>
 
@@ -203,18 +201,10 @@ $CveNomina = $_POST['CveNomina'];
         }
 
         ?>
-
-
-
         <tr>
             <th colspan="4"></th>
             <th colspan="4"> <br> </th>
         </tr>
-
-
-
-
-
     </table>
 
 </body>
