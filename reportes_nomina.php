@@ -142,7 +142,7 @@ if (!isset($usuario)) {
                     <td><button class="buttons">Generar reporte</button></td>
                 </form>
             </tr>
-
+ 
             <tr> 
                 <form action="reporte_dispersion.php" method="post" enctype="multipart/form-data">
                     <td>Dispersion <img src="img/reportes/dispersion.png" height="55" width="55"></td>

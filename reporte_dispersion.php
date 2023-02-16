@@ -101,7 +101,7 @@ $hojaActiva->setTitle("Dispersion");
 //Formato númerico para los totales
 $excel->getActiveSheet()->getStyle('G:I')->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED2);
 //Formato númerico para las claves de banco y no aparezcan como notacion cientifica
-$excel->getActiveSheet()->getStyle('D:E')->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER);
+$excel->getActiveSheet()->getStyle('D:E')->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
 //Alineando la impresion de los datos a la izquierda
 $excel->getActiveSheet()->getStyle('A:M')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
 //Formatos de encabezados
@@ -157,7 +157,8 @@ while ($rows = $resultado->fetch_assoc()) {
     $hojaActiva->setCellValue('B' . $fila, $rows['CveBanco']);
     $hojaActiva->setCellValue('C' . $fila, $rows['NomBanco']);
     $hojaActiva->setCellValue('D' . $fila, $rows['Cuenta']);
-    $hojaActiva->setCellValue('E' . $fila, $rows['Clabe']);
+    //$hojaActiva->setCellValue('E' . $fila, $rows['Clabe']);
+    $hojaActiva->setCellValueExplicit('E'.$fila, $rows['Clabe'], \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
     $hojaActiva->setCellValue('F' . $fila, $rows['Nombre']);
     $hojaActiva->setCellValue('G' . $fila, $rows['TotPer']);
     $hojaActiva->setCellValue('H' . $fila, $rows['TotDed']);
@@ -191,7 +192,8 @@ while ($rows = $resultado2->fetch_assoc()) {
     $hojaActiva->setCellValue('B' . $fila, $rows['CveBanco']);
     $hojaActiva->setCellValue('C' . $fila, $rows['NomBanco']);
     $hojaActiva->setCellValue('D' . $fila, $rows['Cuenta']);
-    $hojaActiva->setCellValue('E' . $fila, $rows['Clabe']);
+    //$hojaActiva->setCellValue('E' . $fila, $rows['Clabe']);
+    $hojaActiva->setCellValueExplicit('E'.$fila, $rows['Clabe'], \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
     $hojaActiva->setCellValue('F' . $fila, $rows['Nombre']);
     $hojaActiva->setCellValue('G' . $fila, $rows['TotPer']);
     $hojaActiva->setCellValue('H' . $fila, $rows['TotDed']);
@@ -222,7 +224,8 @@ while ($rows = $resultado3->fetch_assoc()) {
     $hojaActiva->setCellValue('B' . $fila, $rows['CveBanco']);
     $hojaActiva->setCellValue('C' . $fila, $rows['NomBanco']);
     $hojaActiva->setCellValue('D' . $fila, $rows['Cuenta']);
-    $hojaActiva->setCellValue('E' . $fila, $rows['Clabe']);
+    //$hojaActiva->setCellValue('E' . $fila, $rows['Clabe']);
+    $hojaActiva->setCellValueExplicit('E'.$fila, $rows['Clabe'], \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
     $hojaActiva->setCellValue('F' . $fila, $rows['Nombre']);
     $hojaActiva->setCellValue('G' . $fila, $rows['TotPer']);
     $hojaActiva->setCellValue('H' . $fila, $rows['TotDed']);
