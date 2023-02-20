@@ -75,13 +75,13 @@ if (!file_exists('archivos')) {
 		echo "Ocurrio un error con la carga del archivo";
 	}
 }
-/*Determinar clave de las primeras posiciones*/
+/*
+//Determinar clave de las primeras posiciones
 $bandera = file_get_contents('archivos/'.$nombre,null,null,0,1);
 echo "Ña bandera es: ".$bandera;
 echo "<br>";
 
-/*Recuperar informacion con base a las posiciones de PRISMA*/
-if()*/
+//Recuperar informacion con base a las posiciones de PRISMA
 $strCURP = file_get_contents('archivos/'.$nombre,null,null,2,18);
 echo "La CURP es: ".$strCURP;
 echo "<br>";
@@ -105,7 +105,7 @@ echo "<br>";
 $strQuincena = file_get_contents('archivos/'.$nombre,null,null,423,2);
 echo "La Quincena es: ".$strQuincena;
 echo "<br>";
-
+*/
 
 ?>
 
@@ -152,7 +152,8 @@ if (!file_exists('archivos')) {
 		echo "Ocurrio un error con la carga del archivo";
 	}
 }
-/*Determinar clave de las primeras posiciones*/
+//Determinar clave de las primeras posiciones
+/*
 $bandera = file_get_contents('archivos/'.$nombre,null,null,0,2);
 echo "La bandera es: ".$bandera;
 echo "<br>";
@@ -189,7 +190,7 @@ do {
 
 } while (!feof($arc));
 
-
+*/
 ?>
 
 
@@ -217,7 +218,7 @@ if (!file_exists('archivos')) {
 	}
 }
 /*Determinar clave de las primeras posiciones*/
-$bandera = file_get_contents('archivos/'.$nombre,null,null,0,2);
+//$bandera = file_get_contents('archivos/'.$nombre,null,null,0,2);
 echo "La bandera es: ".$bandera;
 echo "<br>";
 
